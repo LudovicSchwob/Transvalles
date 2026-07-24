@@ -35,21 +35,24 @@
 \newcommand{\Tam}{\mathbf{Tam}}
 \newcommand{\dps}{\displaystyle}
 \newcommand{\Pos}{\mathcal P}
-\newcommand{\RPos}{\mathcal R}
 \renewcommand{\L}{\mathbf L}
 \newcommand{\IdL}{\mathbf{Low}}
 \newcommand{\IdU}{\mathbf{Upp}}
 \newcommand{\JIrr}{\mathcal J}
 \newcommand{\MIrr}{\mathcal M}
 \newcommand{\Spine}{\mathbf{Spine}}
+\newcommand{\Cong}{\mathbf{Cong}}
 
-\newcommand{\Face}{\mathbf{FInt}}
-\newcommand{\SkFace}{\mathbf{FTrv}}
+\newcommand{\JIrrGraph}{\operatorname{JG}}
+
+\newcommand{\Fac}{\mathbf{FInt}}
+\newcommand{\SkFac}{\mathbf{FTrv}}
 \newcommand{\Int}{\mathbf{Int}}
 \newcommand{\SkInt}{\mathbf{Trv}}
 
-\newcommand{\FaceGraph}{\operatorname{FInt}}
-\newcommand{\SkFaceGraph}{\operatorname{FTrv}}
+
+\newcommand{\FacGraph}{\operatorname{FInt}}
+\newcommand{\SkFacGraph}{\operatorname{FTrv}}
 \newcommand{\IntGraph}{\operatorname{Int}}
 \newcommand{\SkIntGraph}{\operatorname{Trv}}
 
@@ -131,7 +134,7 @@ In particular, $x_*$ (resp. $x^*$) is the only element covered by $x$ (resp. cov
 
 	\subsection{Nuclear intervals (faces)}
 	
-	REPRENDRE LES NOTATIONS (pop up et down) de A FACIAL ORDER FOR TORSION CLASSES
+	REPRENDRE LES NOTATIONS (pop up et down) de ~\cite{Hans24}
 	
 	The join of two nuclear intervals is given by $$[x_1,y_1]\vee[x_2,y_2]=\left[\bigwedge\{z:x_1\vee x_2\le z\lessdot y_1\vee y_2\}\cup \{y_1\vee y_2\}, y_1\vee y_2\right]$$
 	
@@ -166,12 +169,12 @@ In particular, $x_*$ (resp. $x^*$) is the only element covered by $x$ (resp. cov
 
 \section{Lattice structures   of transvals}
 \begin{prop}
-     $\Face_\L$ is a sublattice of $\SkFace_\L$, and $\Int_\L$ is a sublattice of $\SkInt_\L$.
+     $\Fac_\L$ is a sublattice of $\SkFac_\L$, and $\Int_\L$ is a sublattice of $\SkInt_\L$.
 \end{prop}
-However, $\Face_\L$ is not a sublattice of $\Int_\L$, and $\SkFace_\L$ is not a sublattice of $\SkInt_\L$.
+However, $\Fac_\L$ is not a sublattice of $\Int_\L$, and $\SkFac_\L$ is not a sublattice of $\SkInt_\L$.
 
 \begin{prop}
-Join-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Face_\L$, and $\SkFace_\L$ are respectively the elements of the form:
+Join-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ are respectively the elements of the form:
 \begin{itemize}
 \item $(0,j)$ and $(j,j)$;
 \item $(0,j)$ and $(j,j_*)$;
@@ -180,7 +183,7 @@ Join-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Face_\L$, and $\SkFace_\L
 \end{itemize}
 where $0$ is the minimal element of $\L$, and $j\in \JIrr(\L)$.
 
-Meet-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Face_\L$, and $\SkFace_\L$ are respectively:
+Meet-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ are respectively:
 \begin{itemize}
 \item $(m,1)$ and $(m,m)$;
 \item $(m,1)$ and $(m^*,m)$;
@@ -191,7 +194,7 @@ where $1$ is the maximal element of $\L$, and $m\in \MIrr(\L)$.
 \end{prop}
 
 \begin{prop}
-   The $\kappa$ maps of $\Int_\L$, $\SkInt_\L$, $\Face_\L$, and $\SkFace_\L$ are respectively given by:
+   The $\kappa$ maps of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ are respectively given by:
 	\begin{itemize}
 	\item $(0,j)\mapsto (m,m)$ and $(j,j)\mapsto (m,1)$;
 	\item $(0,j)\mapsto(m^*, m)$ and $(j,j_*)\mapsto(m, 1)$;
@@ -204,12 +207,12 @@ where $1$ is the maximal element of $\L$, and $m\in \MIrr(\L)$.
 Let $(\Sha, \rightarrow)$ be the two-acyclic factorization system such that $\L \cong \Pairs(\rightarrow)$.
 
 \begin{defi}
-  $\IntGraph(\Sha)$,  $\FaceGraph(\Sha)$,  $\SkIntGraph(\Sha)$ and  $\SkFaceGraph(\Sha)$ are the sets of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with respective binary relations
+  $\IntGraph(\Sha)$,  $\FacGraph(\Sha)$,  $\SkIntGraph(\Sha)$ and  $\SkFacGraph(\Sha)$ are the sets of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with respective binary relations
   \begin{itemize}
   \item $(x,0)\rightarrow_{\IntGraph} (x,0)$ and $x\rightarrow y$ implies $(x,k)\rightarrow_{\IntGraph} (y,k)$ for $k\in \{0,1\}$ and $(x,0)\rightarrow_{\IntGraph} (y,1)$;
   \item $x\rightarrow y$ implies $(x,k)\rightarrow_{\SkIntGraph} (y,k)$ for $k\in \{0,1\}$ and $(x,0)\rightarrow_{\SkIntGraph} (y,1)$;
-  \item $(x,0)\rightarrow_{\FaceGraph} (x,0)$ and $x\rightarrow y$ implies $(x,k)\rightarrow_{\FaceGraph} (y,k)$ for $k\in \{0,1\}$, $(x,0)\rightarrow_{\FaceGraph} (y,1)$, and $(x,1)\rightarrow_{\FaceGraph} (y,0)$;
-   \item $x\rightarrow y$ implies $(x,k)\rightarrow_{\SkFaceGraph} (y,k)$ for $k\in \{0,1\}$, $(x,0)\rightarrow_{\SkFaceGraph} (y,1)$, and $(x,1)\rightarrow_{\SkFaceGraph} (y,0)$.
+  \item $(x,0)\rightarrow_{\FacGraph} (x,0)$ and $x\rightarrow y$ implies $(x,k)\rightarrow_{\FacGraph} (y,k)$ for $k\in \{0,1\}$, $(x,0)\rightarrow_{\FacGraph} (y,1)$, and $(x,1)\rightarrow_{\FacGraph} (y,0)$;
+   \item $x\rightarrow y$ implies $(x,k)\rightarrow_{\SkFacGraph} (y,k)$ for $k\in \{0,1\}$, $(x,0)\rightarrow_{\SkFacGraph} (y,1)$, and $(x,1)\rightarrow_{\SkFacGraph} (y,0)$.
   \end{itemize} 
 \end{defi}
 
@@ -223,16 +226,49 @@ Let $\L$ a finite semidistributive lattice. $\L$ is trim if and only if it is ex
    \begin{itemize}
    \item $\Spine(\Int_\L)=\Int_{\Spine(\L)}$;
    \item $\Spine(\SkInt_\L)=\SkInt_{\Spine(\L)}$;
-   \item $\Spine(\Face_\L)=\Face_{\Spine(\L)}$;
-   \item $\Spine(\SkFace_\L)=\SkFace_{\Spine(\L)}$.
+   \item $\Spine(\Fac_\L)=\Fac_{\Spine(\L)}$;
+   \item $\Spine(\SkFac_\L)=\SkFac_{\Spine(\L)}$.
    \end{itemize}
 \end{prop}
 \begin{proof}
 Direct proof or corollary of the description of TAFS.
 \end{proof}
-	
-	\section{Transvals of the Tamari lattice}
-	We show that transvals of the Tamari lattice $\Tam_n$ are in bijection with topologies on $\{1,...,n\}$ having a base of convex sets \cite{CR15}.
+
+\section{Canonical join-representations}
+
+\begin{defi}
+  Let $G$ be a directed graph. A min-max subset of $G$ is a subset $X\subset G$ such that for all $x\in X$, there is no $y,z\in X$ such that $y\to x\to z$.
+\end{defi}
+
+If $G$ is transitive, its min-max subsets are in bijection with interval-closed subsets of $G$ seen as a poset. In~\cite{ELMSW24}, the authors generalized rowmotion to interval-closed subsets of posets. It would be interesting to generalize this further on min-max subsets of semidistributive lattices.
+%interval-closed subsets of a poset $\Pos$ are in bijection with pairs of disjoint antichains $(A,B)$ of $\Pos$ such that $B\subset \Delta(A)$~\cite[Proposition 2.5]{ELMSW24}. 
+
+\begin{defi}
+  An independant set of $G$ is a subset $X\subset G$ such that $x\in X$, there is no $y\in X$ such that $x\to y$ or $y\to x$.
+\end{defi}
+
+Let $\L$ be a finitesemidistributive lattice, and let $\JIrrGraph(\L)$  be its irreducibles graph. There is a canonical labelling of edges $\gamma : E(\L)\to \JIrr(L)$ such that for all $(x,y)\in E(\L)$, $y = x\vee \gamma((x,y))$.
+\begin{prop}
+   Min-max subsets of $\JIrrGraph(\L)$ are in bijection with edge-labellings of intervals, \emph{i.e.}, sets of the form $\{\gamma((a,b)):(a,b)\in E([x,y])\}$ with $x\le y\in \L$. 
+   Independent sets of $\JIrrGraph(\L)$ are in bijection with labellings $\{\gamma((a,b)):(a,b)\in E([x,y])\}$ where $[x,y]$ is a face of $\L$.
+\end{prop}
+\begin{proof}
+    Let $x\le y\in \L$, $m:=\{\gamma((x,a)):x\lessdot a\le y\}$, and $M:=\{\gamma((b,y)):x\le b\lessdot y\}$. The union $m\cup M$ is a min-max subset of $\JIrrGraph(L)$, and it is an independant set if and only if $m=M$, \emph{i.e.}, $[x,y]$ is a face of $\L$. (show that elements of $m\cup M$ that are both minimal and maximal are $m\cap M$). 
+    %TODO find reverse bijection between set of labels and min-max sets
+\end{proof}
+
+\begin{prop}
+  Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$. There is a bijection between transvals $(x,y)\in \SkInt_\L$ and triples $(X,m,M)$ where $X$ is a min-max subset of $G$ and $m\cup M=\min(X)\cap \max(X)$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m\cup \min X} (j,j_*)\vee \bigvee_{j\in M\cup \max X} (0,j).$$
+  Intervals of $\L$ then correspond to triples $(X,m,M)$ such that $m\subset M=\min(X)\cap \max(X)$.
+\end{prop}
+
+\begin{prop}
+  Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$. There is a bijection between face transvals $(x,y)\in \SkFac_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$ and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j,j_*)\vee \bigvee_{j\in M} (j_*,j).$$
+    Faces of $\L$ then correspond to triples $(X,m,M)$ such that $m\subset M=X$.
+\end{prop}
+
+\section{Transvals of the Tamari lattice}
+	We show that transvals of the Tamari lattice $\Tam_n$ are in bijection with topologies on $\{1,...,n\}$ having a base of convex sets \cite{ClRi15}.
 	
 	Objects equienumerated or in bijection with convex topologies have already been studied in \cite{BGPPST26}, [papier Jonathan Yang ?]
 	
@@ -295,6 +331,10 @@ Direct proof or corollary of the description of TAFS.
 		The lattice of congruences of $\SkInt(\Tam_n)$ is isomorphic to the lattice of Motzkin paths of length $2n-1$.
 	\end{prop}
 	
+	\begin{prop}
+	     $|\SkFac_{\Tam_n}|=|\Cong(\SkFac_{\Tam_n})|$
+	\end{prop}
+	
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{ccccccccccc}
@@ -313,7 +353,7 @@ Direct proof or corollary of the description of TAFS.
 	\subsection{Polytopal decompositions}
 The lattice of intervals and the lattice of faces decompose into polytopes, whose numbers are :
 	\begin{itemize}
-	\item $\Face_\L$ : $2^n$
+	\item $\Fac_\L$ : $2^n$
 	\item $\Int_\L$ : nombre d'intervalles synchrones (A000139)
 	\end{itemize}
 
@@ -327,7 +367,7 @@ The lattice of intervals and the lattice of faces decompose into polytopes, whos
 	
 	\section{Skew intervals of the weak order}
 	
-	Let $\mathfrak g$ be a finite-dimensional complex semisimple Lie algebra, $W$ its Weyl group, and $U_q(\mathfrak g)$ the quantized enveloping algebra of $\mathfrak g$. Heckenberger and Kolb~\cite{HK12} showed that homogeneous right coideal subalgebras of $U_q(\mathfrak g)$ are in bijection with triples $(x,u,J)$ where $x,u\in W$ with $u^{-1}\le_R x$ and $J\subset \Pi\cap x\Pi$, where $\Pi$ denotes a fixed basis of the root system of $\mathfrak g$. We show that they are also in bijection with skew intervals of the weak order.
+	Let $\mathfrak g$ be a finite-dimensional complex semisimple Lie algebra, $W$ its Weyl group, and $U_q(\mathfrak g)$ the quantized enveloping algebra of $\mathfrak g$. Heckenberger and Kolb~\cite{HeKo12} showed that homogeneous right coideal subalgebras of $U_q(\mathfrak g)$ are in bijection with triples $(x,u,J)$ where $x,u\in W$ with $u^{-1}\le_R x$ and $J\subset \Pi\cap x\Pi$, where $\Pi$ denotes a fixed basis of the root system of $\mathfrak g$. We show that they are also in bijection with skew intervals of the weak order.
 	
 	
 	\begin{defi}
@@ -353,13 +393,13 @@ The lattice of intervals and the lattice of faces decompose into polytopes, whos
 			\begin{tabular}{ccccccccc}
 			\toprule
 			   $n$ & $2$ &$3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$   \\ \midrule 
-				$A213438$ & $4$ & $26$ & $252$ & $3368$ & $58810$ & $1290930$ & $34604844$ & $1107490596$  \\ \midrule 
-				$A122704$ & $4$ & $22$ & $160$ & $1456$ & $15905$ & $202672$ & $2951680$ & $48361216$   \\ \midrule 
+				 $A000142$ & $2$ & $6$ & $24$ & $120$ & $720$ & $5040$ & $40320$ & $362880$ \\ \midrule 
+				$A000670$ & $3$ & $13$ & $75$ & $541$ & $4683$ & $47293$ & $545835$ & $7087261$   \\ \midrule 
 			   $A007767$ & $3$ & $17$ & $151$ & $1899$ & $31711$ & $672697$ & $17551323$ & $549500451$   \\ \midrule 
-				$A000670$ & $3$ & $13$ & $75$ & $541$ & $4683$ & $47293$ & $545835$ & $7087261$   \\  \midrule
-			    $A000142$ & $2$ & $6$ & $24$ & $120$ & $720$ & $5040$ & $40320$ & $362880$  \\  \bottomrule
+				 $A122704$ & $4$ & $22$ & $160$ & $1456$ & $15905$ & $202672$ & $2951680$ & $48361216$   \\  \midrule
+			    $A213438$ & $4$ & $26$ & $252$ & $3368$ & $58810$ & $1290930$ & $34604844$ & $1107490596$  \\  \bottomrule
 			\end{tabular}
-			\caption{\centering The number of transvals, face transvals, intervals, face intervals and elements of $(A_n,\le_R)$.}
+			\caption{\centering The number of elements, face intervals, intervals, face transvals, and transvals of $(A_n,\le_R)$.}
 		\end{table}
 		
      \begin{table}[H]
@@ -367,13 +407,13 @@ The lattice of intervals and the lattice of faces decompose into polytopes, whos
 			\begin{tabular}{ccccccc}
 			\toprule
 			   $n$ & $2$ &$3$ & $4$ & $5$ & $6$ & $7$    \\ \midrule 
-				$A395854$ & $38$ & $664$ & $17848$ & $672004$ & $33369560$ & $2094849020$   \\ \midrule 
-			 & $28$ & $304$ & $4432$ &$80704$ & $1763008$ & $44932864$  \\ \midrule 
+			 $A000165$ & $8$ & $48$ & $384$ & $3840$ & $46080$ & $645120$ \\ \midrule 
+			 $A080253$ & $17$ & $147$ & $1697$ & $24483$ & $423857$ & $8560947$ \\ \midrule 
 			  $A395856$ & $27$ & $457$ & $12069$ & $449439$ & $22145671$ &    \\ \midrule 
-			  $A080253$ & $17$ & $147$ & $1697$ & $24483$ & $423857$ & $8560947$  \\  \midrule
-			    $A000165$ & $8$ & $48$ & $384$ & $3840$ & $46080$ & $645120$ \\  \bottomrule
+			   & $28$ & $304$ & $4432$ &$80704$ & $1763008$ & $44932864$  \\  \midrule
+			   $A395854$ & $38$ & $664$ & $17848$ & $672004$ & $33369560$ & $2094849020$  \\  \bottomrule
 			\end{tabular}
-			\caption{\centering The number of transvals, face transvals, intervals, face intervals and elements of $(B_n,\le_R)$.}
+			\caption{\centering The number of elements, face intervals, intervals, face transvals, and transvals of $(B_n,\le_R)$.}
 		\end{table}
 		
      \begin{table}[H]
@@ -381,13 +421,13 @@ The lattice of intervals and the lattice of faces decompose into polytopes, whos
 			\begin{tabular}{ccccc}
 			\toprule
 			   $n$ & $4$ & $5$ & $6$ & $7$    \\ \midrule 
-			  $A395855$ & $6512$ & $238720$ & $11633624$  &  $720453984$\\ \midrule 
-			   & $2320$ & $42304$ & $924352$ & $23557888$  \\ \midrule 
+			   $A002866$ & $192$ & $1920$ & $23040$ & $322560$\\ \midrule 
+			 $A080254$ & $865$ & $12483$ & $216113$ & $4364979$    \\ \midrule 
 			  $A395857$ & $3959$ & $146649$ & $7198141$ & $447955715$   \\ \midrule 
-			 $A080254$ & $865$ & $12483$ & $216113$ & $4364979$ \\  \midrule
-			    $A002866$ & $192$ & $1920$ & $23040$ & $322560$ \\  \bottomrule
+			  & $2320$ & $42304$ & $924352$ & $23557888$ \\  \midrule
+			   $A395855$ & $6512$ & $238720$ & $11633624$  &  $720453984$  \\  \bottomrule
 			\end{tabular}
-			\caption{\centering The number of transvals, face transvals, intervals, face intervals and elements of $(D_n,\le_R)$.}
+			\caption{\centering The number of elements, face intervals, intervals, face transvals, and transvals of $(D_n,\le_R)$.}
 		\end{table}
 		
 \section{Transvals of quotients of the weak order}
