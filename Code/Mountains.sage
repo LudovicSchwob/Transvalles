@@ -1,8 +1,21 @@
+from collections import defaultdict
+
 """
 Number of nested mountains: 
 2, 7, 34, 199, 1308, 9300, 69978, 549559 (A393920)
+ = number of subsets of the AR quiver closed by extension
+
+what about other AR quivers ?
+It seems that the number of extension-closed subsets only depend on the type
+(True: extensions can be obtained from the root poset)
+
+D_4 : 496
+D_5 : 9884
 
 Nested mountains with umbrella:
+
+same sequence as extension-closed subset of the AR quiver,
+but with different offset
 
 """
 
@@ -114,3 +127,66 @@ cf. A000256
 
 cf. A000139
 """
+
+
+########### EXTENSION-CLOSED SUBSETS OF AR QUIVERS #########
+
+
+def extension_closed_subsets(G):
+    n = len(G)
+    def dimension_vector(x):
+        l = n*[0]
+        for i, c in x.dimension_vector():
+            l[i-1] = c
+        return tuple(l)
+    AR = G.auslander_reiten_quiver()
+    AR = AR.digraph().copy(immutable = False)
+    AR.relabel(dimension_vector)
+    extensions = defaultdict(list)
+    for a in AR:
+        for b in AR:
+            if not (all(i <= j for i, j in zip(a, b)) or all(i >= j for i, j in zip(a, b))):
+                j, m = tuple(max(i, j) for i, j in zip(a, b)), tuple(min(i, j) for i, j in zip(a, b))
+                l = []
+                if j in AR:
+                    l.append(j)
+                if m in AR:
+                    l.append(m)
+                extensions[(a, b)] = l
+    def closure(S, a):
+        l = [a]
+        S = list(S)
+        S.append(a)
+        while len(l) > 0:
+            l2 = []
+            for x in S:
+                for y in l:
+                    for z in extensions[(x, y)]:
+                        if z not in S and z not in l2:
+                            l2.append(z)
+            l = l2
+            S.extend(l2)
+        return Set(S)
+    L, l = set([Set()]), [Set()]
+    while len(l) > 0:
+        l2 = []
+        for S in l:
+            for a in AR:
+                if a not in S:
+                    S2 = closure(S, a)
+                    if S2 not in L and S2 not in l2:
+                        l2.append(S2)
+        L = L.union(l)
+        l = l2
+    return list(L)
+            
+
+def extension_closed_subsets_with_max(G):
+    l = extension_closed_subsets(G)
+    n = len(G)
+    m = n*[0]
+    for s in l:
+        for x in s:
+            m = [max(i, j) for i, j in zip(m, x)]
+    m = tuple(m)
+    return [s for s in l if m in s]

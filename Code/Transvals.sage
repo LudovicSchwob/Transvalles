@@ -37,7 +37,7 @@ def transvals_canonical_joinands(L):
                 y[j[1]].append(0)
             else:
                 y[j[0]].append(1)
-        t = tuple(sorted(y))
+        t = tuple(sorted(y, key = lambda t: t.__hash__()))
         D[t].append(tuple(y[j] for j in t))
     return D
 

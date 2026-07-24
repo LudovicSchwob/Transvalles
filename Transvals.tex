@@ -68,6 +68,9 @@
  \DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
  \DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
  \DeclareMathSymbol{\Sha}{\mathord}{mcy}{"58} 
+ 
+ \newcommand{\forcingorder}{\mathcal F}
+
 
 \numberwithin{equation}{section}
 \newtheorem{thm}{Theorem}[section]
@@ -386,6 +389,20 @@ The lattice of intervals and the lattice of faces decompose into polytopes, whos
 			\end{tabular}
 			\caption{\centering The number of transvals, face transvals, intervals, face intervals and elements of $(D_n,\le_R)$.}
 		\end{table}
+		
+\section{Transvals of quotients of the weak order}
+
+Bijection between transvals and preposets for any quotient, generalizing \cite{CPP19}
+
+The forcing order of $\Ss_n$ is isomorphic to the poset $\forcingorder_n$ defined as the set of arcs $(a,A,B,b)$ with $1\le a < b\le n$ and $A,B$ a set partition of $\{a+1,\dots, b-1\}$ ($A$ corresponds to points below the arc), ordered by $(a_1,A_1,B_1,b_1) \le (a_2,A_2,B_2,b_2)$ if $a_1\le b_1$, $A_1\subset A_2$, $B_1\subset B_2$ and $b_1\ge b_2$.
+
+\begin{defi}
+Let $I\in \IdL(\forcingorder_n)$. A preposet $\blacktriangleleft$ is a weak order quotient preposet if and only if for all $a<b<c$, $a\blacktriangleleft c\implies a\blacktriangleleft b$ or $b\blacktriangleleft c$, and for all $(a,A,B,b)\in I$
+\begin{itemize}
+\item if $a\blacktriangleleft b$, there exists $k\in A$ such that $a\blacktriangleleft k$, or there exists $k\in B$ such that $k\blacktriangleleft b$;
+\item if $a \blacktriangleright b$, there exists $k\in A$ such that $k\blacktriangleright b$, or there exists $k\in B$ such that $a\blacktriangleright k$.
+\end{itemize}
+\end{defi}
 	
 	\section{Acknowledgements}
 	The numeral coincidences for the number of transvals in the Tamari lattice and the weak order were discovered thanks to the OEIS.
