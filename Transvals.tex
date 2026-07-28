@@ -248,6 +248,9 @@ If $G$ is transitive, its min-max subsets are in bijection with interval-closed 
 \end{defi}
 
 Let $\L$ be a finitesemidistributive lattice, and let $\JIrrGraph(\L)$  be its irreducibles graph. There is a canonical labelling of edges $\gamma : E(\L)\to \JIrr(L)$ such that for all $(x,y)\in E(\L)$, $y = x\vee \gamma((x,y))$.
+
+FFFFAAAAAAAUUUUUUUXXXXX (par ex. $\Tam_4$)
+{\color{red}
 \begin{prop}
    Min-max subsets of $\JIrrGraph(\L)$ are in bijection with edge-labellings of intervals, \emph{i.e.}, sets of the form $\{\gamma((a,b)):(a,b)\in E([x,y])\}$ with $x\le y\in \L$. 
    Independent sets of $\JIrrGraph(\L)$ are in bijection with labellings $\{\gamma((a,b)):(a,b)\in E([x,y])\}$ where $[x,y]$ is a face of $\L$.
@@ -255,7 +258,7 @@ Let $\L$ be a finitesemidistributive lattice, and let $\JIrrGraph(\L)$  be its i
 \begin{proof}
     Let $x\le y\in \L$, $m:=\{\gamma((x,a)):x\lessdot a\le y\}$, and $M:=\{\gamma((b,y)):x\le b\lessdot y\}$. The union $m\cup M$ is a min-max subset of $\JIrrGraph(L)$, and it is an independant set if and only if $m=M$, \emph{i.e.}, $[x,y]$ is a face of $\L$. (show that elements of $m\cup M$ that are both minimal and maximal are $m\cap M$). 
     %TODO find reverse bijection between set of labels and min-max sets
-\end{proof}
+\end{proof}}
 
 \begin{prop}
   Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$. There is a bijection between transvals $(x,y)\in \SkInt_\L$ and triples $(X,m,M)$ where $X$ is a min-max subset of $G$ and $m\cup M=\min(X)\cap \max(X)$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m\cup \min X} (j,j_*)\vee \bigvee_{j\in M\cup \max X} (0,j).$$
@@ -448,5 +451,5 @@ Let $I\in \IdL(\forcingorder_n)$. A preposet $\blacktriangleleft$ is a weak orde
 	The numeral coincidences for the number of transvals in the Tamari lattice and the weak order were discovered thanks to the OEIS.
 	
 \bibliography{Transvals}{}
-\bibliographystyle{plain}
+\bibliographystyle{alpha}
 \end{document}
