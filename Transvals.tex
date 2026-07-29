@@ -43,6 +43,11 @@
 \newcommand{\Spine}{\mathbf{Spine}}
 \newcommand{\Cong}{\mathbf{Cong}}
 
+\newcommand{\pop}{\operatorname{pop}}
+\newcommand{\popdown}{\operatorname{pop}^\downarrow}
+\newcommand{\popup}{\operatorname{pop}^\uparrow}
+\newcommand{\Lmin}{\mathbf 0}
+\newcommand{\Lmax}{\mathbf 1}
 \newcommand{\JIrrGraph}{\operatorname{JG}}
 
 \newcommand{\Fac}{\mathbf{FInt}}
@@ -73,6 +78,10 @@
  \DeclareMathSymbol{\Sha}{\mathord}{mcy}{"58} 
  
  \newcommand{\forcingorder}{\mathcal F}
+ 
+ \definecolor{darkblue}{rgb}{0,0,0.7} % darkblue color
+ \newcommand{\darkblue}{\color{darkblue}} % darkblue command
+ \newcommand{\defn}[1]{\textsl{\darkblue #1}} % emphasis of a definition
 
 
 \numberwithin{equation}{section}
@@ -102,41 +111,89 @@
 	\tableofcontents
 	\section{Introduction}
 	
-	Etudier le treillis des faces (tout comme les skew intervals, le join des faces n'est pas donné par le join composante par composante) Le treillis des intervalles forme quand même un sous-treillis des skew intervals (ce qui est évident pcq le join des intervalles se fait coordonnée par coordonnée)
-	
-	{\color{red} faces $\rightarrow$ face intervals ? atomic intervals ?}
-	
-		{\color{red} skew faces $\rightarrow$ face transvals ? atomic transvals ?}
+Citer \cite{Hans24} \cite{ClRi15} \cite{BGPPST26} \cite{CPP19} \cite{HeKo12} 
 		
 \section{Notations and preliminaries}
-\subsection{Lattices}
-Let $\L$ be a lattice. 
+\subsection{Nuclear intervals (faces)}
 
-For all $x\in \L$, we define $$x_*:=\begin{cases}
-x \text{ if $x=0$},\\
-\bigwedge_{y\lessdot x}y \text{ otherwise.}
-\end{cases}$$
 
-and $$x^*:=\begin{cases}
-x \text{ if $x=1$},\\
-\bigvee_{x\lessdot y}y \text{ otherwise.}
-\end{cases}$$
+%Let $\L$ be a lattice. 
+%
+%For all $x\in \L$, we define $$x_*:=\begin{cases}
+%x \text{ if $x=0$},\\
+%\bigwedge_{y\lessdot x}y \text{ otherwise.}
+%\end{cases}$$
+%
+%and $$x^*:=\begin{cases}
+%x \text{ if $x=1$},\\
+%\bigvee_{x\lessdot y}y \text{ otherwise.}
+%\end{cases}$$
+%
+%In particular, $x_*$ (resp. $x^*$) is the only element covered by $x$ (resp. covering $x$) if $x$ is join-irreducible (resp. meet-irreducible).
 
-In particular, $x_*$ (resp. $x^*$) is the only element covered by $x$ (resp. covering $x$) if $x$ is join-irreducible (resp. meet-irreducible).
+   $\L$ be a finite lattice.
+  
+Let $x\le y\in \L$. We write
+    $$\pop_x(y):=y\wedge \bigwedge \{z\in \L: x\le z\lessdot y\}$$
+    $$\pop^y(x):=x\vee\bigvee \{z\in \L: x\lessdot z\le y\}.$$
 
-\subsection{Semidistributive lattices}
-   $\L$ be a finite semidistributive lattice.
+$$\popdown(y):=y\wedge \bigwedge\{x\in \L:x\lessdot y\},$$
+$$\popup(x):=x\vee \bigvee\{y\in \L:x\lessdot y\}.$$
 
-   An interval $[x,y] $ of $\L$ is atomic (\emph{i.e.}, $y$ is a join of upper covers of $x$) if and only if it is coatomic (\emph{i.e.}, $x$ is a meet of lower covers of $y$).
+When $j$ is a join-irreducible element of $\L$, we also write $j_*:= \popdown(j)$ for the only element covered by $j$. If $m$ is meet-irreducible, we write $m^*:=\popup(m)$.
+
+    Let $[x,y]$ be an interval of $\L$.
+    \begin{itemize}
+    \item We say that $[x,y]$ is nuclear if $x=\pop_x(y).$
+    \item We say that $[x,y]$ is conuclear if $y=\pop^y(x).$
+    \item We say that $[x,y]$ is binuclear if it is both nuclear and conuclear.
+    \end{itemize}
+
+We also apply the same terminology to finite lattices, by seeing a lattice as its interval $[\Lmin,\Lmax]$.
+    
+The following assertions are equivalent:
+\begin{itemize}
+\item $\L$ is meet-semidistributive.
+\item The map $\kappa:\JIrr(\L) \to \MIrr(\L)$ sending $j$ to $\kappa(j):=\max\{z:z\wedge j=j_*\}$ is well-defined.
+\item Each element of $\L$ has a unique canonical meet-representation.
+\end{itemize}
    
 	
-	\section{Definitions and first results}
+	\section{Definition of transvals and first results}
 
-	\subsection{Nuclear intervals (faces)}
-	
-	REPRENDRE LES NOTATIONS (pop up et down) de ~\cite{Hans24}
-	
-	The join of two nuclear intervals is given by $$[x_1,y_1]\vee[x_2,y_2]=\left[\bigwedge\{z:x_1\vee x_2\le z\lessdot y_1\vee y_2\}\cup \{y_1\vee y_2\}, y_1\vee y_2\right]$$
+\subsection{Faces}
+
+\begin{lem}
+   \label{lem:conuclear}
+   A finite meet-semidistributive lattice is a nuclear interval if and only if for all atoms $w$ of $\L$, $\kappa(w)$ is a coatom of $\L$.
+\end{lem}
+\begin{proof}
+It is straightforward to check that for all $x\gtrdot\Lmin$, $x=\bigwedge_{y\gtrdot \Lmin , y\neq x}\kappa(y)$ and $\Lmin=\bigwedge_{y\gtrdot \Lmin}\kappa(y)$ (these are the canonical meet-representations of $x$ and $\Lmin$, respectively). Hence, if for all atoms $x$ , $\kappa(x)$ is a coatom, then $\L$ is a nuclear interval. Conversely, if there exists $x\gtrdot \Lmin$ such that $\kappa(x)$ is not a coatom, it implies that for all coatoms $y\lessdot \Lmax$, we have $x\le y$, so their meet is above $x$ and $\L$ is not nuclear.
+\end{proof}
+
+\begin{prop}
+   Let $\L$ be a finite meet-semidistributive lattice. Let $[x,y]$ be a conuclear interval of $\L$. Then $[x,y]$ is a nuclear interval.
+\end{prop}
+\begin{proof}
+\label{pr:conuclear_implies_nuclear}
+   Without loss of generality, we take $\L=[x,y]$. Since $\L$ is conuclear, for all atoms $z\gtrdot x$, there exists $w\lessdot y$ such that $z\nleq w$ (if not, the join of the atoms would be less than $w$), and then $z\wedge w=x$ so $w=\kappa(z)$. By Lemma~\ref{lem:conuclear}, $[x,y]$ is nuclear.
+\end{proof}
+The converse is not true (see Figure~\ref{fig:inclusionoffaces}).
+It follows from Proposition~\ref{pr:conuclear_implies_nuclear}, and from its dual counterpart for join-semidistributive lattices, that in a semidistributive lattice, nuclear and conuclear intervals are the same. We will call \defn{faces} the binuclear intervals of a semidistributive lattice, as they coincide with geometric faces of many polytopal realizations of lattices, such as the weak order or the Tamari lattice. However, faces of a semidistributive lattice do not always have a geometric interpretation (see Figure~\ref{fig:inclusionoffaces}).
+
+We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we have an injection from the atoms to the coatoms of $[x,y]$. In semidistributive lattices this is a bijection. We call the \defn{dimension} of a face $[x,y]$ its number of atoms of this interval, or equivalently its number of coatoms.
+ 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{figures/nuclear_interval}\qquad
+\includegraphics[width=0.4\linewidth]{figures/inclusion_of_faces}
+\caption{Left: a meet-semidistributive lattice which is nuclear but not conuclear. Right: A semidistributive lattice with two faces of dimension $2$, one containing the other.}
+\label{fig:inclusionoffaces}
+\end{figure}
+
+
+The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right]$. Hanson proved that for any lattice, if its nuclear intervals compared coordinatewise form a lattice then their join has this expression~\cite{Hans24}.
+%$$[x_1,y_1]\vee[x_2,y_2]=\left[\bigwedge\{z:x_1\vee x_2\le z\lessdot y_1\vee y_2\}\cup \{y_1\vee y_2\}, y_1\vee y_2\right]$$
 	
 	\subsection{Transvals}
 	
@@ -150,11 +207,15 @@ In particular, $x_*$ (resp. $x^*$) is the only element covered by $x$ (resp. cov
 		$K_\L$ is the set of atoms $a\in \L$ such that $\kappa(a)$ is a coatom of $\L$.
 	\end{defi}
 	\begin{prop}
-	Let $\L$ be a finite semidistributive lattice. Transvals of $\L$ are the pairs $\left(\bigvee J, \bigwedge \kappa(J)\right)$ with $J\subset K_{[x,y]}$.
+	Let $\L$ be a finite semidistributive lattice. Transvals of $\L$ are the pairs $\left(\bigvee J, \bigwedge \kappa_{[x,y]}(J)\right)$ where $[x,y]$ is an interval of $\L$ and $J\subset K_{[x,y]}$.
 	\end{prop}
+	\begin{proof}
+	   It is straightforward to show that $\left(\bigvee J\right)_*\le x\le y$ and $\left(\bigwedge \kappa(J)\right)^*\ge y\le x$. Conversely, if $(x,y)$ is a transval of $\L$, for all $z$ such that $x\wedge y\lessdot z \le x$, there exists $w\lessdot x\vee y$ such that $z\nleq w$ (if not, we would have $z \le \bigwedge_{y\le w\lessdot x\vee y}w=y$ and $z\le x\wedge y$). Hence we have $y\le \kappa_{[x\wedge y,x\vee y]}(z)\lessdot x\vee y$. Dually, each coatom of $[x\wedge y,x\vee y]$ which is above $y$ correspond to an atom below $x$, implying that $(x,y)=\left(\bigvee J ,\bigvee \kappa{[x\wedge y,x\vee y]}(J)\right)$ where $J=\{z:x\wedge y\lessdot z\le x\}$ and we have $\kappa{[x\wedge y,x\vee y]}(J)\subset \{w:y\le w\lessdot x\vee y\}$.
+	\end{proof}
+	
 	\begin{cor}
 		Transvals of $\L$ are in bijection with triples $(x,y,J)$ where $x\le y\in \L$ and $J\subset K_{[x,y]}$.
-		\label{pr:2}
+		\label{cor:bijection_transvals}
 	\end{cor}
 	
 	\begin{prop}
@@ -164,10 +225,10 @@ In particular, $x_*$ (resp. $x^*$) is the only element covered by $x$ (resp. cov
 	
 	Transvals form a lattice whose join is given by $$(x_1,y_1)\vee (x_2,y_2)=(x_1\vee x_2, ?????)$$
 	
-\subsection{Nuclear transvals}
+\subsection{Face transvals}
 
 
-\section{Lattice structures   of transvals}
+\section{Lattice structures of transvals}
 \begin{prop}
      $\Fac_\L$ is a sublattice of $\SkFac_\L$, and $\Int_\L$ is a sublattice of $\SkInt_\L$.
 \end{prop}
@@ -204,6 +265,15 @@ where $1$ is the maximal element of $\L$, and $m\in \MIrr(\L)$.
 	where $m=\kappa(j)$.
 \end{prop}
 
+\subsection{Cover relations}
+
+Cover relations of $\Fac_\L$ are also of the form $(x,y_1)\lessdot (x,y_2)$ or $(x_1,y)\lessdot (x_2,y)$.
+
+Cover relations of $\SkInt_\L$ are also of the form $(x,y_1)\lessdot (x,y_2)$ or $(x_1,y)\lessdot (x_2,y)$. This comes from the fact that for all $(a,b)\le (c,d)\in \SkInt_\L$, we have $a_*\le b\le d$ and $a\le c\le d^*$, hence $(a,d)$ is a transval of $\L$ with $(a,b)\le (a,d)\le (c,d)$.
+
+However, cover relations of $\SkFac_\L$ are not always of this form (there is a counterexample for $\Tam_3$).
+\subsection{Irreducibles graph}
+
 Let $(\Sha, \rightarrow)$ be the two-acyclic factorization system such that $\L \cong \Pairs(\rightarrow)$.
 
 \begin{defi}
@@ -217,6 +287,14 @@ Let $(\Sha, \rightarrow)$ be the two-acyclic factorization system such that $\L 
 \end{defi}
 
 
+\begin{prop} We have the following isomorphisms:
+\begin{itemize}
+   \item $\Int_\L\cong \Pairs(\rightarrow_{\IntGraph})$.
+   \item $\Fac_\L\cong \Pairs(\rightarrow_{\FacGraph})$.
+   \item $\SkInt_\L\cong \Pairs(\rightarrow_{\SkIntGraph})$.
+   \item $\SkFac_\L\cong \Pairs(\rightarrow_{\SkFacGraph})$.
+\end{itemize}
+\end{prop}
 
 \subsection{Spine of the lattice transvals in extremal lattices}
 
@@ -247,31 +325,41 @@ If $G$ is transitive, its min-max subsets are in bijection with interval-closed 
   An independant set of $G$ is a subset $X\subset G$ such that $x\in X$, there is no $y\in X$ such that $x\to y$ or $y\to x$.
 \end{defi}
 
-Let $\L$ be a finitesemidistributive lattice, and let $\JIrrGraph(\L)$  be its irreducibles graph. There is a canonical labelling of edges $\gamma : E(\L)\to \JIrr(L)$ such that for all $(x,y)\in E(\L)$, $y = x\vee \gamma((x,y))$.
+Let $\L$ be a finite semidistributive lattice, and let $\JIrrGraph(\L)$  be its irreducibles graph. There is a canonical labelling of edges $\gamma : E(\L)\to \JIrr(L)$ such that for all $(x,y)\in E(\L)$, $y = x\vee \gamma((x,y))$.
 
-FFFFAAAAAAAUUUUUUUXXXXX (par ex. $\Tam_4$)
-{\color{red}
+%{\color{red}
+%FFFFAAAAAAAUUUUUUUXXXXX (par ex. $\Tam_4$)
+%\begin{prop}
+%   Min-max subsets of $\JIrrGraph(\L)$ are in bijection with edge-labellings of intervals, \emph{i.e.}, sets of the form $\{\gamma((a,b)):(a,b)\in E([x,y])\}$ with $x\le y\in \L$. 
+%   Independent sets of $\JIrrGraph(\L)$ are in bijection with labellings $\{\gamma((a,b)):(a,b)\in E([x,y])\}$ where $[x,y]$ is a face of $\L$.
+%\end{prop}
+%\begin{proof}
+%    Let $x\le y\in \L$, $m:=\{\gamma((x,a)):x\lessdot a\le y\}$, and $M:=\{\gamma((b,y)):x\le b\lessdot y\}$. The union $m\cup M$ is a min-max subset of $\JIrrGraph(L)$, and it is an independant set if and only if $m=M$, \emph{i.e.}, $[x,y]$ is a face of $\L$. (show that elements of $m\cup M$ that are both minimal and maximal are $m\cap M$). 
+%    %TODO find reverse bijection between set of labels and min-max sets
+%\end{proof}}
+
+
+Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$.
 \begin{prop}
-   Min-max subsets of $\JIrrGraph(\L)$ are in bijection with edge-labellings of intervals, \emph{i.e.}, sets of the form $\{\gamma((a,b)):(a,b)\in E([x,y])\}$ with $x\le y\in \L$. 
-   Independent sets of $\JIrrGraph(\L)$ are in bijection with labellings $\{\gamma((a,b)):(a,b)\in E([x,y])\}$ where $[x,y]$ is a face of $\L$.
+   There is a bijection between intervals $(x,y)\in \Int_\L$ and triples $(X,m,M)$ where $X$ is a min-max subset of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
 \end{prop}
-\begin{proof}
-    Let $x\le y\in \L$, $m:=\{\gamma((x,a)):x\lessdot a\le y\}$, and $M:=\{\gamma((b,y)):x\le b\lessdot y\}$. The union $m\cup M$ is a min-max subset of $\JIrrGraph(L)$, and it is an independant set if and only if $m=M$, \emph{i.e.}, $[x,y]$ is a face of $\L$. (show that elements of $m\cup M$ that are both minimal and maximal are $m\cap M$). 
-    %TODO find reverse bijection between set of labels and min-max sets
-\end{proof}}
 
 \begin{prop}
-  Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$. There is a bijection between transvals $(x,y)\in \SkInt_\L$ and triples $(X,m,M)$ where $X$ is a min-max subset of $G$ and $m\cup M=\min(X)\cap \max(X)$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m\cup \min X} (j,j_*)\vee \bigvee_{j\in M\cup \max X} (0,j).$$
-  Intervals of $\L$ then correspond to triples $(X,m,M)$ such that $m\subset M=\min(X)\cap \max(X)$.
+    There is a bijection between transvals $(x,y)\in \SkInt_\L$ and triples $(X,m,M)$ where $X$ is a min-max subset of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
+ Intervals of $\L$ correspond to triples $(X,m,M)$ such that $M\subset m=X$.
 \end{prop}
 
 \begin{prop}
-  Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$. There is a bijection between face transvals $(x,y)\in \SkFac_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$ and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j,j_*)\vee \bigvee_{j\in M} (j_*,j).$$
-    Faces of $\L$ then correspond to triples $(X,m,M)$ such that $m\subset M=X$.
+   There is a bijection between faces $(x,y)\in \Fac_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j).$$
+\end{prop}
+
+\begin{prop}
+  There is a bijection between face transvals $(x,y)\in \SkFac_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j_*).$$
+    Faces of $\L$ correspond to triples $(X,m,M)$ such that $M\subset m=X$.
 \end{prop}
 
 \section{Transvals of the Tamari lattice}
-	We show that transvals of the Tamari lattice $\Tam_n$ are in bijection with topologies on $\{1,...,n\}$ having a base of convex sets \cite{ClRi15}.
+	We show that transvals of the Tamari lattice $\Tam_n$ are in bijection with topologies on $\{1,...,n\}$ having a base of convex sets. These topologies were first enumerated in~\cite{ClRi15}.
 	
 	Objects equienumerated or in bijection with convex topologies have already been studied in \cite{BGPPST26}, [papier Jonathan Yang ?]
 	
@@ -370,7 +458,7 @@ The lattice of intervals and the lattice of faces decompose into polytopes, whos
 	
 	\section{Skew intervals of the weak order}
 	
-	Let $\mathfrak g$ be a finite-dimensional complex semisimple Lie algebra, $W$ its Weyl group, and $U_q(\mathfrak g)$ the quantized enveloping algebra of $\mathfrak g$. Heckenberger and Kolb~\cite{HeKo12} showed that homogeneous right coideal subalgebras of $U_q(\mathfrak g)$ are in bijection with triples $(x,u,J)$ where $x,u\in W$ with $u^{-1}\le_R x$ and $J\subset \Pi\cap x\Pi$, where $\Pi$ denotes a fixed basis of the root system of $\mathfrak g$. We show that they are also in bijection with skew intervals of the weak order.
+	Let $\mathfrak g$ be a finite-dimensional complex semisimple Lie algebra, $W$ its Weyl group, and $U_q(\mathfrak g)$ the quantized enveloping algebra of $\mathfrak g$. Heckenberger and Kolb~\cite{HeKo12} showed that homogeneous right coideal subalgebras of $U_q(\mathfrak g)$ are in bijection with triples $(x,u,J)$ where $x,u\in W$ with $u^{-1}\le_R x$ and $J\subset \Pi\cap x\Pi$, where $\Pi$ denotes a fixed basis of the root system of $\mathfrak g$. We show that they are also in bijection with transvals of the weak order.
 	
 	
 	\begin{defi}
@@ -382,13 +470,13 @@ The lattice of intervals and the lattice of faces decompose into polytopes, whos
 	
 	\begin{prop}
 		Let $u,v\in W$ such that $u\le_R v$. Elements of $K_{[u,v]}$ are in bijection with elements of $\AD(u,v)$. More precisely, we have $(r,s) \in \AD(u,v)$ if and only if $ur\in K_{[u,v]}$, and in this case $\kappa(ur)=vs$.
-		\label{pr:1}
+		\label{pr:ascents_descents}
 	\end{prop}
 	\begin{prop}
-		Skew intervals of $(W,\le_R)$  are in bijection with triples $(x,y,K)$ where $x\le_Ry$ and $K$ is a subset of $\Dec(x)$.
+		Transvals of $(W,\le_R)$  are in bijection with triples $(x,y,K)$ where $x\le_Ry$ and $K$ is a subset of $\Dec(x)$.
 	\end{prop}
 	\begin{proof}
-		By Propositions (\ref{pr:2}) and (\ref{pr:1}), skew intervals of $(W,\le_R)$ are in bijection with triples $(u,v,J)$ where $u\le_R v$ and $J$ is a subset of $\AD(u,v)$. We show that the map $(u,v)\mapsto (v^{-1}u,v^{-1})$ is a bijection between intervals of the right weak order, and that we have $\AD(u,v)=\Dec(v^{-1}u)$ for $u\le_Rv$. We have $u\le_Rv$ if and only $u$ is a prefix of $v$, which is equivalent to $u^{-1}v$ being a suffix of $v$, \emph{i.e.} $u^{-1}v\le_Lv$. By taking inverses, we get $v^{-1}u\le_Rv^{-1}$. Let $(r,s)\in \AD(u,v)$. Since $s$ is a descent of $v$, it is also a descent of $u^{-1}v$ 
+		By Propositions (\ref{cor:bijection_transvals}) and (\ref{pr:ascents_descents}), transvals of $(W,\le_R)$ are in bijection with triples $(u,v,J)$ where $u\le_R v$ and $J$ is a subset of $\AD(u,v)$. We show that the map $(u,v)\mapsto (v^{-1}u,v^{-1})$ is a bijection between intervals of the right weak order, and that we have $\AD(u,v)=\Dec(v^{-1}u)$ for $u\le_Rv$. We have $u\le_Rv$ if and only $u$ is a prefix of $v$, which is equivalent to $u^{-1}v$ being a suffix of $v$, \emph{i.e.} $u^{-1}v\le_Lv$. By taking inverses, we get $v^{-1}u\le_Rv^{-1}$. Let $(r,s)\in \AD(u,v)$. Since $s$ is a descent of $v$, it is also a descent of $u^{-1}v$ 
 	\end{proof}
 	
      \begin{table}[H]
