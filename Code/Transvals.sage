@@ -157,42 +157,10 @@ Same thing for the Stanley lattice:
 741	372	129	24	10	1
 6398	3148	1047	267	50	15	1
 58974	29009	9289	2491	510	97	21	1
+575362	280623	90391	23220	5329	935	175	28	1
 """
 
-
-############### INTERVAL-CLOSED SUBSETS ###############
-
-# for posets (distributive lattices) :
-
-def disjoint_antichains(P):
-    L = []
-    for a in P.antichains():
-        P2 = P.subposet([x for x in P.order_ideal(a) if x not in a])
-        for b in P2.antichains():
-            L.append((tuple(a), tuple(b)))
-    return Poset((L, lambda p, q: Set(P.order_ideal(p[0])).issubset(Set(P.order_ideal(q[0]))) and Set(P.order_ideal(p[1])).issubset(Set(P.order_ideal(q[1])))))
-
-def disjoint_antichains2(P):
-    L = []
-    for a in P.antichains():
-        P2 = P.subposet([x for x in P.order_ideal(a) if x not in a])
-        for b in P2.antichains():
-            a2, c = [], []
-            for x in a:
-                if any(P.is_lequal(y, x) for y in b):
-                    a2.append(x)
-                else:
-                    c.append(x)
-            L.append((tuple(a2), tuple(b), tuple(c)))
-    return Poset((L, lambda p, q: Set(P.order_ideal(list(p[0])+list(p[2]))).issubset(Set(P.order_ideal(list(q[0])+list(q[2])))) and Set(P.order_filter(list(p[1])+list(p[2]))).issubset(Set(P.order_filter(list(q[1])+list(q[2]))))))
-
-def interval_closed_sets(P):
-    L = []
-    for a in P.antichains():
-        P2 = P.subposet([x for x in P.order_ideal(a) if x not in a])
-        for b in P2.antichains():
-            L.append(Set(list(a)+P2.order_filter(b)))
-    return LatticePoset((L, lambda p, q: p.issubset(q)))
+######################## MIN-MAX SUBSETS ########################
 
 
 # for two-acyclic factorization systems (semidistributive lattices)

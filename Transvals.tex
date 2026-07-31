@@ -63,6 +63,9 @@
 
 %Tamari
 \newcommand{\MN}{\operatorname{MN}}
+\newcommand{\cvxtopo}{\mathbf{T_{cvx}}}
+\newcommand{\treeup}{\mathrm{T_{up}}}
+\newcommand{\treedown}{\mathrm{T_{down}}}
 
 %Weak order
 \newcommand{\AD}{\operatorname{AscDes}}
@@ -179,7 +182,7 @@ It is straightforward to check that for all $x\gtrdot\Lmin$, $x=\bigwedge_{y\gtr
    Without loss of generality, we take $\L=[x,y]$. Since $\L$ is conuclear, for all atoms $z\gtrdot x$, there exists $w\lessdot y$ such that $z\nleq w$ (if not, the join of the atoms would be less than $w$), and then $z\wedge w=x$ so $w=\kappa(z)$. By Lemma~\ref{lem:conuclear}, $[x,y]$ is nuclear.
 \end{proof}
 The converse is not true (see Figure~\ref{fig:inclusionoffaces}).
-It follows from Proposition~\ref{pr:conuclear_implies_nuclear}, and from its dual counterpart for join-semidistributive lattices, that in a semidistributive lattice, nuclear and conuclear intervals are the same. We will call \defn{faces} the binuclear intervals of a semidistributive lattice, as they coincide with geometric faces of many polytopal realizations of lattices, such as the weak order or the Tamari lattice. However, faces of a semidistributive lattice do not always have a geometric interpretation (see Figure~\ref{fig:inclusionoffaces}).
+It follows from Proposition~\ref{pr:conuclear_implies_nuclear}, and from its dual counterpart for join-semidistributive lattices, that in a semidistributive lattice, nuclear and conuclear intervals are the same. We will call \defn{faces} the binuclear intervals of a semidistributive lattice, as they coincide with geometric faces of many polytopal realizations of lattices such as the weak order and the Tamari lattice. However, faces of a semidistributive lattice do not always have a geometric interpretation (see Figure~\ref{fig:inclusionoffaces}).
 
 We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we have an injection from the atoms to the coatoms of $[x,y]$. In semidistributive lattices this is a bijection. We call the \defn{dimension} of a face $[x,y]$ its number of atoms of this interval, or equivalently its number of coatoms.
  
@@ -232,7 +235,7 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 \begin{prop}
      $\Fac_\L$ is a sublattice of $\SkFac_\L$, and $\Int_\L$ is a sublattice of $\SkInt_\L$.
 \end{prop}
-However, $\Fac_\L$ is not a sublattice of $\Int_\L$, and $\SkFac_\L$ is not a sublattice of $\SkInt_\L$.
+However, $\Fac_\L$ is not a sublattice of $\Int_\L$, and $\SkFac_\L$ is not a sublattice of $\SkInt_\L$.  $\SkFac_\L$ contains another sublattice isomorphic to $\Fac_\L$, consisting of pairs $(x,y)$ such that $[x,y]\in \Fac_\L$.
 
 \begin{prop}
 Join-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ are respectively the elements of the form:
@@ -315,17 +318,16 @@ Direct proof or corollary of the description of TAFS.
 \section{Canonical join-representations}
 
 \begin{defi}
-  Let $G$ be a directed graph. A min-max subset of $G$ is a subset $X\subset G$ such that for all $x\in X$, there is no $y,z\in X$ such that $y\to x\to z$.
+  Let $G$ be a directed graph. A min-max set of $G$ is a subset $X\subset G$ such that for all $x\in X$, there is no $y,z\in X$ such that $y\to x\to z$.
 \end{defi}
 
-If $G$ is transitive, its min-max subsets are in bijection with interval-closed subsets of $G$ seen as a poset. In~\cite{ELMSW24}, the authors generalized rowmotion to interval-closed subsets of posets. It would be interesting to generalize this further on min-max subsets of semidistributive lattices.
 %interval-closed subsets of a poset $\Pos$ are in bijection with pairs of disjoint antichains $(A,B)$ of $\Pos$ such that $B\subset \Delta(A)$~\cite[Proposition 2.5]{ELMSW24}. 
 
 \begin{defi}
   An independant set of $G$ is a subset $X\subset G$ such that $x\in X$, there is no $y\in X$ such that $x\to y$ or $y\to x$.
 \end{defi}
 
-Let $\L$ be a finite semidistributive lattice, and let $\JIrrGraph(\L)$  be its irreducibles graph. There is a canonical labelling of edges $\gamma : E(\L)\to \JIrr(L)$ such that for all $(x,y)\in E(\L)$, $y = x\vee \gamma((x,y))$.
+%Let $\L$ be a finite semidistributive lattice, and let $\JIrrGraph(\L)$  be its irreducibles graph. There is a canonical labelling of edges $\gamma : E(\L)\to \JIrr(L)$ such that for all $(x,y)\in E(\L)$, $y = x\vee \gamma((x,y))$.
 
 %{\color{red}
 %FFFFAAAAAAAUUUUUUUXXXXX (par ex. $\Tam_4$)
@@ -341,11 +343,11 @@ Let $\L$ be a finite semidistributive lattice, and let $\JIrrGraph(\L)$  be its 
 
 Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$.
 \begin{prop}
-   There is a bijection between intervals $(x,y)\in \Int_\L$ and triples $(X,m,M)$ where $X$ is a min-max subset of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
+   There is a bijection between intervals $(x,y)\in \Int_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
 \end{prop}
 
 \begin{prop}
-    There is a bijection between transvals $(x,y)\in \SkInt_\L$ and triples $(X,m,M)$ where $X$ is a min-max subset of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
+    There is a bijection between transvals $(x,y)\in \SkInt_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
  Intervals of $\L$ correspond to triples $(X,m,M)$ such that $M\subset m=X$.
 \end{prop}
 
@@ -358,6 +360,36 @@ Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGra
     Faces of $\L$ correspond to triples $(X,m,M)$ such that $M\subset m=X$.
 \end{prop}
 
+\subsection{Enumeration of interval-closed subsets}
+
+If $G$ is transitive, its min-max subsets are in bijection with interval-closed subsets of $G$ seen as a poset. In~\cite{ELMSW24}, the authors generalized rowmotion to interval-closed subsets of posets. It would be interesting to generalize this further on min-max subsets of semidistributive lattices. They showed that interval-closed subsets are in bijection with pairs of disjoint antichains $(A,B)$ such that $B\subset \downarrow A$.
+
+We define two different orders on the set of interval-closed subsets of a poset $\Pos$, and we prove that these orders are join-distributive lattices. Join-lattices can be represented by colored posets, generalizing the Birkhoff's representation theorem~\cite{HaNo18}.
+
+The reverse inclusion of interval-closed subsets yields a join-distributive lattice whose corresponding colored poset is $$(\Pos\setminus \max(\Pos))\sqcup \overline{(\Pos\setminus \min(\Pos))},$$
+where elements of $\Pos$ which are neither maximal nor minimal give two distinct elements with the same color.
+
+\begin{figure}[H]
+\centering
+\raisebox{60pt}{\includegraphics[width=0.2\linewidth]{figures/colored_poset1}}\hspace{60pt}
+\includegraphics[width=0.5\linewidth]{figures/interval_closed_sets1}
+\caption{}
+\label{fig:coloredposet1}
+\end{figure}
+
+
+The order $(A_1,B_1)\le (A_2,B_2)\iff \downarrow A_1 \subset \downarrow A_2 \text{ and } \downarrow B_1 \subset \downarrow B_2 $ yields a join-distributive lattice whose corresponding colored poset contains elements and edges of $\Pos$, with cover relations given by $$x\lessdot y\lessdot z\in \Pos\implies \begin{cases}
+x\lessdot y \\ y\lessdot (x,y) \\ (x,y) \lessdot (y,z) 
+\end{cases}.$$
+Two edges have the same color if they have the same lower bound.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{figures/interval_closed_sets2}
+\caption{}
+\label{fig:coloredposet2}
+\end{figure}
+
 \section{Transvals of the Tamari lattice}
 	We show that transvals of the Tamari lattice $\Tam_n$ are in bijection with topologies on $\{1,...,n\}$ having a base of convex sets. These topologies were first enumerated in~\cite{ClRi15}.
 	
@@ -366,15 +398,28 @@ Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGra
 	\subsection{Convex topologies}
 	
 	Let $X$ be a convex topology on $\{1,...,n\}$. Each $k\in \{1,...,n\}$ has a minimal neighborhood in $X$ written $\MN_X(k)$ which is convex by definition. The mapping $k\mapsto \MN_X(k)$ characterizes the topology $X$.
+	
+	We write $\cvxtopo(n)$ the set of convex topologies on $\{1,\dots, n\}$, with the following order: for all $X,Y\in \cvxtopo(n)$, $X\le Y $ if and only if for all $k\in \{1,...,n\}$, $\MN_X(k) \le \MN_Y(k)$ where minimal neighborhoods are compared coordinatewise.
+	Nested convex topologies form a sublattice of convex topologies. The spine of ... has size $A001333(n)$
+	
 	\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{figures/ConvexTopologies}
+	\includegraphics[width=0.7\linewidth]{figures/ConvexTopologies2}
 	\caption{The lattice of convex topologies on $\{1,\dots,3\}$.}
 	\label{fig:convextopologies}
 	\end{figure}
 	
-	Nested convex topologies form a sublattice of convex topologies. The spine of ... has size $A001333(n)$
+We write $\Tam_n$ the Tamari lattice on binary trees of size $n$, \emph{i.e.}, with $n$ internal nodes. 
+From a convex topology we construct recursively a binary tree in two different ways.
+\begin{defi}
+Let $X\in \cvxtopo(n)$. If $X$ is empty, $\treeup(X)$ is the empty binary tree (a leaf). If not, $\treeup(X)$ is the binary tree of size $n$ whose left and right children are respectively $\treeup(X\cap \{1,\dots, k-2\})$ and $\treeup(X\cap \{k,\dots, n\})$ where $2\le k \le n$ is the smallest value such that $\{k,\dots, n\}$ is open in $X$.
+
+If $X$ is empty, $\treedown(X)$ is the empty binary tree. If not, $\treedown(X)$ is the binary tree of size $n$ whose left and right children are respectively $\treedown(X\cap \{1,\dots, k\})$ and $\treedown(X\cap \{k+2,\dots, n\})$ where $1\le k \le 1$ is the biggest value such that $\{1,\dots, k\}$ is open in $X$.
+\end{defi}
 	
+	\begin{prop}
+	The map $X\mapsto (\treedown(X),\treeup(X))$ is an isomorphism from $\cvxtopo(n)$ to $\SkInt_{\Tam_n}$.
+	\end{prop}
 	
 	\begin{figure}[H]
 	\centering
@@ -383,6 +428,9 @@ Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGra
 	\label{fig:tamaritransval}
 	\end{figure}
 	
+	\begin{prop}
+	   Let $X\in \cvxtopo(n)$. $(\treedown(X),\treeup(X))$ is an interval of $\Tam_n$ if and only the minimal neighborhoods $\MN(k)$ are all distinct for $k\in \{1,\dots,n\}$.
+	\end{prop}
 	
 	\begin{table}[H]
 		\centering
@@ -414,7 +462,10 @@ Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGra
 		\caption{\centering The number of self-dual elements, face intervals, intervals, face transvals, and transvals of $\Tam_n$.}
 	\end{table}
 	
-	BIJECTION AVEC LES TAMARI PREPOSETS, + PAIRE D'ARBRES superposés
+	\subsection{Nested mountains}
+	
+	
+	MENTION TAMARI PREPOSETS ($\to$ SECTION QUOTIENTS OF THE WEAK ORDER),
 	
 	\subsection{Congruences of the lattice of transvals of $\Tam_n$}
 	
@@ -441,17 +492,18 @@ Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGra
 		\caption{\centering The number of congruences of the lattices of elements, face intervals, intervals, face transvals, and transvals of $\Tam_n$.}
 	\end{table}
 	
-	\subsection{Polytopal decompositions}
-The lattice of intervals and the lattice of faces decompose into polytopes, whose numbers are :
-	\begin{itemize}
-	\item $\Fac_\L$ : $2^n$
-	\item $\Int_\L$ : nombre d'intervalles synchrones (A000139)
-	\end{itemize}
+%	\subsection{Polytopal decompositions}
+% pas intéressant, ne semble pas se généraliser aux transvalles
+%The lattice of intervals and the lattice of faces decompose into polytopes, whose numbers are :
+%	\begin{itemize}
+%	\item $\Fac_\L$ : $2^n$
+%	\item $\Int_\L$ : nombre d'intervalles synchrones (A000139)
+%	\end{itemize}
+%
 
-
-	\subsection{The lattice of faces}
+\subsection{The lattice of faces}
 	
-	$\SkInt(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its intervals, {\color{red} FAUX (TAM4) but also as a sublattice containing nested convex topologies (cf. A007052)}
+$\SkInt(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its intervals, {\color{red} FAUX (TAM4) but also as a sublattice containing nested convex topologies (cf. A007052)}
 	
 \subsection{Transvals of Jurassian lattices}
    Jurassian lattices do not have the same number of transvals or intervals as the Tamari lattice, but it is the case for those obtained from a rectangulation into chains.
