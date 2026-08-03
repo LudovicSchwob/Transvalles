@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 def ConvexTopologies(n):
     LT = [((0,0),)]
     for k in range(1,n):
@@ -335,6 +337,16 @@ class Binary_Tree():
         for t in self.upper_covers():
             dual_bv = [min(i, j) for i, j in zip(dual_bv, t.dual_bv)]
         return to_binary_tree_dual(dual_bv)
+    def canopy(self):
+        T = self.T
+        if T == ():
+            return (None,)
+        T1, T2 = T
+        C1 = (1,) if T1 == () else Binary_Tree(T1).canopy()
+        C2 = (0,) if T2 == () else Binary_Tree(T2).canopy()
+        C = list(C1)
+        C.extend(C2)
+        return tuple(C)
 
 def to_binary_tree(bv):
     if len(bv) == 0:
@@ -402,4 +414,20 @@ def Draw_BT_pair(T1, T2):
     plt.show()
 
 
+def canopy_preimages(n):
+    L = TamariLattice(n)
+    D = defaultdict(list)
+    for T in L:
+        D[T.canopy()].append(T)
+    n_int, n_trv = 0, 0
+    for c in D:
+        L2 = LatticePoset(L.subposet(D[c]))
+        n_int += len(L2.intervals_poset())
+        n_trv += len(semidistributive_transvals(L2, False))
+    return n_int, n_trv
 
+# nombre de canopy transvals 1, 2, 7, 28, 125, 598, 3011, 15760
+# à comparer avec 2,7,34,203,1394
+def canopy_transvals(n):
+    L = TamariLattice(n)
+    return [(x, y) in semidistributive_transvals(L) if x.canopy() == y.canopy()]
