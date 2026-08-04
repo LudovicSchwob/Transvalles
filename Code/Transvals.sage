@@ -40,11 +40,25 @@ def semidistributive_face_transvals(L, lattice = True):
         return LatticePoset((SF,lambda p,q:L.is_lequal(p[0],q[0]) and L.is_lequal(p[1],q[1])))
     return SF
 
+def intervals_canonical_joinands(L):
+    L2 = semidistributive_transvals(L)
+    D = defaultdict(list)
+    m = L.minimal_elements()[0]
+    for x in L2:
+        y = defaultdict(list)
+        for j in L2.canonical_joinands(x):
+            if j[0] == m:
+                y[j[1]].append(0)
+            else:
+                y[j[0]].append(1)
+        t = tuple(sorted(y, key = lambda t: t.__hash__()))
+        D[t].append(tuple(y[j] for j in t))
+    return D
 
 def transvals_canonical_joinands(L):
     L2 = semidistributive_transvals(L)
-    m = L.minimal_elements()[0]
     D = defaultdict(list)
+    m = L.minimal_elements()[0]
     for x in L2:
         y = defaultdict(list)
         for j in L2.canonical_joinands(x):
@@ -58,7 +72,6 @@ def transvals_canonical_joinands(L):
 
 def face_transvals_canonical_joinands(L):
     L2 = semidistributive_face_transvals(L)
-    m = L.minimal_elements()[0]
     D = defaultdict(list)
     for x in L2:
         y = defaultdict(list)

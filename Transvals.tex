@@ -147,20 +147,34 @@ When $j$ is a join-irreducible element of $\L$, we also write $j_*:= \popdown(j)
 
     Let $[x,y]$ be an interval of $\L$.
     \begin{itemize}
-    \item We say that $[x,y]$ is nuclear if $x=\pop_x(y).$
-    \item We say that $[x,y]$ is conuclear if $y=\pop^y(x).$
-    \item We say that $[x,y]$ is binuclear if it is both nuclear and conuclear.
+    \item We say that $[x,y]$ is \defn{nuclear} if $x=\pop_x(y).$
+    \item We say that $[x,y]$ is \defn{conuclear} if $y=\pop^y(x).$
+    \item We say that $[x,y]$ is \defn{binuclear} if it is both nuclear and conuclear.
     \end{itemize}
 
 We also apply the same terminology to finite lattices, by seeing a lattice as its interval $[\Lmin,\Lmax]$.
-    
+
+\subsection{Semidistributive lattices}
+A lattice is \defn{meet-semidistributive} if for all $x,y,z\in \L$, $x\wedge y=x\wedge z$ implies $x\wedge(y\vee z)=x\wedge y$.
 The following assertions are equivalent:
 \begin{itemize}
 \item $\L$ is meet-semidistributive.
 \item The map $\kappa:\JIrr(\L) \to \MIrr(\L)$ sending $j$ to $\kappa(j):=\max\{z:z\wedge j=j_*\}$ is well-defined.
 \item Each element of $\L$ has a unique canonical meet-representation.
 \end{itemize}
-   
+
+A lattice respecting the dual condition is called \defn{join-semidistributive}. A lattice which is both meet- and join-distributive is \defn{semidistributive}.
+
+\subsection{Join-distributive lattices}
+
+The following assertions are equivalent:
+\begin{itemize}
+\item $\L$ is join-distributive.
+\item $\L$ is meet-semidistributive and upper-semimodular.
+\item For all $j\in \JIrr(\L)$, there is a unique $m\in \MIrr(\L)$ such that $j\wedge m=j_*$.
+\end{itemize}
+
+Any finite lattice $\L$ can be represented as the lattice of lower sets of a set-colored poset~\cite{HaNo18}, which is the poset $\JIrr(\L)$ with coloring $\gamma(j)=\{m\in \MIrr(\L): j\wedge m=j_*\}$. The last assertion means that join-distributive lattices are the lattices such that $|\gamma(j)|=1$, or equivalently $\gamma(j)=\{\kappa(j)\}$.
 	
 	\section{Definition of transvals and first results}
 
@@ -201,7 +215,7 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 	\subsection{Transvals}
 	
 	\begin{defi}
-	    Let $\L$ be a lattice, and $x,y\in \L$. The pair $(x,y)$ is a transval of $\L$ if $x_*\le y$ and $x\le y^*$.
+	    Let $\L$ be a lattice, and $x,y\in \L$. The pair $(x,y)$ is a \defn{transval} of $\L$ if $x_*\le y$ and $x\le y^*$.
 	\end{defi}
 	
 	In the following, $\L$ is a finite semidistributive lattice.
@@ -235,7 +249,7 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 \begin{prop}
      $\Fac_\L$ is a sublattice of $\SkFac_\L$, and $\Int_\L$ is a sublattice of $\SkInt_\L$.
 \end{prop}
-However, $\Fac_\L$ is not a sublattice of $\Int_\L$, and $\SkFac_\L$ is not a sublattice of $\SkInt_\L$.  $\SkFac_\L$ contains another sublattice isomorphic to $\Fac_\L$, consisting of pairs $(x,y)$ such that $[x,y]\in \Fac_\L$.
+However, $\Fac_\L$ is not a sublattice of $\Int_\L$, and $\SkFac_\L$ is not a sublattice of $\SkInt_\L$.  $\SkFac_\L$ contains another sublattice isomorphic to $\Fac_\L$, consisting of pairs $(y,x)$ such that $[x,y]\in \Fac_\L$.
 
 \begin{prop}
 Join-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ are respectively the elements of the form:
@@ -362,7 +376,7 @@ Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGra
 
 \subsection{Enumeration of interval-closed subsets}
 
-If $G$ is transitive, its min-max subsets are in bijection with interval-closed subsets of $G$ seen as a poset. In~\cite{ELMSW24}, the authors generalized rowmotion to interval-closed subsets of posets. It would be interesting to generalize this further on min-max subsets of semidistributive lattices. They showed that interval-closed subsets are in bijection with pairs of disjoint antichains $(A,B)$ such that $B\subset \downarrow A$.
+If $G$ is a two-acyclic factorization system which is transitive, it can be seen as a poset, and the corresponding lattice is distributive. The min-max sets of $G$ are then in bijection with interval-closed subsets of $G$ seen as a poset. In~\cite{ELMSW24}, the authors generalized rowmotion to interval-closed subsets of posets. It would be interesting to generalize this further on min-max subsets of semidistributive lattices. They showed that interval-closed subsets are in bijection with pairs of disjoint antichains $(A,B)$ such that $B\subset \downarrow A$.
 
 We define two different orders on the set of interval-closed subsets of a poset $\Pos$, and we prove that these orders are join-distributive lattices. Join-lattices can be represented by colored posets, generalizing the Birkhoff's representation theorem~\cite{HaNo18}.
 
