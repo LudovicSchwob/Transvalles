@@ -24,7 +24,16 @@ def Preorders(n):
                             L2.append(P2)
         LP = L2
         L.extend(LP)
-    return L
+    return [G.copy(immutable=True) for G in L]
+
+def preposet_order(p, q):
+    for x, y, _ in p.edges():
+        if x < y and not q.has_edge(x, y):
+            return False
+    for x, y, _ in q.edges():
+        if x > y and not p.has_edge(x, y):
+            return False
+    return True
 
 def is_WO_preposet(G):
     for a, c, _ in G.edges():
@@ -118,7 +127,7 @@ def is_WO_quotient_min(I, p):
     for i in range(1, len(p)):
         if p[i-1] > p[i]:
             for S1, S2 in D[(p[i], p[i-1])]:
-                if all(k in l for k in S1) and all(k not in l for k in S2):
+                if all(k not in l for k in S1) and all(k in l for k in S2):
                     return False
         l.append(p[i-1])
     return True
@@ -132,7 +141,7 @@ def is_WO_quotient_max(I, p):
     for i in range(1, len(p)):
         if p[i-1] < p[i]:
             for S1, S2 in D[(p[i-1], p[i])]:
-                if all(k in l for k in S1) and all(k not in l for k in S2):
+                if all(k not in l for k in S1) and all(k in l for k in S2):
                     return False
         l.append(p[i-1])
     return True
@@ -148,7 +157,7 @@ def WO_quotient_max(I, p):
         for i in range(1, len(p)):
             if p[i-1] < p[i]:
                 for S1, S2 in D[(p[i-1], p[i])]:
-                    if all(k in l for k in S1) and all(k not in l for k in S2):
+                    if all(k not in l for k in S1) and all(k in l for k in S2):
                         p[i-1], p[i] = p[i], p[i-1]
                         m = False
                         break
@@ -199,13 +208,14 @@ def is_WOQ_preposet(I, G):
     return True
 
 # les préposets correspondent bien aux transvalles !
+# testé jusqu'à n = 4
 def Test_WO_quotients(n):
     P = Poset((WeakOrderEdges(n), lambda p,q:p<=q))
     preorders = Preorders(n)
     for I in P.order_ideals_lattice():
         if len(I) > 0:
-            n_preposets = sum(1 for G in preorders if is_WOQ_preposet(I, G))
+            LG = LatticePoset(([G for G in preorders if is_WOQ_preposet(I, G)], preposet_order))
             L = WO_quotient_min_max(I)
             L2 = semidistributive_transvals(L)
-            if len(L2) != n_preposets:
+            if not L2.is_isomorphic(LG):
                 print('ERREUR', I)

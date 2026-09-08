@@ -41,18 +41,33 @@ def semidistributive_face_transvals(L, lattice = True):
     return SF
 
 def intervals_canonical_joinands(L):
-    L2 = semidistributive_transvals(L)
+    L2 = L.intervals_poset()
     D = defaultdict(list)
     m = L.minimal_elements()[0]
     for x in L2:
         y = defaultdict(list)
         for j in L2.canonical_joinands(x):
-            if j[0] == m:
+            if j[0] == j[1]:        # (j, j)
                 y[j[1]].append(0)
-            else:
-                y[j[0]].append(1)
+            else:                   # (0, j)
+                y[j[1]].append(1)
         t = tuple(sorted(y, key = lambda t: t.__hash__()))
         D[t].append(tuple(y[j] for j in t))
+    return D
+
+def face_transvals_canonical_joinands2(L):
+    L2 = semidistributive_face_transvals(L)
+    D = defaultdict(list)
+    for x in L2:
+        if L.is_lequal(x[0], x[1]):
+                y = defaultdict(list)
+                for j in L2.canonical_joinands(x):
+                    if L.is_lequal(j[0],j[1]):
+                        y[j[1]].append(0)
+                    else:
+                        y[j[0]].append(1)
+                t = tuple(sorted(y, key = lambda t: t.__hash__()))
+                D[t].append(tuple(y[j] for j in t))
     return D
 
 def transvals_canonical_joinands(L):
@@ -62,9 +77,9 @@ def transvals_canonical_joinands(L):
     for x in L2:
         y = defaultdict(list)
         for j in L2.canonical_joinands(x):
-            if j[0] == m:
+            if j[0] == m:            # (0, j)
                 y[j[1]].append(0)
-            else:
+            else:                    # (j, j_*)
                 y[j[0]].append(1)
         t = tuple(sorted(y, key = lambda t: t.__hash__()))
         D[t].append(tuple(y[j] for j in t))

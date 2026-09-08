@@ -139,7 +139,7 @@ def CT_to_BT_down(T):
         k = T[k][1]+1
     T1 = [(T[i][0],min(T[i][1],k-1)) for i in range(k)]
     T2 = [(max(T[i][0],k)-k-1,T[i][1]-k-1) for i in range(k+1,len(T))]
-    return (CT_to_BT_down(T1),CT_to_BT_down(T2))
+    return (CT_to_BT_down(T1), CT_to_BT_down(T2))
 
 def CT_to_BT_up(T):
     if len(T)==0:
@@ -149,10 +149,10 @@ def CT_to_BT_up(T):
         k = T[k][0]-1
     T1 = [(T[i][0],min(T[i][1],k)) for i in range(k)]
     T2 = [(max(T[i][0],k+1)-k-1,T[i][1]-k-1) for i in range(k+1,len(T))]
-    return (CT_to_BT_up(T1),CT_to_BT_up(T2))
+    return (CT_to_BT_up(T1), CT_to_BT_up(T2))
 
 def CT_to_SkInt(T):
-    return CT_to_BT_up(T),CT_to_BT_down(T)
+    return CT_to_BT_up(T), CT_to_BT_down(T)
 
 
 def TamariLattice(n, lattice = True):
@@ -430,4 +430,85 @@ def canopy_preimages(n):
 # à comparer avec 2,7,34,203,1394
 def canopy_transvals(n):
     L = TamariLattice(n)
-    return [(x, y) in semidistributive_transvals(L) if x.canopy() == y.canopy()]
+    return [(x, y) for x,y in semidistributive_transvals(L) if x.canopy() == y.canopy()]
+
+
+############# all topologies ############
+
+# to be more efficient (eliminate doublons)
+# code a function to generate labelled posets
+def Topologies(n):
+    """
+    return topologies on {1..n}, as pairs of minimal neighborhoods of k for 1<=k<=n
+      and minimal neighborhoods of the dual topology
+    """
+    L = set()
+    for k in range(1, n+1):
+        for P in Posets(k):
+            ideals = [P.order_ideal([i]) for i in range(k)]
+            filters = [P.order_filter([i]) for i in range(k)]
+            for S in SetPartitions(n, k):
+                for p in Permutations(S):
+                    T, T2 = n*[None], n*[None]
+                    for i, I in enumerate(ideals):
+                        t = Set([])
+                        for j in I:
+                            t = t.union(Set(p[j]))
+                        for j in p[i]:
+                            T[j-1] = t
+                    for i, I in enumerate(filters):
+                        t = Set([])
+                        for j in I:
+                            t = t.union(Set(p[j]))
+                        for j in p[i]:
+                            T2[j-1] = t
+                    L.add((tuple(T), tuple(T2)))
+    return L
+
+def preposet_to_topology(G):
+    T, T2 = [], []
+    for x in range(1, len(G)+1):
+        ideal, filter = [], []
+        for y in G:
+            if x == y or G.has_edge(x, y):
+                ideal.append(y)
+            if x == y or G.has_edge(y, x):
+                filter.append(y)
+        T.append(Set(ideal))
+        T2.append(Set(filter))
+    return tuple(T), tuple(T2)
+
+def test_topologies(n, I):
+    S = set()
+    lP = Preorders(n)
+    for G in lP:
+        if is_WOQ_preposet(I, G):
+            T, T2 = preposet_to_topology(G)
+            for s in T:
+                for s2 in T2:
+                    S.add((s, s2))
+    for s in Subsets(n):
+        for s2 in Subsets(n):
+            if len(s)>0 and len(s2)>0 and (s, s2) not in S:
+                print((s,s2))
+    for G in lP:
+        T, T2 = preposet_to_topology(G)
+        if all((s, s2) in S for s in T for s2 in T2) != is_WOQ_preposet(I, G):
+            print('erreur', T, T2, S1, S2, G.edges())
+
+# pas au point
+def is_WO_topology(T):
+    n = len(T)
+    for k in range(1, n+1):
+        t = T[k-1]
+        for a in t:
+            if a < k:
+                for i in range(a+1, k):
+                    if i not in t and a not in T[i-1]:
+                        return False
+            elif k < a:
+                for i in range(k+1, a):
+                    if i not in t and a not in T[i-1]:
+                        return False
+    return True
+        

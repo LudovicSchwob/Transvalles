@@ -41,6 +41,7 @@
 \newcommand{\JIrr}{\mathcal J}
 \newcommand{\MIrr}{\mathcal M}
 \newcommand{\Spine}{\mathbf{Spine}}
+\newcommand{\SpinePos}{\mathcal{G}}
 \newcommand{\Cong}{\mathbf{Cong}}
 
 \newcommand{\pop}{\operatorname{pop}}
@@ -51,21 +52,28 @@
 \newcommand{\JIrrGraph}{\operatorname{JG}}
 
 \newcommand{\Fac}{\mathbf{FInt}}
-\newcommand{\SkFac}{\mathbf{FTrv}}
+\newcommand{\Trf}{\mathbf{FTrv}}
 \newcommand{\Int}{\mathbf{Int}}
-\newcommand{\SkInt}{\mathbf{Trv}}
+\newcommand{\Trv}{\mathbf{Trv}}
+\newcommand{\SpInt}{\mathbf{SpInt}}
+\newcommand{\SpTrv}{\mathbf{SpTrv}}
 
+\newcommand{\FacGraph}{{\operatorname{FInt}}}
+\newcommand{\TrfGraph}{{\operatorname{FTrv}}}
+\newcommand{\IntGraph}{{\operatorname{Int}}}
+\newcommand{\TrvGraph}{{\operatorname{Trv}}}
+\newcommand{\SpIntGraph}{{\operatorname{SpInt}}}
+\newcommand{\SpTrvGraph}{{\operatorname{SpTrv}}}
 
-\newcommand{\FacGraph}{\operatorname{FInt}}
-\newcommand{\SkFacGraph}{\operatorname{FTrv}}
-\newcommand{\IntGraph}{\operatorname{Int}}
-\newcommand{\SkIntGraph}{\operatorname{Trv}}
 
 %Tamari
 \newcommand{\MN}{\operatorname{MN}}
 \newcommand{\cvxtopo}{\mathbf{T_{cvx}}}
 \newcommand{\treeup}{\mathrm{T_{up}}}
 \newcommand{\treedown}{\mathrm{T_{down}}}
+
+%maximal closed set (may be not important)
+\newcommand{\MC}{\operatorname{MC}}
 
 %Weak order
 \newcommand{\AD}{\operatorname{AscDes}}
@@ -98,6 +106,12 @@
 \newtheorem{exmp}[thm]{Example}
 \theoremstyle{remark}
 \newtheorem{rmk}[thm]{Remark}
+
+
+\usepackage{todonotes}
+\newcommand{\jonathan}[1]{\todo[inline, color=orange!30]{#1 \\ \hfill --- J.}}
+\newcommand{\ludovic}[1]{\todo[inline, color=green!30]{#1 \\ \hfill --- L.}}
+\newcommand{\vincent}[1]{\todo[inline, color=blue!30]{#1 \\ \hfill --- V.}}
 
 \title{Transvals in semidistributive lattices}
 \author{Ludovic Schwob}
@@ -163,7 +177,7 @@ The following assertions are equivalent:
 \item Each element of $\L$ has a unique canonical meet-representation.
 \end{itemize}
 
-A lattice respecting the dual condition is called \defn{join-semidistributive}. A lattice which is both meet- and join-distributive is \defn{semidistributive}.
+A lattice respecting the dual condition is called \defn{join-semidistributive}. A lattice which is both meet- and join-distributive is called \defn{semidistributive}.
 
 \subsection{Join-distributive lattices}
 
@@ -247,12 +261,12 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 
 \section{Lattice structures of transvals}
 \begin{prop}
-     $\Fac_\L$ is a sublattice of $\SkFac_\L$, and $\Int_\L$ is a sublattice of $\SkInt_\L$.
+     $\Fac_\L$ is a sublattice of $\Trf_\L$, and $\Int_\L$ is a sublattice of $\Trv_\L$.
 \end{prop}
-However, $\Fac_\L$ is not a sublattice of $\Int_\L$, and $\SkFac_\L$ is not a sublattice of $\SkInt_\L$.  $\SkFac_\L$ contains another sublattice isomorphic to $\Fac_\L$, consisting of pairs $(y,x)$ such that $[x,y]\in \Fac_\L$.
+However, $\Fac_\L$ is not a sublattice of $\Int_\L$, and $\Trf_\L$ is not a sublattice of $\Trv_\L$.  $\Trf_\L$ contains another sublattice isomorphic to $\Fac_\L$, consisting of pairs $(y,x)$ such that $[x,y]\in \Fac_\L$.
 
 \begin{prop}
-Join-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ are respectively the elements of the form:
+Join-irreducible elements of $\Int_\L$, $\Trv_\L$, $\Fac_\L$, and $\Trf_\L$ are respectively the elements of the form:
 \begin{itemize}
 \item $(0,j)$ and $(j,j)$;
 \item $(0,j)$ and $(j,j_*)$;
@@ -261,7 +275,7 @@ Join-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ 
 \end{itemize}
 where $0$ is the minimal element of $\L$, and $j\in \JIrr(\L)$.
 
-Meet-irreducible elements of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ are respectively:
+Meet-irreducible elements of $\Int_\L$, $\Trv_\L$, $\Fac_\L$, and $\Trf_\L$ are respectively:
 \begin{itemize}
 \item $(m,1)$ and $(m,m)$;
 \item $(m,1)$ and $(m^*,m)$;
@@ -272,7 +286,7 @@ where $1$ is the maximal element of $\L$, and $m\in \MIrr(\L)$.
 \end{prop}
 
 \begin{prop}
-   The $\kappa$ maps of $\Int_\L$, $\SkInt_\L$, $\Fac_\L$, and $\SkFac_\L$ are respectively given by:
+   The $\kappa$ maps of $\Int_\L$, $\Trv_\L$, $\Fac_\L$, and $\Trf_\L$ are respectively given by:
 	\begin{itemize}
 	\item $(0,j)\mapsto (m,m)$ and $(j,j)\mapsto (m,1)$;
 	\item $(0,j)\mapsto(m^*, m)$ and $(j,j_*)\mapsto(m, 1)$;
@@ -286,20 +300,20 @@ where $1$ is the maximal element of $\L$, and $m\in \MIrr(\L)$.
 
 Cover relations of $\Fac_\L$ are also of the form $(x,y_1)\lessdot (x,y_2)$ or $(x_1,y)\lessdot (x_2,y)$.
 
-Cover relations of $\SkInt_\L$ are also of the form $(x,y_1)\lessdot (x,y_2)$ or $(x_1,y)\lessdot (x_2,y)$. This comes from the fact that for all $(a,b)\le (c,d)\in \SkInt_\L$, we have $a_*\le b\le d$ and $a\le c\le d^*$, hence $(a,d)$ is a transval of $\L$ with $(a,b)\le (a,d)\le (c,d)$.
+Cover relations of $\Trv_\L$ are also of the form $(x,y_1)\lessdot (x,y_2)$ or $(x_1,y)\lessdot (x_2,y)$. This comes from the fact that for all $(a,b)\le (c,d)\in \Trv_\L$, we have $a_*\le b\le d$ and $a\le c\le d^*$, hence $(a,d)$ is a transval of $\L$ with $(a,b)\le (a,d)\le (c,d)$.
 
-However, cover relations of $\SkFac_\L$ are not always of this form (there is a counterexample for $\Tam_3$).
+However, cover relations of $\Trf_\L$ are not always of this form (there is a counterexample for $\Tam_3$).
 \subsection{Irreducibles graph}
 
 Let $(\Sha, \rightarrow)$ be the two-acyclic factorization system such that $\L \cong \Pairs(\rightarrow)$.
 
 \begin{defi}
-  $\IntGraph(\Sha)$,  $\FacGraph(\Sha)$,  $\SkIntGraph(\Sha)$ and  $\SkFacGraph(\Sha)$ are the sets of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with respective binary relations
+  $\IntGraph(\Sha)$,  $\FacGraph(\Sha)$,  $\TrvGraph(\Sha)$ and  $\TrfGraph(\Sha)$ are the sets of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with respective binary relations
   \begin{itemize}
-  \item $(x,0)\rightarrow_{\IntGraph} (x,0)$ and $x\rightarrow y$ implies $(x,k)\rightarrow_{\IntGraph} (y,k)$ for $k\in \{0,1\}$ and $(x,0)\rightarrow_{\IntGraph} (y,1)$;
-  \item $x\rightarrow y$ implies $(x,k)\rightarrow_{\SkIntGraph} (y,k)$ for $k\in \{0,1\}$ and $(x,0)\rightarrow_{\SkIntGraph} (y,1)$;
-  \item $(x,0)\rightarrow_{\FacGraph} (x,0)$ and $x\rightarrow y$ implies $(x,k)\rightarrow_{\FacGraph} (y,k)$ for $k\in \{0,1\}$, $(x,0)\rightarrow_{\FacGraph} (y,1)$, and $(x,1)\rightarrow_{\FacGraph} (y,0)$;
-   \item $x\rightarrow y$ implies $(x,k)\rightarrow_{\SkFacGraph} (y,k)$ for $k\in \{0,1\}$, $(x,0)\rightarrow_{\SkFacGraph} (y,1)$, and $(x,1)\rightarrow_{\SkFacGraph} (y,0)$.
+  \item $(x,0)\rightarrow_{\IntGraph} (x,1)$ for all $x\in \Sha$, and $x\rightarrow y$ implies $(x,k)\rightarrow_{\IntGraph} (y,k)$ for $k\in \{0,1\}$ and $(x,0)\rightarrow_{\IntGraph} (y,1)$;
+  \item $x\rightarrow y$ implies $(x,k)\rightarrow_{\TrvGraph} (y,k)$ for $k\in \{0,1\}$ and $(x,0)\rightarrow_{\TrvGraph} (y,1)$;
+  \item $(x,0)\rightarrow_{\FacGraph} (x,1)$ for all $x\in \Sha$, and $x\rightarrow y$ implies $(x,k)\rightarrow_{\FacGraph} (y,k)$ for $k\in \{0,1\}$, $(x,0)\rightarrow_{\FacGraph} (y,1)$, and $(x,1)\rightarrow_{\FacGraph} (y,0)$;
+   \item $x\rightarrow y$ implies $(x,k)\rightarrow_{\TrfGraph} (y,k)$ for $k\in \{0,1\}$, $(x,0)\rightarrow_{\TrfGraph} (y,1)$, and $(x,1)\rightarrow_{\TrfGraph} (y,0)$.
   \end{itemize} 
 \end{defi}
 
@@ -308,26 +322,61 @@ Let $(\Sha, \rightarrow)$ be the two-acyclic factorization system such that $\L 
 \begin{itemize}
    \item $\Int_\L\cong \Pairs(\rightarrow_{\IntGraph})$.
    \item $\Fac_\L\cong \Pairs(\rightarrow_{\FacGraph})$.
-   \item $\SkInt_\L\cong \Pairs(\rightarrow_{\SkIntGraph})$.
-   \item $\SkFac_\L\cong \Pairs(\rightarrow_{\SkFacGraph})$.
+   \item $\Trv_\L\cong \Pairs(\rightarrow_{\TrvGraph})$.
+   \item $\Trf_\L\cong \Pairs(\rightarrow_{\TrfGraph})$.
 \end{itemize}
 \end{prop}
 
 \subsection{Spine of the lattice transvals in extremal lattices}
 
-Let $\L$ a finite semidistributive lattice. $\L$ is trim if and only if it is extremal~\cite[Thm. 1.4]{ThWi19}. The spine of a trim lattice is its subposet $\Spine(\L)$ formed by elements belonging to a maximal chain. It is a distributive lattice with the same height as $\L$, hence it has the same number of irreducible elements.
+%Let $\L$ a finite semidistributive lattice. $\L$ is trim if and only if it is extremal~\cite[Thm. 1.4]{ThWi19}. The spine of a trim lattice is its subposet $\Spine(\L)$ formed by elements belonging to a maximal chain. It is a distributive lattice with the same height as $\L$, hence it has the same number of irreducible elements.
+
+If $\L$ is trim, which is the case if and only if $\L$ is extremal~\cite[Thm. 1.4]{ThWi19}, the set of elements appearing in a chain of maximal length form a sublattice $\Spine(\L)$ called the \defn{spine} of $\L$, which is a distributive lattice~\cite{Thom06}.  $\L$ is extremal if and only the corresponding factorization system is acyclic, and the induced order on $\JIrr(\L)$ is the poset of irreducibles of $\Spine(\L)$:
+
+\ludovic{Find citation ? I use the same result in my paper on Jurassian lattices.}
+\begin{prop}
+  \label{pr:spine_poset}
+  Let $\L$ be a finite semidistributive extremal lattice, and let $\SpinePos$ be the poset obtained as the transitive closure of $\rightarrow_\L$. We have $\Spine(\L)\cong \IdL(\SpinePos)$.
+\end{prop}
+\begin{proof}
+   Elements of $\Spine(\L)$ correspond to pairs $(X,Y)\in \Pairs(\rightarrow_\L)$ such that $X\cup Y= \JIrr(\L)$, since chains of maximal length in $\L$ have length $|\JIrr(\L)|$ and $(X,Y)$ belongs to chains of length at most $|X|+|Y|$. For all $(X,Y)\in \Pairs(\rightarrow_\L)$, we have $X\cup Y=\JIrr(\L)$ if and only if $x\rightarrow _\L y$ and $x\in X$ imply $y\in X$, which is the case if and only $X$ is a lower set of $\SpinePos$.
+\end{proof}
 
 \begin{prop}Let $\L$ be a finite semidistributive extremal lattice. We have
    \begin{itemize}
    \item $\Spine(\Int_\L)=\Int_{\Spine(\L)}$;
-   \item $\Spine(\SkInt_\L)=\SkInt_{\Spine(\L)}$;
+   \item $\Spine(\Trv_\L)=\Trv_{\Spine(\L)}$;
    \item $\Spine(\Fac_\L)=\Fac_{\Spine(\L)}$;
-   \item $\Spine(\SkFac_\L)=\SkFac_{\Spine(\L)}$.
+   \item $\Spine(\Trf_\L)=\Trf_{\Spine(\L)}$.
    \end{itemize}
 \end{prop}
 \begin{proof}
 Direct proof or corollary of the description of TAFS.
 \end{proof}
+
+\section{Spine intervals and spine transvals}
+
+\begin{defi}
+A \defn{spine interval} of a trim lattice $\L$ is an interval $[x,y]$ intersecting its spine, \emph{i.e.}, there exists $x\le z\le y$ such that $z\in \Spine(\L)$.
+\end{defi}
+Spine intervals of a semidistributive and extremal lattice $\Pairs(\rightarrow)$ form (conjecturally) a lattice  $\Pairs(\rightarrow_{\SpIntGraph})$, where $\SpIntGraph(\Sha)$ is the set of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with the binary relation where $(x, 0)\rightarrow_\SpIntGraph(y,0)$ and $(x, 1)\rightarrow_{\SpIntGraph}(y,1)$ if $x\rightarrow y$, and $(x, 0)\rightarrow_{\SpIntGraph}(y,1)$ if $x\le y$ in $\SpinePos$, the transitive closure of $\rightarrow$.
+Spine intervals of Tamari seem to coincide with infinitely modern intervals, which are counted by the same sequence as ternary trees~\cite{Rogn18}.
+
+The faces intersecting the spine of such lattices does not always form a semidistributive lattice (consider for example $\mathbf{Jura}_{132}$). However the spine faces of the Tamari lattice form a semidistributive and extremal lattice, which is isomorphic to the lattice of nested topologies.
+
+We define $\SpTrvGraph(\Sha)$ as the set of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with the binary relation where $(x, 0)\rightarrow_\SpTrvGraph(y,0)$ and $(x, 1)\rightarrow_\SpTrvGraph(y,1)$ if $x\rightarrow y$, and $(x, 0)\rightarrow_\SpTrvGraph(y,1)$ if $x< y$ in $\SpinePos$.
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{cccccccccccc}
+		\toprule
+		   $n$ & $1$& $2$ &$3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $11$  \\ \midrule 
+		   $A007052$ & $1$ & $3$ & $10$ & $34$ & $116$ & $396$ & $1352$ & $4616$ &$15760$ & $53808$ & $183712$ \\ \midrule 
+			$A001764$ & $1$ & $3$ & $12$ & $55$ & $273$ & $1428$ & $7752$ & $43263$ & $246675$ & $1430715$ & $8414640$ \\ \midrule 
+		    $A121545$ & $1$ & $4$ & $17$ & $81$ & $412$ & $2192$ & $12049$ & $67891$ & $390041$ & $2276176$ & $13455356$ \\  \bottomrule
+		\end{tabular}
+		\caption{\centering The number of spine faces, spine intervals and spine transvals of $\Tam_n$.}
+	\end{table}
 
 \section{Canonical join-representations}
 
@@ -357,24 +406,26 @@ Direct proof or corollary of the description of TAFS.
 
 Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$.
 \begin{prop}
-   There is a bijection between intervals $(x,y)\in \Int_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
+   There is a bijection between intervals $(x,y)\in \Int_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $m\subset\min(X) $, $M\subset \max(X)$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
 \end{prop}
 
 \begin{prop}
-    There is a bijection between transvals $(x,y)\in \SkInt_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
- Intervals of $\L$ correspond to triples $(X,m,M)$ such that $M\subset m=X$.
+    There is a bijection between transvals $(x,y)\in \Trv_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $m\subset\min(X) $, $M\subset \max(X)$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
+ Intervals of $\L$ correspond to triples $(X,m,M)$ such that $m=\min(X)$.
 \end{prop}
 
 \begin{prop}
-   There is a bijection between faces $(x,y)\in \Fac_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j).$$
+   There is a bijection between faces $(x,y)\in \Fac_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$ and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j).$$
 \end{prop}
 
 \begin{prop}
-  There is a bijection between face transvals $(x,y)\in \SkFac_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$, $\min(X)\subset m$, $\max(X)\subset M$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j_*).$$
-    Faces of $\L$ correspond to triples $(X,m,M)$ such that $M\subset m=X$.
+  There is a bijection between face transvals $(x,y)\in \Trf_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j_*).$$
+    Faces of $\L$ correspond to triples $(X,m,M)$ such that $m=X$.
 \end{prop}
 
 \subsection{Enumeration of interval-closed subsets}
+
+\ludovic{Interval-closed sets = Convex sets. Maybe keep the name "interval-closed" to avoid confusion with convex topologies}
 
 If $G$ is a two-acyclic factorization system which is transitive, it can be seen as a poset, and the corresponding lattice is distributive. The min-max sets of $G$ are then in bijection with interval-closed subsets of $G$ seen as a poset. In~\cite{ELMSW24}, the authors generalized rowmotion to interval-closed subsets of posets. It would be interesting to generalize this further on min-max subsets of semidistributive lattices. They showed that interval-closed subsets are in bijection with pairs of disjoint antichains $(A,B)$ such that $B\subset \downarrow A$.
 
@@ -432,7 +483,7 @@ If $X$ is empty, $\treedown(X)$ is the empty binary tree. If not, $\treedown(X)$
 \end{defi}
 	
 	\begin{prop}
-	The map $X\mapsto (\treedown(X),\treeup(X))$ is an isomorphism from $\cvxtopo(n)$ to $\SkInt_{\Tam_n}$.
+	The map $X\mapsto (\treedown(X),\treeup(X))$ is an isomorphism from $\cvxtopo(n)$ to $\Trv_{\Tam_n}$.
 	\end{prop}
 	
 	\begin{figure}[H]
@@ -484,11 +535,11 @@ If $X$ is empty, $\treedown(X)$ is the empty binary tree. If not, $\treedown(X)$
 	\subsection{Congruences of the lattice of transvals of $\Tam_n$}
 	
 	\begin{prop}
-		The lattice of congruences of $\SkInt(\Tam_n)$ is isomorphic to the lattice of Motzkin paths of length $2n-1$.
+		The lattice of congruences of $\Trv(\Tam_n)$ is isomorphic to the lattice of Motzkin paths of length $2n-1$.
 	\end{prop}
 	
 	\begin{prop}
-	     $|\SkFac_{\Tam_n}|=|\Cong(\SkFac_{\Tam_n})|$
+	     $|\Trf_{\Tam_n}|=|\Cong(\Trf_{\Tam_n})|$
 	\end{prop}
 	
 	\begin{table}[H]
@@ -517,7 +568,7 @@ If $X$ is empty, $\treedown(X)$ is the empty binary tree. If not, $\treedown(X)$
 
 \subsection{The lattice of faces}
 	
-$\SkInt(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its intervals, {\color{red} FAUX (TAM4) but also as a sublattice containing nested convex topologies (cf. A007052)}
+$\Trv(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its intervals, {\color{red} FAUX (TAM4) but also as a sublattice containing nested convex topologies (cf. A007052)}
 	
 \subsection{Transvals of Jurassian lattices}
    Jurassian lattices do not have the same number of transvals or intervals as the Tamari lattice, but it is the case for those obtained from a rectangulation into chains.
@@ -591,15 +642,22 @@ $\SkInt(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of it
 
 Bijection between transvals and preposets for any quotient, generalizing \cite{CPP19}
 
+Preposets on a finite set $X$ are in bijection with topologies on $X$, by letting $x\blacktriangleleft y$ if and only if $\MN(x)\subset\MN(y)$, where $\MN(x)$ is the minimal neighborhood of $x$.
+
 The forcing order of $\Ss_n$ is isomorphic to the poset $\forcingorder_n$ defined as the set of arcs $(a,A,B,b)$ with $1\le a < b\le n$ and $A,B$ a set partition of $\{a+1,\dots, b-1\}$ ($A$ corresponds to points below the arc), ordered by $(a_1,A_1,B_1,b_1) \le (a_2,A_2,B_2,b_2)$ if $a_1\le b_1$, $A_1\subset A_2$, $B_1\subset B_2$ and $b_1\ge b_2$.
 
 \begin{defi}
-Let $I\in \IdL(\forcingorder_n)$. A preposet $\blacktriangleleft$ is a weak order quotient preposet if and only if for all $a<b<c$, $a\blacktriangleleft c\implies a\blacktriangleleft b$ or $b\blacktriangleleft c$, and for all $(a,A,B,b)\in I$
+Let $I\in \IdL(\forcingorder_n)$. A preposet $\blacktriangleleft$ is a weak order quotient preposet if and only if for all $a<b<c$ (or $a>b>c$), $a\blacktriangleleft c\implies a\blacktriangleleft b$ or $b\blacktriangleleft c$, and for all $(a,A,B,b)\in I$
 \begin{itemize}
 \item if $a\blacktriangleleft b$, there exists $k\in A$ such that $a\blacktriangleleft k$, or there exists $k\in B$ such that $k\blacktriangleleft b$;
 \item if $a \blacktriangleright b$, there exists $k\in A$ such that $k\blacktriangleright b$, or there exists $k\in B$ such that $a\blacktriangleright k$.
 \end{itemize}
 \end{defi}
+
+The definition of weak order preposets translated on topologies, give the following:
+
+If $a,c\in \MN(b)$ with $a<b<c$, then for all $a<k<b$, we have $k\in \MN(b)$ or $a\in \MN(k)$, and for all $b<k<c$ we have $k\in \MN(b)$ or $c\in \MN(k)$.
+
 	
 	\section{Acknowledgements}
 	The numeral coincidences for the number of transvals in the Tamari lattice and the weak order were discovered thanks to the OEIS.
