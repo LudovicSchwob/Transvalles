@@ -25,6 +25,22 @@ def semidistributive_transvals(L, lattice = True):
         return LatticePoset((ST,lambda p,q:L.is_lequal(p[0],q[0]) and L.is_lequal(p[1],q[1])))
     return ST
 
+def popdown(L, x):
+    return L.meet([x] + L.lower_covers(x))
+def popup(L, x):
+    return L.join([x] + L.upper_covers(x))
+
+def generic_transvals(L):
+    P = {x: popup(L, x) for x in L}
+    T = []
+    for x in L:
+        xd = popdown(L, x)
+        for y in L.order_filter([xd]):
+            if L.is_lequal(x, P[y]):
+                T.append((x,y))
+    return Poset((T, lambda p, q: L.is_lequal(p[0],q[0]) and L.is_lequal(p[1],q[1])))
+
+
 def semidistributive_face_transvals(L, lattice = True):
     SF = []
     for x in L:

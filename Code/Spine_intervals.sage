@@ -32,7 +32,7 @@ def Spine_intervals(L, lattice = False):
 """
 L = LatticePoset({0: [1,2], 1:[3], 2:[4,5], 3:[4], 4:[6,7], 5:[7], 6:[8], 7:[9], 8:[9]})
 G = SDLGraph(L)
-G2 = Nested_intervals_graph(G)
+G2 = Spine_intervals_graph(G)
 L2 = Spine_intervals(L, True)
 L3 = MOPLattice(G2)
 L2.is_isomorphic(L3)
@@ -82,7 +82,7 @@ def Spine_transvals(L, lattice = False):
 
 # ne donne pas un TAFS, à corriger pour obtenir le treillis des nested topologies
 # il semblerait qu'il faille rajouter des arêtes dans les deux copies de G, mais lesquelles ?
-def Nested_faces_graph(G):
+def Spine_faces_graph(G):
     """
     G must be a acyclic & two-acylic factorization system
     (corresponds to an extremal and semidistributive lattice)
@@ -139,7 +139,7 @@ def test_spine_faces_Tamari(n):
 
 def spine_face_relabel1(x):
     """
-    x = join-irreductible de NestedLattice(n) de type 'red'
+    x = join-irréductible de NestedLattice(n) de type 'red'
     renvoie un élément de TamariGraph(n)
     """
     n = len(x)
@@ -149,12 +149,91 @@ def spine_face_relabel1(x):
             t[i] = x[i][1] - i
             return tuple(t)
 
+def spine_face_relabel2(x):
+    """
+    x = join-irréductible de NestedLattice(n) de type 'green'
+    renvoie un élément de TamariGraph(n)
+    """
+    n = len(x)
+    for i in range(n-1, 0, -1):
+        for j in range(i-1, -1, -1):
+            if x[i] == x[j]:
+                t = n * [0]
+                t[j] = i - j
+                return tuple(t)
+
+def Spine_faces_bv1(n):
+    G, vertex_colors = test_spine_faces_Tamari(n)
+    G2 = G.subgraph(vertex_colors['red'])
+    G2.relabel(spine_face_relabel1)
+    L = MOPLattice(G2)
+    def Max(X):
+        t = n*[0]
+        for x in X:
+            t = [max(i, j) for i, j in zip(t, x)]
+        return tuple(t)
+    return L.relabel(Max)
+
+def Spine_faces_bv2(n):
+    G, vertex_colors = test_spine_faces_Tamari(n)
+    G2 = G.subgraph(vertex_colors['green'])
+    G2.relabel(spine_face_relabel2)
+    L = MOPLattice(G2)
+    def Max(X):
+        t = n*[0]
+        for x in X:
+            t = [max(i, j) for i, j in zip(t, x)]
+        return tuple(t)
+    return L.relabel(Max)
+            
+def bvs(n):
+    L = []
+    for t in cartesian_product([range(n-k) for k in range(n)]):
+        if all(t[i]-t[j]>=j-i for i in range(n-1) for j in range(i+1,i+t[i]+1)):
+            L.append(t)
+    return L
+
 """
 G, vertex_colors = test_spine_faces_Tamari(5)
-G2 = G.subgraph(vertex_colors['red'])
-G2.relabel(spine_face_relabel1)
+G2 = G.subgraph(vertex_colors['green'])
+G2.relabel(spine_face_relabel2)
+E = set(TamariGraph(4).edges())
+for e in G2.edges():
+    if e not in E:
+        print(e)
+
+L = Spine_faces_bv1(5)
+for t in bvs(5):
+    if t not in L:
+        print(t)
+
+G, vertex_colors = test_spine_faces_Tamari(5)
+G.relabel( lambda x: (spine_face_relabel1(x),0) if x in vertex_colors['red'] else (spine_face_relabel2(x),1))
+for e in G.edges():
+    if e[0][0] == e[1][0]:
+        G.delete_edge(e)
+
+15, 56, 209, 780, 2911
 """
-            
+
+def Tamari_Ribs(n, lattice = True):
+    G, vertex_colors = test_spine_faces_Tamari(n)
+    G2 = G.subgraph(vertex_colors['red'])
+    G3 = G.subgraph(vertex_colors['green'])
+    G2.relabel(spine_face_relabel1)
+    G3.relabel(spine_face_relabel2)
+    for e in G3.edges():
+        G2.add_edge(e)
+    if not is_TAFS(G2):
+        print('NOT A 2-ACYCLIC FACTORIZATION SYSTEM')
+    return MOPLattice(G2, lattice)
+
+"""
+size of Tamari_Ribs(n) :
+1, 2, 5, 12, 28, 64, 144, 320 (A045623)
+"""
+
+####################################
 
 def lattice_popdown(L, x):
     return L.meet([x, L.meet(L.lower_covers(x))])
@@ -162,12 +241,12 @@ def lattice_popdown(L, x):
 def lattice_popup(L, x):
     return L.join([x, L.join(L.upper_covers(x))])
 
-def test_nested_faces2(L):
+def test_spine_faces2(L):
     """
     La construction des treillis ne semble pas tout à fait bonne non plus
     plutôt enlever les éléments x tels qu'il n'y aie pas de face (x,y) minimale intersectant S ?
     """
-    G,G0,G1 = test_nested_faces(L)
+    G,G0,G1 = test_spine_faces(L)
     S = Spine(L)
     L0, L1 = MOPLattice(G0), MOPLattice(G1)
     S0 = L.subposet([x for x in L if any(y in S for y in L.interval(lattice_popdown(L, x), x))])
@@ -197,3 +276,50 @@ L2.is_isomorphic(L3)
 
 
 
+def Spine_transvals_restriction(L):
+    G = SDLGraph(L)
+    L = MOPLattice(G)
+    G2 = Spine_transvals_graph(G)
+    rest = []
+    for X in MOPLattice(G2, False):
+        s1, s2 = [x[0] for x in X if x[1]==0], [x[0] for x in right_orthogonal(G2, X) if x[1]==1]
+        rest.append((Set(s1), Set(left_orthogonal(G, s2))))
+    L2 = LatticePoset((rest, lambda p,q: p[0].issubset(q[0]) and p[1].issubset(q[1])))
+    return L2
+
+# pas nécessaire ! La restriction suffit
+def Spine_transvals_cloture_restriction(L):
+    G = SDLGraph(L)
+    L = MOPLattice(G)
+    G2 = Spine_transvals_graph(G)
+    rest = []
+    for X in MOPLattice(G2, False):
+        s1, s2 = [x[0] for x in X if x[1]==0], [x[0] for x in right_orthogonal(G2, X) if x[1]==1]
+        rest.append((Set(left_orthogonal(G, right_orthogonal(G, s1))),Set(left_orthogonal(G, s2))))
+    L2 = LatticePoset((rest, lambda p,q: p[0].issubset(q[0]) and p[1].issubset(q[1])))
+    return L2
+
+
+def Spine_transvals(L):
+    G = SDLGraph(L)
+    D = MOPLattice(G).is_isomorphic(L, certificate= True)[1]
+    L2 = Spine_transvals_restriction(L).relabel(lambda x: (D[x[0]],D[x[1]]))
+    L3 = semidistributive_transvals(L)
+    if not L2.is_sublattice(L3):
+        print('spine transvals do not form a sublattice of transvals')
+    if not all(x in L3 for x in L2):
+        print('spine transvals are not transvals')
+    return list(L2), [x for x in L3 if x not in L2]
+    
+def Test_spine_transvals(L):
+    l1, l2 = Spine_transvals(L)
+    S = Spine(L)
+    def test(x, y):
+        a, b = L.meet([x, y]), L.join([x, y])
+        return (any(z in S for z in L.interval(a, y)) or any(z in S for z in L.interval(x, b))) and (all(z in S for z in L.interval(a, x)) or all(z in S for z in L.interval(y, b)))
+    for x, y in l1:
+        if not test(x, y):
+            print(f'le transvalle {(x, y)} ne vérifie pas le test')
+    for x, y in l2:
+        if test(x, y):
+            print(f"{(x, y)} vérifie pas le test mais n'est pas un transvalle")

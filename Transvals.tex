@@ -260,6 +260,8 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 
 
 \section{Lattice structures of transvals}
+\ludovic{Should face transvals be named transfaces ? If so, should faces become interfaces ?? Meh.}
+
 \begin{prop}
      $\Fac_\L$ is a sublattice of $\Trf_\L$, and $\Int_\L$ is a sublattice of $\Trv_\L$.
 \end{prop}
@@ -362,7 +364,7 @@ A \defn{spine interval} of a trim lattice $\L$ is an interval $[x,y]$ intersecti
 Spine intervals of a semidistributive and extremal lattice $\Pairs(\rightarrow)$ form (conjecturally) a lattice  $\Pairs(\rightarrow_{\SpIntGraph})$, where $\SpIntGraph(\Sha)$ is the set of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with the binary relation where $(x, 0)\rightarrow_\SpIntGraph(y,0)$ and $(x, 1)\rightarrow_{\SpIntGraph}(y,1)$ if $x\rightarrow y$, and $(x, 0)\rightarrow_{\SpIntGraph}(y,1)$ if $x\le y$ in $\SpinePos$, the transitive closure of $\rightarrow$.
 Spine intervals of Tamari seem to coincide with infinitely modern intervals, which are counted by the same sequence as ternary trees~\cite{Rogn18}.
 
-The faces intersecting the spine of such lattices does not always form a semidistributive lattice (consider for example $\mathbf{Jura}_{132}$). However the spine faces of the Tamari lattice form a semidistributive and extremal lattice, which is isomorphic to the lattice of nested topologies.
+The faces intersecting the spine of such lattices does not always form a semidistributive lattice (consider for example $\mathbf{Camb}_{s_2s_1s_3}$, $\mathbf{Jura}_{132}$, or the Hochschild lattice $\mathbf{Tr}_3$). However the spine faces of the Tamari lattice form a semidistributive and extremal lattice, which is isomorphic to the lattice of nested topologies.
 
 We define $\SpTrvGraph(\Sha)$ as the set of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with the binary relation where $(x, 0)\rightarrow_\SpTrvGraph(y,0)$ and $(x, 1)\rightarrow_\SpTrvGraph(y,1)$ if $x\rightarrow y$, and $(x, 0)\rightarrow_\SpTrvGraph(y,1)$ if $x< y$ in $\SpinePos$.
 
@@ -373,9 +375,10 @@ We define $\SpTrvGraph(\Sha)$ as the set of pairs $(x,k)$ with $x\in \Sha$ and $
 		   $n$ & $1$& $2$ &$3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $11$  \\ \midrule 
 		   $A007052$ & $1$ & $3$ & $10$ & $34$ & $116$ & $396$ & $1352$ & $4616$ &$15760$ & $53808$ & $183712$ \\ \midrule 
 			$A001764$ & $1$ & $3$ & $12$ & $55$ & $273$ & $1428$ & $7752$ & $43263$ & $246675$ & $1430715$ & $8414640$ \\ \midrule 
+			$A001353$ & $1$ & $4$ & $15$ & $56$ & $209$ & $780$ & $2911$ & $10864$ & $40545$ & $151316$ & $564719$ \\ \midrule 
 		    $A121545$ & $1$ & $4$ & $17$ & $81$ & $412$ & $2192$ & $12049$ & $67891$ & $390041$ & $2276176$ & $13455356$ \\  \bottomrule
 		\end{tabular}
-		\caption{\centering The number of spine faces, spine intervals and spine transvals of $\Tam_n$.}
+		\caption{\centering The number of spine faces, spine intervals, spine, spine face transvals and spine transvals of $\Tam_n$.}
 	\end{table}
 
 \section{Canonical join-representations}
