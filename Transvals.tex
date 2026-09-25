@@ -252,10 +252,49 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 	\begin{prop}
 		Let $[x,y]$ be an interval of $\L$. $(y,x)$ is a transval of $\L$ if and only if $[x,y]$ is a nuclear interval.
 	\end{prop}
-	
-	
-	Transvals form a lattice whose join is given by $$(x_1,y_1)\vee (x_2,y_2)=(x_1\vee x_2, ?????)$$
-	
+
+  \begin{lem}\label{TransvalsClosureLemma}
+    Let \(a_1,a_2,b_1,b_2 \in \L\).
+    \begin{enumerate}
+      \item If \((a_1,b_1)\) and \((a_2,b_1)\) are transvals, then \((a_1 \vee a_2, b_1)\) is a transval.
+      \item If \((a_1,b_1)\) and \((a_1,b_2)\) are transvals, then \((a_1, b_1 \wedge b_2)\) is a transval.
+    \end{enumerate}
+  \end{lem}
+  \begin{proof}
+    
+  \end{proof}
+
+  \begin{cor}
+    Let \((a_1,b_1)\) and \((a_2,b_2)\) be transvals in \(\L\). Let
+    \begin{align*}
+      c &= \bigwedge \left\{ x \geq b_1 \vee b_2 : (a_1 \vee a_2,x) \text{ is a transval} \right\}, \\     
+      d &= \bigvee \left\{ x \leq a_1 \wedge a_2 : (x, b_1 \wedge b_2) \text{ is a transval} \right\}.
+    \end{align*}
+    Then,
+    \begin{align*}
+      (a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c), \\
+      (a_1,b_1) \wedge (a_2,b_2) = ( d , b_1 \wedge b_2 ).
+    \end{align*}
+  \end{cor}
+  \begin{proof}
+    It suffices to prove \((a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c)\) for \(c\) as defined above.
+    By Lemma~\ref{TransvalsClosureLemma} part (2) and using that \(\L\) is finite, we have \((a_1 \vee a_2, c)\) is a transval.
+
+    First, we show \((a_1 \vee a_2, c)\) is an upper bound. That is, we want to show \((a_1 \vee a_2, c) \geq (a_i, b_i)\) for all \(i \in \{1,2\}\).
+    By definition of \(c\), we have that \(c \geq b_1 \vee b_2\). So, \(c \geq b_i\).
+    Also, \(a_1 \vee a_2 \geq a_i\).
+    Hence, \((a_1 \vee a_2, c) \geq (a_i, b_i)\).
+
+    It remains to show \((a_1 \vee a_2, c)\) is a \textit{minimal} upper bound.
+    Take any transval \((e,f)\) such that \((e,f) \geq (a_i,b_i)\) for all \(i \in \{1,2\}\).
+    We want to show \((a_1 \vee a_2, c) \leq (e,f)\). By definition of transval,
+    \[{a_i}_* \leq b_i \leq f \text{ and } a_i \leq e \leq f^*.\]
+    Hence, \((a_i,f)\) is a transval for all \(i \in \{1,2\}\).
+    By Lemma~\ref{TransvalsClosureLemma}, \((a_1 \vee a_2, f)\) is a transval.
+    By assumption, \(f \geq b_1 \vee b_2\). So by definition of \(c\), we have \(c \leq f\).
+    Also by assumption, \(a_1 \vee a_2 \leq e\). Hence, \((a_1 \vee a_2, c) \leq (e,f)\).
+  \end{proof}
+
 \subsection{Face transvals}
 
 
