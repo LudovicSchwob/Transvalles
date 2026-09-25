@@ -12,6 +12,15 @@ def join_kappa(L, j):
         else:
             js = L.upper_covers(js)[0]
 
+def semidistributive_faces(L, lattice = True):
+    F = []
+    for x in L:
+        for S in Subsets(L.upper_covers(x)):
+            F.append((x, L.join([x] + list(S))))
+    if lattice:
+        return LatticePoset((F,lambda p,q:L.is_lequal(p[0],q[0]) and L.is_lequal(p[1],q[1])))
+    return F
+
 def semidistributive_transvals(L, lattice = True):
     ST = []
     for x,y in L.intervals_poset():
@@ -25,12 +34,16 @@ def semidistributive_transvals(L, lattice = True):
         return LatticePoset((ST,lambda p,q:L.is_lequal(p[0],q[0]) and L.is_lequal(p[1],q[1])))
     return ST
 
-def popdown(L, x):
-    return L.meet([x] + L.lower_covers(x))
-def popup(L, x):
-    return L.join([x] + L.upper_covers(x))
+def popdown(L, x, m = None):
+    if m == None:
+        return L.meet([x] + L.lower_covers(x))
+    return L.meet([x] + [y for y in L.lower_covers(x) if L.is_lequal(m, y)])
+def popup(L, x, m = None):
+    if m == None:
+        return L.join([x] + L.upper_covers(x))
+    return L.join([x] + [y for y in L.upper_covers(x) if L.is_lequal(y, m)])
 
-def generic_transvals(L):
+def transvals(L):
     P = {x: popup(L, x) for x in L}
     T = []
     for x in L:
@@ -55,6 +68,35 @@ def semidistributive_face_transvals(L, lattice = True):
     if lattice:
         return LatticePoset((SF,lambda p,q:L.is_lequal(p[0],q[0]) and L.is_lequal(p[1],q[1])))
     return SF
+
+def is_nuclear(L, x, y):
+    return x == popdown(L, y, x)
+
+def is_conuclear(L, x, y):
+    return y == popup(L, x, y)
+
+# all transvals are exact in semidistributive lattices, but not in general
+# smallest counter-example : 
+# {5: [6, 1], 6: [3, 2], 3: [4], 2: [0], 1: [4], 4: [0], 0: []}
+# (1, 6), (4, 6) and (4, 2) are not exact
+def exact_transvals(L):
+    T = []
+    for x in L:
+        for y in L:
+            a, b = L.meet([x, y]), L.join([x, y])
+            if is_nuclear(L, a, x) and is_conuclear(L, y, b):
+                T.append((x,y))
+    return Poset((T, lambda p, q: L.is_lequal(p[0],q[0]) and L.is_lequal(p[1],q[1])))
+
+def Test_transvals(L):
+    T = set(semidistributive_faces(L, False))
+    for t1 in T:
+        for t2 in T:
+            if t1[1] == t2[1]:
+                t3 = (L.join([t1[0], t2[0]]), t1[1])
+                if t3 not in T:
+                    print(t1, t2, t3)
+            
 
 def intervals_canonical_joinands(L):
     L2 = L.intervals_poset()
