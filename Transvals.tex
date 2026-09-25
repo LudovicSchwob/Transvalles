@@ -266,7 +266,66 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
     \end{enumerate}
   \end{lem}
   \begin{proof}
+    It remains to prove (1). The following argument uses only finiteness and the two semidistributive laws.
     
+    For each cover \(p\prec q\), join-semidistributivity makes
+    \[
+    \{z:p\vee z=q\}
+    \]
+    closed under meets. It therefore has a least element \(j\), which we call the **label** of that cover. Every element strictly below \(j\) lies below \(p\), so \(j\) is join-irreducible, with unique lower cover \(j_*\le p\).
+    \ludovic{$\Gamma(x)$ is the canonical join-representation of $x$}
+    Let \(\Gamma(x)\) be the labels of the covers immediately below \(x\), and let \(U(y)\) be the labels of the covers immediately above \(y\). We need three elementary facts:
+    
+    - **\(x=\bigvee\Gamma(x)\).** Otherwise this join lies below some lower cover \(p\prec x\), contradicting the fact that the label of \(p\prec x\) is not below \(p\).
+    - **\(\Gamma(x)\) refines every join representation of \(x\).** If \(x=\bigvee R\), then for each \(p\prec x\), some \(r\in R\) is not below \(p\). Hence \(p\vee r=x\), so the label of \(p\prec x\) lies below \(r\).
+   \ludovic{$l(x)=\popdown(x)$ and $u(x)=\popup(x)$}
+    - **For \(j\in\Gamma(x)\), \(j_*\le l(x)\), but \(j\nleq l(x)\).** If \(j\) labels \(p\prec x\), then \(j_*\le p\). Every other lower cover \(q\) of \(x\) satisfies \(p\vee q=x\), so \(j\le q\). Taking the meet of the lower covers proves the first assertion; \(j\nleq p\) proves the second.
+    
+    Here is another useful observation. If \(j\) is join-irreducible and
+    \[
+    j_*\le y,\qquad j\le u(y),\qquad j\nleq y,
+    \]
+    then \(j\in U(y)\). Indeed, if no upper cover \(z\) of \(y\) contained \(j\), we would have \(j\wedge z=j_*\) for every such cover. Meet-semidistributivity would then give
+    \[
+    j\wedge u(y)=j_*,
+    \]
+    contradicting \(j\le u(y)\). Thus some upper cover contains \(j\), and \(j_*\le y\) ensures that \(j\) is its label.
+    
+    \ludovic{Test if it works also for lattices that are only join-semidistributive}
+    We can now characterize transvals:
+    \[
+    \boxed{
+    T(x,y)\iff
+    \Gamma(x)\subseteq
+    \{j\text{ join-irreducible}:j\le y\}\cup U(y).
+    }\tag{2}
+    \]
+    
+    For the forward implication, each \(j\in\Gamma(x)\) satisfies
+    \[
+    j_*\le l(x)\le y,\qquad j\le x\le u(y).
+    \]
+    The observation above says that either \(j\le y\) or \(j\in U(y)\).
+    
+    For the converse, suppose the inclusion in (2) holds. Since \(x=\bigvee\Gamma(x)\), we immediately get \(x\le u(y)\).
+    
+    Suppose, for a contradiction, that \(l(x)\nleq y\). Choose a minimal element \(k\le l(x)\) that is not below \(y\). Then \(k\) is join-irreducible and \(k_*\le y\). The observation gives \(k\in U(y)\). But \(k\notin\Gamma(x)\), because \(k\le l(x)\).
+    
+    Put \(z=y\vee k\), an upper cover of \(y\). For every \(j\in\Gamma(x)\), either \(j\le y\), or \(j\) labels a **different** upper cover of \(y\). In either case,
+    \[
+    z\wedge(y\vee j)=y.
+    \]
+    Applying meet-semidistributivity over the finite set \(\Gamma(x)\) gives
+    \[
+    z\wedge(y\vee x)=y.
+    \]
+    However, \(k\le l(x)\le x\), so \(z=y\vee k\le y\vee x\). The left side is therefore \(z>y\), a contradiction. Thus \(l(x)\le y\), proving (2).
+    
+    Finally, the allowed set of join-irreducibles on the right of (2) is downward closed among join-irreducibles: if \(j\in U(y)\), every element strictly below \(j\) lies below \(j_*\le y\).
+    
+    If \(T(a,y)\) and \(T(c,y)\), the refinement property says every label in \(\Gamma(a\vee c)\) lies below some label in \(\Gamma(a)\cup\Gamma(c)\). It therefore remains in that allowed set. By (2), \(T(a\vee c,y)\).
+    
+    Applying the same argument to the dual lattice proves the meet statement in (1), completing the proof. \(\square\)
   \end{proof}
 
   \begin{cor}
