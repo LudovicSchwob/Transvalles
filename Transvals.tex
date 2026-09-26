@@ -243,20 +243,38 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 		$K_\L$ is the set of atoms $a\in \L$ such that $\kappa(a)$ is a coatom of $\L$.
 	\end{defi}
 	\begin{prop}
-	Let $\L$ be a finite semidistributive lattice. Transvals of $\L$ are the pairs $\left(\bigvee J, \bigwedge \kappa_{[x,y]}(J)\right)$ where $[x,y]$ is an interval of $\L$ and $J\subset K_{[x,y]}$.
+	  \label{pr:transval_triplets}
+	Let $\L$ be a finite semidistributive lattice. Transvals of $\L$ are the pairs $\left(\bigvee J, \bigwedge \kappa_{[x,y]}(J)\right)$ where $[x,y]$ is an interval of $\L$ and $J\subseteq K_{[x,y]}$.
 	\end{prop}
 	\begin{proof}
-	   It is straightforward to show that $\left(\bigvee J\right)_*\le x\le y$ and $\left(\bigwedge \kappa(J)\right)^*\ge y\le x$. Conversely, if $(x,y)$ is a transval of $\L$, for all $z$ such that $x\wedge y\lessdot z \le x$, there exists $w\lessdot x\vee y$ such that $z\nleq w$ (if not, we would have $z \le \bigwedge_{y\le w\lessdot x\vee y}w=y$ and $z\le x\wedge y$). Hence we have $y\le \kappa_{[x\wedge y,x\vee y]}(z)\lessdot x\vee y$. Dually, each coatom of $[x\wedge y,x\vee y]$ which is above $y$ correspond to an atom below $x$, implying that $(x,y)=\left(\bigvee J ,\bigvee \kappa{[x\wedge y,x\vee y]}(J)\right)$ where $J=\{z:x\wedge y\lessdot z\le x\}$ and we have $\kappa{[x\wedge y,x\vee y]}(J)\subset \{w:y\le w\lessdot x\vee y\}$.
+	   It is straightforward to show that $\popdown\left(\bigvee J\right)\le x\le y$ and $\popup\left(\bigwedge \kappa(J)\right)\ge y\ge x$. Conversely, if $(a,b)$ is a transval of $\L$ with $x:=a\wedge b$ and $y:=a\vee b$, for all $c$ such that $x\lessdot c \le a$, there exists $d\lessdot y$ such that $c\nleq d$ (if not, we would have $c \le \bigwedge_{b\le d\lessdot y}d=b$ and $c\le x$). Hence we have $b\le \kappa_{[x,y]}(c)\lessdot y$. Dually, each coatom of $[x,y]$ which is above $b$ corresponds to an atom above $a$, implying that $(a,b)=\left(\bigvee J ,\bigvee \kappa{[x,y]}(J)\right)$ where $J=\{c:x\lessdot c\le a\}$ and we have $\kappa{[x,y]}(J)=\{d:b\le d\lessdot y\}$, so $J\subseteq K_{[x,y]}$.
 	\end{proof}
-	
 	\begin{cor}
-		Transvals of $\L$ are in bijection with triples $(x,y,J)$ where $x\le y\in \L$ and $J\subset K_{[x,y]}$.
-		\label{cor:bijection_transvals}
+	   All transvals of a finite semidistributive lattice are exact transvals.
 	\end{cor}
 	
+	\begin{cor}
+		Transvals of a finite semidistributive $\L$ are in bijection with triples $(x,y,J)$ where $x\le y\in \L$ and $J\subseteq K_{[x,y]}$.
+		\label{cor:bijection_transvals}
+	\end{cor}
+
 	\begin{prop}
 		Let $[x,y]$ be an interval of $\L$. $(y,x)$ is a transval of $\L$ if and only if $[x,y]$ is a nuclear interval.
 	\end{prop}
+	
+In a join-semidistributive lattice, there is a canonical labelling of edges by join-irreducible elements $\gamma:(x,y)\mapsto \min \{j: j\vee x = y\}$. $\Gamma(y):=\{\gamma(x,y):x\lessdot y\}$ is the canonical join-representation of $y$, and we write $U(x):=\{\gamma(x,y):y\gtrdot x\}$. Note that $\kappa(U(x))$ is the canonical meet-representation of $x$.
+	
+		\ludovic{This proposition could be proved more directly using Proposition~\ref{pr:transval_triplets} I think}
+\begin{prop}\label{pr:transvals_edgelabelling}
+   $(x,y)$ is a transval of $\L$ if and only if $\Gamma(x)\subseteq \{j\in\JIrr(\L) :j\le y\}\cup U(y)$
+\end{prop}
+\begin{proof}
+  If $(x,y)$ is a transval, each $j\in \Gamma(x)$ satisfies $j_*\le \popdown(x)\le y$ and $j\le x\le \popup(y)$. This tells us that either $j\le y$ or $j\in U(y)$. 
+  Conversely, suppose that $\Gamma(x)\subseteq \{j\in\JIrr(\L) :j\le y\}\cup U(y)$. Since for all $j\in \Gamma(x)$, $j\le y$ or $j\le z$ for some $z\gtrdot y$, we have $x\le \popup y$.
+  Suppose, for a contradiction, that $\popdown(x)\nleq y$. Let $k\le \popdown(x)$ that is not below $y$, minimal with this property. Then $k$ is join-irreducible and $k_*\le y$. This gives us $k\in U(y)$, but $k\notin\Gamma(x)$, because $k\le \popdown(x)$. Let $z=y\vee k$, an upper cover of $y$. For every $j\in\Gamma(x)$, either $j\le y$, or $j$ labels a different upper cover of \(y\). In either case, $z\wedge(y\vee j)=y.$
+     Applying meet-semidistributivity over the finite set $\Gamma(x)$ gives $ z\wedge(y\vee x)=y$.
+     However, $k\le \popdown(x)\le x$, so $z=y\vee k\le y\vee x$. The left side is therefore $z>y$, a contradiction. Thus $\popdown(x)\le y$, proving the result.
+\end{proof}
 
   \begin{lem}\label{TransvalsClosureLemma}
     Let \(a_1,a_2,b_1,b_2 \in \L\).
@@ -290,38 +308,9 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
     j\wedge u(y)=j_*,
     \]
     contradicting \(j\le u(y)\). Thus some upper cover contains \(j\), and \(j_*\le y\) ensures that \(j\) is its label.
+ 
     
-    \ludovic{Test if it works also for lattices that are only join-semidistributive}
-    We can now characterize transvals:
-    \[
-    \boxed{
-    T(x,y)\iff
-    \Gamma(x)\subseteq
-    \{j\text{ join-irreducible}:j\le y\}\cup U(y).
-    }\tag{2}
-    \]
-    
-    For the forward implication, each \(j\in\Gamma(x)\) satisfies
-    \[
-    j_*\le l(x)\le y,\qquad j\le x\le u(y).
-    \]
-    The observation above says that either \(j\le y\) or \(j\in U(y)\).
-    
-    For the converse, suppose the inclusion in (2) holds. Since \(x=\bigvee\Gamma(x)\), we immediately get \(x\le u(y)\).
-    
-    Suppose, for a contradiction, that \(l(x)\nleq y\). Choose a minimal element \(k\le l(x)\) that is not below \(y\). Then \(k\) is join-irreducible and \(k_*\le y\). The observation gives \(k\in U(y)\). But \(k\notin\Gamma(x)\), because \(k\le l(x)\).
-    
-    Put \(z=y\vee k\), an upper cover of \(y\). For every \(j\in\Gamma(x)\), either \(j\le y\), or \(j\) labels a **different** upper cover of \(y\). In either case,
-    \[
-    z\wedge(y\vee j)=y.
-    \]
-    Applying meet-semidistributivity over the finite set \(\Gamma(x)\) gives
-    \[
-    z\wedge(y\vee x)=y.
-    \]
-    However, \(k\le l(x)\le x\), so \(z=y\vee k\le y\vee x\). The left side is therefore \(z>y\), a contradiction. Thus \(l(x)\le y\), proving (2).
-    
-    Finally, the allowed set of join-irreducibles on the right of (2) is downward closed among join-irreducibles: if \(j\in U(y)\), every element strictly below \(j\) lies below \(j_*\le y\).
+    Finally, the allowed set of join-irreducibles on the right of Proposition~\ref{pr:transvals_edgelabelling} is downward closed among join-irreducibles: if \(j\in U(y)\), every element strictly below \(j\) lies below \(j_*\le y\).
     
     If \(T(a,y)\) and \(T(c,y)\), the refinement property says every label in \(\Gamma(a\vee c)\) lies below some label in \(\Gamma(a)\cup\Gamma(c)\). It therefore remains in that allowed set. By (2), \(T(a\vee c,y)\).
     
@@ -487,13 +476,13 @@ We define $\SpTrvGraph(\Sha)$ as the set of pairs $(x,k)$ with $x\in \Sha$ and $
 \section{Canonical join-representations}
 
 \begin{defi}
-  Let $G$ be a directed graph. A min-max set of $G$ is a subset $X\subset G$ such that for all $x\in X$, there is no $y,z\in X$ such that $y\to x\to z$.
+  Let $G$ be a directed graph. A min-max set of $G$ is a subset $X\subseteq G$ such that for all $x\in X$, there is no $y,z\in X$ such that $y\to x\to z$.
 \end{defi}
 
 %interval-closed subsets of a poset $\Pos$ are in bijection with pairs of disjoint antichains $(A,B)$ of $\Pos$ such that $B\subset \Delta(A)$~\cite[Proposition 2.5]{ELMSW24}. 
 
 \begin{defi}
-  An independant set of $G$ is a subset $X\subset G$ such that $x\in X$, there is no $y\in X$ such that $x\to y$ or $y\to x$.
+  An independant set of $G$ is a subset $X\subseteq G$ such that $x\in X$, there is no $y\in X$ such that $x\to y$ or $y\to x$.
 \end{defi}
 
 %Let $\L$ be a finite semidistributive lattice, and let $\JIrrGraph(\L)$  be its irreducibles graph. There is a canonical labelling of edges $\gamma : E(\L)\to \JIrr(L)$ such that for all $(x,y)\in E(\L)$, $y = x\vee \gamma((x,y))$.
@@ -512,11 +501,11 @@ We define $\SpTrvGraph(\Sha)$ as the set of pairs $(x,k)$ with $x\in \Sha$ and $
 
 Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$.
 \begin{prop}
-   There is a bijection between intervals $(x,y)\in \Int_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $m\subset\min(X) $, $M\subset \max(X)$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
+   There is a bijection between intervals $(x,y)\in \Int_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $m\subseteq\min(X) $, $M\subseteq \max(X)$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
 \end{prop}
 
 \begin{prop}
-    There is a bijection between transvals $(x,y)\in \Trv_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $m\subset\min(X) $, $M\subset \max(X)$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
+    There is a bijection between transvals $(x,y)\in \Trv_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $m\subseteq\min(X) $, $M\subseteq \max(X)$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
  Intervals of $\L$ correspond to triples $(X,m,M)$ such that $m=\min(X)$.
 \end{prop}
 
@@ -533,7 +522,7 @@ Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGra
 
 \ludovic{Interval-closed sets = Convex sets. Maybe keep the name "interval-closed" to avoid confusion with convex topologies}
 
-If $G$ is a two-acyclic factorization system which is transitive, it can be seen as a poset, and the corresponding lattice is distributive. The min-max sets of $G$ are then in bijection with interval-closed subsets of $G$ seen as a poset. In~\cite{ELMSW24}, the authors generalized rowmotion to interval-closed subsets of posets. It would be interesting to generalize this further on min-max subsets of semidistributive lattices. They showed that interval-closed subsets are in bijection with pairs of disjoint antichains $(A,B)$ such that $B\subset \downarrow A$.
+If $G$ is a two-acyclic factorization system which is transitive, it can be seen as a poset, and the corresponding lattice is distributive. The min-max sets of $G$ are then in bijection with interval-closed subsets of $G$ seen as a poset. In~\cite{ELMSW24}, the authors generalized rowmotion to interval-closed subsets of posets. It would be interesting to generalize this further on min-max subsets of semidistributive lattices. They showed that interval-closed subsets are in bijection with pairs of disjoint antichains $(A,B)$ such that $B\subseteq \downarrow A$.
 
 We define two different orders on the set of interval-closed subsets of a poset $\Pos$, and we prove that these orders are join-distributive lattices. Join-lattices can be represented by colored posets, generalizing the Birkhoff's representation theorem~\cite{HaNo18}.
 
@@ -549,7 +538,7 @@ where elements of $\Pos$ which are neither maximal nor minimal give two distinct
 \end{figure}
 
 
-The order $(A_1,B_1)\le (A_2,B_2)\iff \downarrow A_1 \subset \downarrow A_2 \text{ and } \downarrow B_1 \subset \downarrow B_2 $ yields a join-distributive lattice whose corresponding colored poset contains elements and edges of $\Pos$, with cover relations given by $$x\lessdot y\lessdot z\in \Pos\implies \begin{cases}
+The order $(A_1,B_1)\le (A_2,B_2)\iff \downarrow A_1 \subseteq \downarrow A_2 \text{ and } \downarrow B_1 \subseteq \downarrow B_2 $ yields a join-distributive lattice whose corresponding colored poset contains elements and edges of $\Pos$, with cover relations given by $$x\lessdot y\lessdot z\in \Pos\implies \begin{cases}
 x\lessdot y \\ y\lessdot (x,y) \\ (x,y) \lessdot (y,z) 
 \end{cases}.$$
 Two edges have the same color if they have the same lower bound.
@@ -681,7 +670,7 @@ $\Trv(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its 
 	
 	\section{Transvals of the weak order}
 	
-	Let $\mathfrak g$ be a finite-dimensional complex semisimple Lie algebra, $W$ its Weyl group, and $U_q(\mathfrak g)$ the quantized enveloping algebra of $\mathfrak g$. Heckenberger and Kolb~\cite{HeKo12} showed that homogeneous right coideal subalgebras of $U_q(\mathfrak g)$ are in bijection with triples $(x,u,J)$ where $x,u\in W$ with $u^{-1}\le_R x$ and $J\subset \Pi\cap x\Pi$, where $\Pi$ denotes a fixed basis of the root system of $\mathfrak g$. We show that they are also in bijection with transvals of the weak order.
+	Let $\mathfrak g$ be a finite-dimensional complex semisimple Lie algebra, $W$ its Weyl group, and $U_q(\mathfrak g)$ the quantized enveloping algebra of $\mathfrak g$. Heckenberger and Kolb~\cite{HeKo12} showed that homogeneous right coideal subalgebras of $U_q(\mathfrak g)$ are in bijection with triples $(x,u,J)$ where $x,u\in W$ with $u^{-1}\le_R x$ and $J\subseteq \Pi\cap x\Pi$, where $\Pi$ denotes a fixed basis of the root system of $\mathfrak g$. We show that they are also in bijection with transvals of the weak order.
 	
 	
 	\begin{defi}
@@ -748,9 +737,9 @@ $\Trv(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its 
 
 Bijection between transvals and preposets for any quotient, generalizing \cite{CPP19}
 
-Preposets on a finite set $X$ are in bijection with topologies on $X$, by letting $x\blacktriangleleft y$ if and only if $\MN(x)\subset\MN(y)$, where $\MN(x)$ is the minimal neighborhood of $x$.
+Preposets on a finite set $X$ are in bijection with topologies on $X$, by letting $x\blacktriangleleft y$ if and only if $\MN(x)\subseteq \MN(y)$, where $\MN(x)$ is the minimal neighborhood of $x$.
 
-The forcing order of $\Ss_n$ is isomorphic to the poset $\forcingorder_n$ defined as the set of arcs $(a,A,B,b)$ with $1\le a < b\le n$ and $A,B$ a set partition of $\{a+1,\dots, b-1\}$ ($A$ corresponds to points below the arc), ordered by $(a_1,A_1,B_1,b_1) \le (a_2,A_2,B_2,b_2)$ if $a_1\le b_1$, $A_1\subset A_2$, $B_1\subset B_2$ and $b_1\ge b_2$.
+The forcing order of $\Ss_n$ is isomorphic to the poset $\forcingorder_n$ defined as the set of arcs $(a,A,B,b)$ with $1\le a < b\le n$ and $A,B$ a set partition of $\{a+1,\dots, b-1\}$ ($A$ corresponds to points below the arc), ordered by $(a_1,A_1,B_1,b_1) \le (a_2,A_2,B_2,b_2)$ if $a_1\le b_1$, $A_1\subseteq A_2$, $B_1\subseteq B_2$ and $b_1\ge b_2$.
 
 \begin{defi}
 Let $I\in \IdL(\forcingorder_n)$. A preposet $\blacktriangleleft$ is a weak order quotient preposet if and only if for all $a<b<c$ (or $a>b>c$), $a\blacktriangleleft c\implies a\blacktriangleleft b$ or $b\blacktriangleleft c$, and for all $(a,A,B,b)\in I$
