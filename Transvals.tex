@@ -237,6 +237,13 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 		\end{defi}
 	It is clear from the definition that exact transvals are transvals, however the converse is not true in general.
 	
+	\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\linewidth]{figures/non_exact}
+	\caption{A lattice in which $(a,b), (d,b)$, and $(d,e)$ are non-exact transvals.}
+	\label{fig:nonexact}
+	\end{figure}
+	
 	In the following, $\L$ is a finite semidistributive lattice.
 	
 	\begin{defi}
@@ -251,12 +258,15 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 	\end{proof}
 	\begin{cor}
 	   All transvals of a finite semidistributive lattice are exact transvals.
+	   \label{cor:exact_transvals}
 	\end{cor}
-	
+	Corollary~\ref{cor:exact_transvals} states that each transval $(x,y)$ of a semidistributive lattice corresponds to an interval in the lattice of faces $[x\wedge y,x]\le [y,x\vee y]$. Conversely, for all faces $[x_1,x_2]\le [y_1,y_2]$, the pair $(x_2,y_1)$ is a transval.
 	\begin{cor}
 		Transvals of a finite semidistributive $\L$ are in bijection with triples $(x,y,J)$ where $x\le y\in \L$ and $J\subseteq K_{[x,y]}$.
 		\label{cor:bijection_transvals}
 	\end{cor}
+	
+	Corollary~\ref{cor:bijection_transvals} is useful for enumeration purposes, as $|\Trv(\L)|=\sum_{x\le y}2^{|K_{[x,y]}|}$. Other methods for enumerating transvals will be discussed in Section~\ref{sec:trv_cjr}.
 
 	\begin{prop}
 		Let $[x,y]$ be an interval of $\L$. $(y,x)$ is a transval of $\L$ if and only if $[x,y]$ is a nuclear interval.
@@ -278,46 +288,32 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
 
   \begin{lem}\label{TransvalsClosureLemma}
     Let \(a_1,a_2,b_1,b_2 \in \L\).
-    \begin{enumerate}
+    \begin{itemize}
       \item If \((a_1,b_1)\) and \((a_2,b_1)\) are transvals, then \((a_1 \vee a_2, b_1)\) is a transval.
       \item If \((a_1,b_1)\) and \((a_1,b_2)\) are transvals, then \((a_1, b_1 \wedge b_2)\) is a transval.
-    \end{enumerate}
+    \end{itemize}
   \end{lem}
   \begin{proof}
-    It remains to prove (1). The following argument uses only finiteness and the two semidistributive laws.
+    We use the following facts:
+    \begin{enumerate}
+      \item For all $j\in\Gamma(x)$, $j_*\le \popdown(x)$, but $j\nleq \popdown(x)$;
+      \item If $j$ is join-irreducible and $ j_*\le y, j\le \popup(y)$, and $j\nleq y$, then $j\in U(y)$.
+    \end{enumerate}
     
-    For each cover \(p\prec q\), join-semidistributivity makes
-    \[
-    \{z:p\vee z=q\}
-    \]
-    closed under meets. It therefore has a least element \(j\), which we call the **label** of that cover. Every element strictly below \(j\) lies below \(p\), so \(j\) is join-irreducible, with unique lower cover \(j_*\le p\).
-    \ludovic{$\Gamma(x)$ is the canonical join-representation of $x$}
-    Let \(\Gamma(x)\) be the labels of the covers immediately below \(x\), and let \(U(y)\) be the labels of the covers immediately above \(y\). We need three elementary facts:
+    Fact $(1)$ is proved as follows. If \(j\) labels \(p\lessdot x\), then \(j_*\le p\). Every other lower cover \(q\) of \(x\) satisfies \(p\vee q=x\), so \(j\le q\). Taking the meet of the lower covers proves the first assertion; \(j\nleq p\) proves the second.
     
-    - **\(x=\bigvee\Gamma(x)\).** Otherwise this join lies below some lower cover \(p\prec x\), contradicting the fact that the label of \(p\prec x\) is not below \(p\).
-    - **\(\Gamma(x)\) refines every join representation of \(x\).** If \(x=\bigvee R\), then for each \(p\prec x\), some \(r\in R\) is not below \(p\). Hence \(p\vee r=x\), so the label of \(p\prec x\) lies below \(r\).
-   \ludovic{$l(x)=\popdown(x)$ and $u(x)=\popup(x)$}
-    - **For \(j\in\Gamma(x)\), \(j_*\le l(x)\), but \(j\nleq l(x)\).** If \(j\) labels \(p\prec x\), then \(j_*\le p\). Every other lower cover \(q\) of \(x\) satisfies \(p\vee q=x\), so \(j\le q\). Taking the meet of the lower covers proves the first assertion; \(j\nleq p\) proves the second.
-    
-    Here is another useful observation. If \(j\) is join-irreducible and
-    \[
-    j_*\le y,\qquad j\le u(y),\qquad j\nleq y,
-    \]
-    then \(j\in U(y)\). Indeed, if no upper cover \(z\) of \(y\) contained \(j\), we would have \(j\wedge z=j_*\) for every such cover. Meet-semidistributivity would then give
-    \[
-    j\wedge u(y)=j_*,
-    \]
-    contradicting \(j\le u(y)\). Thus some upper cover contains \(j\), and \(j_*\le y\) ensures that \(j\) is its label.
+    Fact $(2)$ is proved as follows. If no upper cover \(z\) of \(y\) contained \(j\), we would have \(j\wedge z=j_*\) for every such cover. Meet-semidistributivity would then give $ j\wedge \popup(y)=j_*$,
+    contradicting \(j\le \popup(y)\). Thus some upper cover contains \(j\), and \(j_*\le y\) ensures that \(j\) is its label.
  
     
     Finally, the allowed set of join-irreducibles on the right of Proposition~\ref{pr:transvals_edgelabelling} is downward closed among join-irreducibles: if \(j\in U(y)\), every element strictly below \(j\) lies below \(j_*\le y\).
     
-    If \(T(a,y)\) and \(T(c,y)\), the refinement property says every label in \(\Gamma(a\vee c)\) lies below some label in \(\Gamma(a)\cup\Gamma(c)\). It therefore remains in that allowed set. By (2), \(T(a\vee c,y)\).
+    If \((a,y)\) and \((c,y)\) are transvals, the refinement property says that every label in \(\Gamma(a\vee c)\) lies below some label in \(\Gamma(a)\cup\Gamma(c)\). It therefore remains in that allowed set. By Proposition~\ref{pr:transvals_edgelabelling}, \((a\vee c,y)\) is a transval.
     
-    Applying the same argument to the dual lattice proves the meet statement in (1), completing the proof. \(\square\)
+    Applying the same argument to the dual lattice proves the statement for the meets, completing the proof.
   \end{proof}
 
-  \begin{cor}
+  \begin{prop}
     Let \((a_1,b_1)\) and \((a_2,b_2)\) be transvals in \(\L\). Let
     \begin{align*}
       c &= \bigwedge \left\{ x \geq b_1 \vee b_2 : (a_1 \vee a_2,x) \text{ is a transval} \right\}, \\     
@@ -328,10 +324,10 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
       (a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c), \\
       (a_1,b_1) \wedge (a_2,b_2) = ( d , b_1 \wedge b_2 ).
     \end{align*}
-  \end{cor}
+  \end{prop}
   \begin{proof}
     It suffices to prove \((a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c)\) for \(c\) as defined above.
-    By Lemma~\ref{TransvalsClosureLemma} part (2) and using that \(\L\) is finite, we have \((a_1 \vee a_2, c)\) is a transval.
+    By Lemma~\ref{TransvalsClosureLemma} and using that \(\L\) is finite, we have \((a_1 \vee a_2, c)\) is a transval.
 
     First, we show \((a_1 \vee a_2, c)\) is an upper bound. That is, we want to show \((a_1 \vee a_2, c) \geq (a_i, b_i)\) for all \(i \in \{1,2\}\).
     By definition of \(c\), we have that \(c \geq b_1 \vee b_2\). So, \(c \geq b_i\).
@@ -349,6 +345,9 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
   \end{proof}
 
 \subsection{Face transvals}
+\begin{defi}
+    A pair $(x,y)\in \L^2$ is a face transval of $\L$ if it is a transval such that $[x\wedge y,x\vee y]$ is a face.
+\end{defi}
 
 
 \section{Lattice structures of transvals}
@@ -474,6 +473,7 @@ We define $\SpTrvGraph(\Sha)$ as the set of pairs $(x,k)$ with $x\in \Sha$ and $
 	\end{table}
 
 \section{Canonical join-representations}
+\label{sec:trv_cjr}
 
 \begin{defi}
   Let $G$ be a directed graph. A min-max set of $G$ is a subset $X\subseteq G$ such that for all $x\in X$, there is no $y,z\in X$ such that $y\to x\to z$.
