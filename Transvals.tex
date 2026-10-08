@@ -274,6 +274,15 @@ The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\pop
 	
 In a join-semidistributive lattice, there is a canonical labelling of edges by join-irreducible elements $\gamma:(x,y)\mapsto \min \{j: j\vee x = y\}$. $\Gamma(y):=\{\gamma(x,y):x\lessdot y\}$ is the canonical join-representation of $y$, and we write $U(x):=\{\gamma(x,y):y\gtrdot x\}$. Note that $\kappa(U(x))$ is the canonical meet-representation of $x$.
 	
+	\ludovic{Also true for faces, as well as Lemma \ref{TransvalsClosureLemma}}
+  \begin{lem}\label{TransvalsClosureLemmabis}
+    Let \(a,b,c \in \L\).
+    \begin{itemize}
+      \item If \((a,b)\) and \((a, c)\) are transvals, then \((a, b \vee c)\) is a transval.
+      \item dual statement
+    \end{itemize}
+  \end{lem}
+	
 		\ludovic{This proposition could be proved more directly using Proposition~\ref{pr:transval_triplets} I think}
 \begin{prop}\label{pr:transvals_edgelabelling}
    $(x,y)$ is a transval of $\L$ if and only if $\Gamma(x)\subseteq \{j\in\JIrr(\L) :j\le y\}\cup U(y)$
