@@ -202,7 +202,7 @@ Any finite lattice $\L$ can be represented as the lattice of lower sets of a set
 It is straightforward to check that for all $x\gtrdot\Lmin$, $x=\bigwedge_{y\gtrdot \Lmin , y\neq x}\kappa(y)$ and $\Lmin=\bigwedge_{y\gtrdot \Lmin}\kappa(y)$ (these are the canonical meet-representations of $x$ and $\Lmin$, respectively). Hence, if for all atoms $x$ , $\kappa(x)$ is a coatom, then $\L$ is a nuclear interval. Conversely, if there exists $x\gtrdot \Lmin$ such that $\kappa(x)$ is not a coatom, it implies that for all coatoms $y\lessdot \Lmax$, we have $x\le y$, so their meet is above $x$ and $\L$ is not nuclear.
 \end{proof}
 
-\begin{prop}
+\begin{prop}\label{PropositionNuclearCoNuclear}
    Let $\L$ be a finite meet-semidistributive lattice. Let $[x,y]$ be a conuclear interval of $\L$. Then $[x,y]$ is a nuclear interval.
 \end{prop}
 \begin{proof}
@@ -225,10 +225,63 @@ We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we
 
 The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right]$. Hanson proved that for any lattice, if its nuclear intervals compared coordinatewise form a lattice then their join has this expression~\cite{Hans24}.
 %$$[x_1,y_1]\vee[x_2,y_2]=\left[\bigwedge\{z:x_1\vee x_2\le z\lessdot y_1\vee y_2\}\cup \{y_1\vee y_2\}, y_1\vee y_2\right]$$
-	
-	\subsection{Transvals}
-	
-	\begin{defi}
+
+  \begin{lem}\label{FaceClosureLemmabis}
+    Suppose \(\L\) is finite and semidistributive. 
+    Let \(a_1,a_2,b_1,b_2 \in \L\).
+    \begin{itemize}
+      \item If \([a_1,b_1]\) and \([a_1,b_2]\) are faces, then \([a_1, b_1 \vee b_2]\) is a face.
+      \item If \([a_1,b_1]\) and \([a_2,b_1]\) are faces, then \([a_1 \wedge a_2, b_1]\) is a face.
+    \end{itemize}
+  \end{lem}
+  \begin{proof}
+    It suffices to prove only the first statement. Let \([a_1,b_1], [a_1,b_2]\) be faces.
+    That is, \(\popdown_{a_1}(b_1) = a_1\) and \(\popdown_{a_1}(b_2) = a_1\).
+    It is clear that \([a_1, b_1 \vee b_2]\) is an interval. By Proposition~\ref{PropositionNuclearCoNuclear} and using that \(\L\) is finite and join-semidistributive,
+    it suffices to show \([a_1,b_1 \vee b_2]\) is a nuclear interval. That is, we want to show \(\popdown_{a_1}(b_1 \vee b_2) = a_1\).
+
+    Suppose \(\popdown_{a_1}(b_1 \vee b_2) \neq a_1\) for sake of contradiction. By definition, \(\popdown_{a_1}(b_1 \vee b_2) \geq a_1\).
+    By assumption, we have \(\popdown_{a_1}(b_1 \vee b_2) > a_1\).
+    Take any \(w \in [a_1,b_1 \vee b_2]\) such that
+    \[a_1 \lessdot w \leq \popdown_{a_1}(b_1 \vee b_2).\]
+    Let \(i \in \{1,2\}\). Consider the set 
+    \[S_i := \{ b_i \} \cup \{ z \in \L : a_1 \leq z \lessdot b_i \}\]
+    so that \(\popdown_{a_1}(b_i) = \bigwedge S_i\). Now, either \(w \leq b_i\) or \(w \not \leq b_i\).
+    \begin{itemize}
+      \item Suppose \(w \leq b_i\). 
+        Suppose \(c_i \geq w\) for all \(c_i \in S_i\). Then,
+        \[w > a_1 = \popdown_{a_1}(b_i) = \bigwedge S_i \geq w.\]
+        A contradiction. So we may choose \(c_i \in S_i\) such that \(c_i \not \geq w\).
+        Moreover, by the assumption \(w \leq b_i\) and using that \(c_i \not \geq w\), we have
+        \[c_i < c_i \vee w \leq b_i.\]
+        Since \(c_i \lessdot b_i\), we have \(c_i \vee w = b_i\).
+      \item Suppose \(w \not \leq b_i\). Pick \(c_i = b_i\) so that \(c_i \not \geq w\).
+        By the choice of \(c_i\), we have \(c_i \vee w \geq b_i\).
+    \end{itemize}
+    In either case, there exists \(c_i \in S_i\) with the properties \(c_i \not \geq w\) and \(c_i \vee w \geq b_i\) for both \(i \in \{1,2\}\). Using the first property \(c_i \not \geq w\), we have
+    \[a_1 \leq c_i \wedge w < w.\]
+    Since \(a_1 \lessdot w\), we have \(c_i \wedge w = a_1\). By meet-semidistributivity, we have \((c_1 \vee c_2) \wedge w = a_1\).
+    Since \(w \leq b_1 \vee b_2\), we have \((b_1 \vee b_2) \wedge w = w \neq a_1\). Hence, \(c_1 \vee c_2 \neq b_2 \vee b_2\).
+    In particular,
+    \[a_1 \leq c_1 \vee c_2 < b_1 \vee b_2.\]
+    So there exists \(c \in [a_1,b_1 \vee b_2]\) such that
+    \(c_1 \vee c_2 \leq c \lessdot b_1 \vee b_2\).
+    By definition of \(w\), we have \(w \leq \popdown_{a_1}(b_1 \vee b_2) \leq c\).
+    Hence,
+    \[(c_1 \vee c_2) \vee w \leq c \lessdot b_1 \vee b_2.\]
+    Now, using the second property \(c_i \vee w \geq b_i\), we have \((c_1 \vee c_2) \vee w \geq b_1 \vee b_2\).
+    A contradiction.
+  \end{proof}
+  \jonathan{The proof of Lemma~\ref{FaceClosureLemmabis} can probably be shorter.
+  The main idea is that \(\popdown_{a_1}(b_1 \vee b_2) = a_1\) if \(\popdown_{a_1}(b_1) = \popdown_{a_1}(b_2) = a_1\).
+  This follows from the simpler statement that \(\popdown(b_1 \vee b_2) = 0\) if \(\popdown(b_1) = \popdown(b_2) = 0\).
+  This only needs meet-semidistributivity.
+  Join-semidistributive and finiteness is needed to use Proposition~\ref{PropositionNuclearCoNuclear}.
+  We should check if join-semidistributivity is actually needed.}
+
+  \subsection{Transvals}
+
+  \begin{defi}
 	    Let $\L$ be a lattice, and $x,y\in \L$. The pair $(x,y)$ is a \defn{transval} of $\L$ if $x_*\le y$ and $x\le y^*$.
 	\end{defi}
 	
@@ -276,10 +329,10 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
 	
 	\ludovic{Also true for faces, as well as Lemma \ref{TransvalsClosureLemma}}
   \begin{lem}\label{TransvalsClosureLemmabis}
-    Let \(a,b,c \in \L\).
+    Let \(a_1,a_2,b_1,b_2 \in \L\).
     \begin{itemize}
-      \item If \((a,b)\) and \((a, c)\) are transvals, then \((a, b \vee c)\) is a transval.
-      \item dual statement
+      \item If \((a_1,b_1)\) and \((a_1,b_2)\) are transvals, then \((a_1, b_1 \vee b_2)\) is a transval.
+      \item If \((a_1,b_1)\) and \((a_2,b_1)\) are transvals, then \((a_1 \wedge a_2, b_1)\) is a transval.
     \end{itemize}
   \end{lem}
 	
@@ -325,8 +378,8 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
   \begin{prop}
     Let \((a_1,b_1)\) and \((a_2,b_2)\) be transvals in \(\L\). Let
     \begin{align*}
-      c &= \bigwedge \left\{ x \geq b_1 \vee b_2 : (a_1 \vee a_2,x) \text{ is a transval} \right\}, \\     
-      d &= \bigvee \left\{ x \leq a_1 \wedge a_2 : (x, b_1 \wedge b_2) \text{ is a transval} \right\}.
+      c &= \min \left\{ x \geq b_1 \vee b_2 : (a_1 \vee a_2,x) \text{ is a transval} \right\}, \\     
+      d &= \max \left\{ x \leq a_1 \wedge a_2 : (x, b_1 \wedge b_2) \text{ is a transval} \right\}.
     \end{align*}
     Then,
     \begin{align*}
