@@ -50,6 +50,7 @@
 \newcommand{\Lmin}{\mathbf 0}
 \newcommand{\Lmax}{\mathbf 1}
 \newcommand{\JIrrGraph}{\operatorname{JG}}
+\newcommand{\joinlabel}{\operatorname{j}}
 
 \newcommand{\Fac}{\mathbf{FInt}}
 \newcommand{\Trf}{\mathbf{FTrv}}
@@ -179,6 +180,7 @@ The following assertions are equivalent:
 
 A lattice respecting the dual condition is called \defn{join-semidistributive}. A lattice which is both meet- and join-distributive is called \defn{semidistributive}.
 
+A finite join-semidistributive lattice has a canonical labelling of edges by join-irreducibles defined for all $x\lessdot y$ by $\joinlabel(x,y):=\min\{z:z\vee x=y\}$.
 \subsection{Join-distributive lattices}
 
 The following assertions are equivalent:
@@ -223,61 +225,28 @@ We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we
 \end{figure}
 
 
-The join of two nuclear intervals is given by $[x_1,y_1]\vee[x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right]$. Hanson proved that for any lattice, if its nuclear intervals compared coordinatewise form a lattice then their join has this expression~\cite{Hans24}.
+Hanson proved that for any lattice, if its nuclear intervals compared coordinatewise form a lattice then their join has the following expression~\cite{Hans24}: $$[x_1,y_1]\vee[x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right].$$
 %$$[x_1,y_1]\vee[x_2,y_2]=\left[\bigwedge\{z:x_1\vee x_2\le z\lessdot y_1\vee y_2\}\cup \{y_1\vee y_2\}, y_1\vee y_2\right]$$
 
-  \begin{lem}\label{FaceClosureLemmabis}
-    Suppose \(\L\) is finite and semidistributive. 
-    Let \(a_1,a_2,b_1,b_2 \in \L\).
-    \begin{itemize}
-      \item If \([a_1,b_1]\) and \([a_1,b_2]\) are faces, then \([a_1, b_1 \vee b_2]\) is a face.
-      \item If \([a_1,b_1]\) and \([a_2,b_1]\) are faces, then \([a_1 \wedge a_2, b_1]\) is a face.
-    \end{itemize}
-  \end{lem}
-  \begin{proof}
-    It suffices to prove only the first statement. Let \([a_1,b_1], [a_1,b_2]\) be faces.
-    That is, \(\popdown_{a_1}(b_1) = a_1\) and \(\popdown_{a_1}(b_2) = a_1\).
-    It is clear that \([a_1, b_1 \vee b_2]\) is an interval. By Proposition~\ref{PropositionNuclearCoNuclear} and using that \(\L\) is finite and join-semidistributive,
-    it suffices to show \([a_1,b_1 \vee b_2]\) is a nuclear interval. That is, we want to show \(\popdown_{a_1}(b_1 \vee b_2) = a_1\).
+We prove that for any finite semidistributive lattice, its faces form automatically a lattice.
 
-    Suppose \(\popdown_{a_1}(b_1 \vee b_2) \neq a_1\) for sake of contradiction. By definition, \(\popdown_{a_1}(b_1 \vee b_2) \geq a_1\).
-    By assumption, we have \(\popdown_{a_1}(b_1 \vee b_2) > a_1\).
-    Take any \(w \in [a_1,b_1 \vee b_2]\) such that
-    \[a_1 \lessdot w \leq \popdown_{a_1}(b_1 \vee b_2).\]
-    Let \(i \in \{1,2\}\). Consider the set 
-    \[S_i := \{ b_i \} \cup \{ z \in \L : a_1 \leq z \lessdot b_i \}\]
-    so that \(\popdown_{a_1}(b_i) = \bigwedge S_i\). Now, either \(w \leq b_i\) or \(w \not \leq b_i\).
-    \begin{itemize}
-      \item Suppose \(w \leq b_i\). 
-        Suppose \(c_i \geq w\) for all \(c_i \in S_i\). Then,
-        \[w > a_1 = \popdown_{a_1}(b_i) = \bigwedge S_i \geq w.\]
-        A contradiction. So we may choose \(c_i \in S_i\) such that \(c_i \not \geq w\).
-        Moreover, by the assumption \(w \leq b_i\) and using that \(c_i \not \geq w\), we have
-        \[c_i < c_i \vee w \leq b_i.\]
-        Since \(c_i \lessdot b_i\), we have \(c_i \vee w = b_i\).
-      \item Suppose \(w \not \leq b_i\). Pick \(c_i = b_i\) so that \(c_i \not \geq w\).
-        By the choice of \(c_i\), we have \(c_i \vee w \geq b_i\).
-    \end{itemize}
-    In either case, there exists \(c_i \in S_i\) with the properties \(c_i \not \geq w\) and \(c_i \vee w \geq b_i\) for both \(i \in \{1,2\}\). Using the first property \(c_i \not \geq w\), we have
-    \[a_1 \leq c_i \wedge w < w.\]
-    Since \(a_1 \lessdot w\), we have \(c_i \wedge w = a_1\). By meet-semidistributivity, we have \((c_1 \vee c_2) \wedge w = a_1\).
-    Since \(w \leq b_1 \vee b_2\), we have \((b_1 \vee b_2) \wedge w = w \neq a_1\). Hence, \(c_1 \vee c_2 \neq b_2 \vee b_2\).
-    In particular,
-    \[a_1 \leq c_1 \vee c_2 < b_1 \vee b_2.\]
-    So there exists \(c \in [a_1,b_1 \vee b_2]\) such that
-    \(c_1 \vee c_2 \leq c \lessdot b_1 \vee b_2\).
-    By definition of \(w\), we have \(w \leq \popdown_{a_1}(b_1 \vee b_2) \leq c\).
-    Hence,
-    \[(c_1 \vee c_2) \vee w \leq c \lessdot b_1 \vee b_2.\]
-    Now, using the second property \(c_i \vee w \geq b_i\), we have \((c_1 \vee c_2) \vee w \geq b_1 \vee b_2\).
-    A contradiction.
-  \end{proof}
-  \jonathan{The proof of Lemma~\ref{FaceClosureLemmabis} can probably be shorter.
-  The main idea is that \(\popdown_{a_1}(b_1 \vee b_2) = a_1\) if \(\popdown_{a_1}(b_1) = \popdown_{a_1}(b_2) = a_1\).
-  This follows from the simpler statement that \(\popdown(b_1 \vee b_2) = 0\) if \(\popdown(b_1) = \popdown(b_2) = 0\).
-  This only needs meet-semidistributivity.
-  Join-semidistributive and finiteness is needed to use Proposition~\ref{PropositionNuclearCoNuclear}.
-  We should check if join-semidistributivity is actually needed.}
+\begin{lem}
+  \label{lem:faces}
+   Let $[x,y]$ be a face of a finite semidistributive lattice, and $a\lessdot b$ with $a\le x$ and $b\le y$. Then $b\vee x=x$ or $b\vee x\gtrdot x$.
+\end{lem}
+\begin{proof}
+   If $b\le x$, $b\vee x=x$ and we conclude. Assume that $b\nleq x$. Let $j:=\joinlabel(a,b)$. We have $j\nleq x$, otherwise we would have $b=j\vee a \le x$.
+   Since $x$ is the meet of lower covers of $y$, there exists $d\lessdot y$ such that $j\nleq d$. $j$ is the smallest element such that $j\vee d=y$, so $\joinlabel(d,y)=j$. Since $[x,y]$ is a face, there exists $c\gtrdot x$ such that $\joinlabel(x,c)=j$. Hence, $c=j\vee x=b\vee x$.
+\end{proof}
+
+\begin{prop}
+  Let $[x_1,y_1], [x_2,y_2]$ be faces of a finite semidistributive lattice $L$. Then $[x_1,y_1], [x_2,y_2]$ have a meet, which is equal to $\left[x, \popup_y(x)\right]$ where $x:=x_1\wedge x_2$ and $y:=y_1\wedge y_2$.
+\end{prop} 
+\begin{proof}
+Let $[a,b]$ be a face of $\L$ such that $a\le x:=x_1\wedge x_2$ and $b\le y:=y_1\wedge y_2$. We need to prove that $b\le \popup_y(x)$, and for this we show that for each upper cover $c\gtrdot a$, $c$ is below an upper cover of $x$ which is below $x_1$ and $x_2$. If $c\le x$ the result is trivial. %If not,  at least one $x_i$ verify $c\nleq x_i$.
+By Lemma~\ref{lem:faces}, $d_i:=c\vee x_i$ is either an upper cover of $x_i$ or equal to $x_i$. Let $j=\joinlabel(a,c)$,  $k=\kappa(j)$ and $u=j\vee x$. We have $d_i\wedge k\le x_i$ and $u\le d_1\wedge d_2$, thus $u\wedge k=x$. 
+Let $x\le v \le u$. Assume for a contradiction that $j\nleq v$. We have $v\ge x\ge j_*$  so $v\wedge j=j_*$ and $v\le k$, thus $v\le u\wedge k=x$, which is impossible. Hence, $j\le v$ and so $v\ge j\vee x=u$, meaning that $u$ is an upper cover of $x$.
+\end{proof}
 
   \subsection{Transvals}
 
@@ -378,7 +347,7 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
   \begin{prop}
     Let \((a_1,b_1)\) and \((a_2,b_2)\) be transvals in \(\L\). Let
     \begin{align*}
-      c &= \min \left\{ x \geq b_1 \vee b_2 : (a_1 \vee a_2,x) \text{ is a transval} \right\}, \\     
+      c &= \min \left\{ y \geq b_1 \vee b_2 : (a_1 \vee a_2,y) \text{ is a transval} \right\}, \\     
       d &= \max \left\{ x \leq a_1 \wedge a_2 : (x, b_1 \wedge b_2) \text{ is a transval} \right\}.
     \end{align*}
     Then,
@@ -396,10 +365,10 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
     Also, \(a_1 \vee a_2 \geq a_i\).
     Hence, \((a_1 \vee a_2, c) \geq (a_i, b_i)\).
 
-    It remains to show \((a_1 \vee a_2, c)\) is a \textit{minimal} upper bound.
+    It remains to show \((a_1 \vee a_2, c)\) is a minimal upper bound.
     Take any transval \((e,f)\) such that \((e,f) \geq (a_i,b_i)\) for all \(i \in \{1,2\}\).
-    We want to show \((a_1 \vee a_2, c) \leq (e,f)\). By definition of transval,
-    \[{a_i}_* \leq b_i \leq f \text{ and } a_i \leq e \leq f^*.\]
+    We want to show \((a_1 \vee a_2, c) \leq (e,f)\). By definition of transvals,
+    \[\popdown(a_i) \leq b_i \leq f \text{ and } a_i \leq e \leq \popup(f)\]
     Hence, \((a_i,f)\) is a transval for all \(i \in \{1,2\}\).
     By Lemma~\ref{TransvalsClosureLemma}, \((a_1 \vee a_2, f)\) is a transval.
     By assumption, \(f \geq b_1 \vee b_2\). So by definition of \(c\), we have \(c \leq f\).
