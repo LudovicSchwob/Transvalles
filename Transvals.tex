@@ -226,26 +226,39 @@ We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we
 
 
 Hanson proved that for any lattice, if its nuclear intervals compared coordinatewise form a lattice then their join has the following expression~\cite{Hans24}: $$[x_1,y_1]\vee[x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right].$$
-%$$[x_1,y_1]\vee[x_2,y_2]=\left[\bigwedge\{z:x_1\vee x_2\le z\lessdot y_1\vee y_2\}\cup \{y_1\vee y_2\}, y_1\vee y_2\right]$$
 
-We prove that for any finite semidistributive lattice, its faces form automatically a lattice.
+%\begin{lem}
+%  \label{lem:faces}
+%   Let $[x,y]$ be a face of a finite semidistributive lattice, and $a\lessdot b$ with $a\le x$ and $b\le y$. Then $b\vee x=x$ or $b\vee x\gtrdot x$.
+%\end{lem}
+%\begin{proof}
+%   If $b\le x$, $b\vee x=x$ and we conclude. Assume that $b\nleq x$. Let $j:=\joinlabel(a,b)$. We have $j\nleq x$, otherwise we would have $b=j\vee a \le x$.
+%   Since $x$ is the meet of lower covers of $y$, there exists $d\lessdot y$ such that $j\nleq d$. $j$ is the smallest element such that $j\vee d=y$, so $\joinlabel(d,y)=j$. Since $[x,y]$ is a face, there exists $c\gtrdot x$ such that $\joinlabel(x,c)=j$. Hence, $c=j\vee x=b\vee x$.
+%\end{proof}
+%
+%\begin{prop}
+%  Let $[x_1,y_1], [x_2,y_2]$ be faces of a finite semidistributive lattice $L$. Then $[x_1,y_1], [x_2,y_2]$ have a meet, which is equal to $\left[x, \popup_y(x)\right]$ where $x:=x_1\wedge x_2$ and $y:=y_1\wedge y_2$.
+%\end{prop} 
+%\begin{proof}
+%Let $[a,b]$ be a face of $\L$ such that $a\le x:=x_1\wedge x_2$ and $b\le y:=y_1\wedge y_2$. We need to prove that $b\le \popup_y(x)$, and for this we show that for each upper cover $c\gtrdot a$, $c$ is below an upper cover of $x$ which is below $x_1$ and $x_2$. If $c\le x$ the result is trivial. %If not,  at least one $x_i$ verify $c\nleq x_i$.
+%By Lemma~\ref{lem:faces}, $d_i:=c\vee x_i$ is either an upper cover of $x_i$ or equal to $x_i$. Let $j=\joinlabel(a,c)$,  $k=\kappa(j)$ and $u=j\vee x$. We have $d_i\wedge k\le x_i$ and $u\le d_1\wedge d_2$, thus $u\wedge k=x$. 
+%Let $x\le v \le u$. Assume for a contradiction that $j\nleq v$. We have $v\ge x\ge j_*$  so $v\wedge j=j_*$ and $v\le k$, thus $v\le u\wedge k=x$, which is impossible. Hence, $j\le v$ and so $v\ge j\vee x=u$, meaning that $u$ is an upper cover of $x$.
+%\end{proof}
 
+We prove that this operation defines a join on nuclear intervals of a join-semidistributive lattice.
 \begin{lem}
-  \label{lem:faces}
-   Let $[x,y]$ be a face of a finite semidistributive lattice, and $a\lessdot b$ with $a\le x$ and $b\le y$. Then $b\vee x=x$ or $b\vee x\gtrdot x$.
+  \label{lem:faces_lattice}
+   Let $[x,y]$ be a nuclear interval of a finite join-semidistributive lattice with $x\neq y$, and $a\lessdot b$ with $x\le a$ and $y\le b$. Then there exists $z\lessdot y$ such that $x\le z\le a$.
 \end{lem}
 \begin{proof}
-   If $b\le x$, $b\vee x=x$ and we conclude. Assume that $b\nleq x$. Let $j:=\joinlabel(a,b)$. We have $j\nleq x$, otherwise we would have $b=j\vee a \le x$.
-   Since $x$ is the meet of lower covers of $y$, there exists $d\lessdot y$ such that $j\nleq d$. $j$ is the smallest element such that $j\vee d=y$, so $\joinlabel(d,y)=j$. Since $[x,y]$ is a face, there exists $c\gtrdot x$ such that $\joinlabel(x,c)=j$. Hence, $c=j\vee x=b\vee x$.
+   Write $x =\bigwedge S$ where $S$ is a nonempty set of lower covers of $y$, and assume for a contradiction that for all $s\in S$, $s\nleq a$. For all $s\in S$, we have $s\vee a = b$ since $s\le y\le b$, $s\nleq b$ and $a\lessdot b$. By join-semidistributivity, $\left( \bigwedge S\right)\vee a=b$, which is impossible since $\bigwedge S = x\le a < b$.
 \end{proof}
 
 \begin{prop}
-  Let $[x_1,y_1], [x_2,y_2]$ be faces of a finite semidistributive lattice $L$. Then $[x_1,y_1], [x_2,y_2]$ have a meet, which is equal to $\left[x, \popup_y(x)\right]$ where $x:=x_1\wedge x_2$ and $y:=y_1\wedge y_2$.
-\end{prop} 
+     Let $\L$ be a finite join-semidistributive lattice. The operation $$[x_1,y_1]\vee [x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right]$$ defines a join on the set of nuclear intervals of $\L$.
+\end{prop}
 \begin{proof}
-Let $[a,b]$ be a face of $\L$ such that $a\le x:=x_1\wedge x_2$ and $b\le y:=y_1\wedge y_2$. We need to prove that $b\le \popup_y(x)$, and for this we show that for each upper cover $c\gtrdot a$, $c$ is below an upper cover of $x$ which is below $x_1$ and $x_2$. If $c\le x$ the result is trivial. %If not,  at least one $x_i$ verify $c\nleq x_i$.
-By Lemma~\ref{lem:faces}, $d_i:=c\vee x_i$ is either an upper cover of $x_i$ or equal to $x_i$. Let $j=\joinlabel(a,c)$,  $k=\kappa(j)$ and $u=j\vee x$. We have $d_i\wedge k\le x_i$ and $u\le d_1\wedge d_2$, thus $u\wedge k=x$. 
-Let $x\le v \le u$. Assume for a contradiction that $j\nleq v$. We have $v\ge x\ge j_*$  so $v\wedge j=j_*$ and $v\le k$, thus $v\le u\wedge k=x$, which is impossible. Hence, $j\le v$ and so $v\ge j\vee x=u$, meaning that $u$ is an upper cover of $x$.
+   Let $[a,b]$ be a nuclear interval of $\L$ such that $[x_1,y_1]\le [a,b]$ and $[x_2,y_2]\le [a,b]$. Since $y=y_1\vee y_2 \le b$, we just need to prove that $x=\popdown_{x_1\vee x_2} (y_1\vee y_2)\le a$. The inequality is obvious if $y\le a$, so we can assume without loss of generality that $y_1\nleq a$. This also implies $a\neq b$, and we can write $a$ as $\bigwedge S$ where $S$ is a nonempty set of lower covers of $b$. By Lemma~ \ref{lem:faces_lattice}, for all $s\in S$ there exists $z\lessdot y$ such that $x\le z \le s$. Hence, $x\le \bigwedge S = a$ and $[x, y]\le [a,b]$.
 \end{proof}
 
   \subsection{Transvals}
@@ -786,7 +799,7 @@ If $a,c\in \MN(b)$ with $a<b<c$, then for all $a<k<b$, we have $k\in \MN(b)$ or 
 
 	
 	\section{Acknowledgements}
-	The numeral coincidences for the number of transvals in the Tamari lattice and the weak order were discovered thanks to the OEIS.
+	The numeral coincidences for the number of transvals in the Tamari lattice and the weak order were discovered thanks to the OEIS. We thank Jian Dai for his work on the lattice of faces.
 	
 \bibliography{Transvals}{}
 \bibliographystyle{alpha}
