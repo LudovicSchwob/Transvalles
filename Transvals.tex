@@ -307,6 +307,7 @@ We prove that this operation defines a join on nuclear intervals of a join-semid
 		Let $[x,y]$ be an interval of $\L$. $(y,x)$ is a transval of $\L$ if and only if $[x,y]$ is a nuclear interval.
 	\end{prop}
 
+\ludovic{Proposition~\ref{ClosureFaceProp} also implies that $[x\wedge y, x]\le [w,w\vee x]\le [y,y\vee x]$ are all faces.}
   \begin{prop}\label{ClosureFaceProp}
     Let \((x,y)\) be a transval and \(w \in [0,y]\) such that \((w \vee x) \wedge y = w\). Then, \([w, w \vee x]\) is a face.
   \end{prop}
@@ -344,15 +345,8 @@ We prove that this operation defines a join on nuclear intervals of a join-semid
 	
 In a join-semidistributive lattice, there is a canonical labelling of edges by join-irreducible elements $\gamma:(x,y)\mapsto \min \{j: j\vee x = y\}$. $\Gamma(y):=\{\gamma(x,y):x\lessdot y\}$ is the canonical join-representation of $y$, and we write $U(x):=\{\gamma(x,y):y\gtrdot x\}$. Note that $\kappa(U(x))$ is the canonical meet-representation of $x$.
 	
-	\ludovic{Also true for faces, as well as Lemma \ref{TransvalsClosureLemma}}
-  \begin{lem}\label{TransvalsClosureLemmabis}
-    Let \(a_1,a_2,b_1,b_2 \in \L\).
-    \begin{itemize}
-      \item If \((a_1,b_1)\) and \((a_1,b_2)\) are transvals, then \((a_1, b_1 \vee b_2)\) is a transval.
-      \item If \((a_1,b_1)\) and \((a_2,b_1)\) are transvals, then \((a_1 \wedge a_2, b_1)\) is a transval.
-    \end{itemize}
-  \end{lem}
-		\ludovic{This proposition could be proved more directly using Proposition~\ref{pr:transval_triplets} I think}
+
+		\ludovic{This proposition could be proved more directly using Proposition~\ref{pr:transval_triplets} I think. Maybe we can just remove it, as we don't use it in the proof ?}
 \begin{prop}\label{pr:transvals_edgelabelling}
    $(x,y)$ is a transval of $\L$ if and only if $\Gamma(x)\subseteq \{j\in\JIrr(\L) :j\le y\}\cup U(y)$
 \end{prop}
