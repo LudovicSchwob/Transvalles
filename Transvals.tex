@@ -204,27 +204,6 @@ Any finite lattice $\L$ can be represented as the lattice of lower sets of a set
 It is straightforward to check that for all $x\gtrdot\Lmin$, $x=\bigwedge_{y\gtrdot \Lmin , y\neq x}\kappa(y)$ and $\Lmin=\bigwedge_{y\gtrdot \Lmin}\kappa(y)$ (these are the canonical meet-representations of $x$ and $\Lmin$, respectively). Hence, if for all atoms $x$ , $\kappa(x)$ is a coatom, then $\L$ is a nuclear interval. Conversely, if there exists $x\gtrdot \Lmin$ such that $\kappa(x)$ is not a coatom, it implies that for all coatoms $y\lessdot \Lmax$, we have $x\le y$, so their meet is above $x$ and $\L$ is not nuclear.
 \end{proof}
 
-\begin{prop}\label{PropositionNuclearCoNuclear}
-   Let $\L$ be a finite meet-semidistributive lattice. Let $[x,y]$ be a conuclear interval of $\L$. Then $[x,y]$ is a nuclear interval.
-\end{prop}
-\begin{proof}
-\label{pr:conuclear_implies_nuclear}
-   Without loss of generality, we take $\L=[x,y]$. Since $\L$ is conuclear, for all atoms $z\gtrdot x$, there exists $w\lessdot y$ such that $z\nleq w$ (if not, the join of the atoms would be less than $w$), and then $z\wedge w=x$ so $w=\kappa(z)$. By Lemma~\ref{lem:conuclear}, $[x,y]$ is nuclear.
-\end{proof}
-The converse is not true (see Figure~\ref{fig:inclusionoffaces}).
-It follows from Proposition~\ref{pr:conuclear_implies_nuclear}, and from its dual counterpart for join-semidistributive lattices, that in a semidistributive lattice, nuclear and conuclear intervals are the same. We will call \defn{faces} the binuclear intervals of a semidistributive lattice, as they coincide with geometric faces of many polytopal realizations of lattices such as the weak order and the Tamari lattice. However, faces of a semidistributive lattice do not always have a geometric interpretation (see Figure~\ref{fig:inclusionoffaces}).
-
-We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we have an injection from the atoms to the coatoms of $[x,y]$. In semidistributive lattices this is a bijection. We call the \defn{dimension} of a face $[x,y]$ its number of atoms of this interval, or equivalently its number of coatoms.
- 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.4\linewidth]{figures/nuclear_interval}\qquad
-\includegraphics[width=0.4\linewidth]{figures/inclusion_of_faces}
-\caption{Left: a meet-semidistributive lattice which is nuclear but not conuclear. Right: A semidistributive lattice with two faces of dimension $2$, one containing the other.}
-\label{fig:inclusionoffaces}
-\end{figure}
-
-
 Hanson proved that for any lattice, if its nuclear intervals compared coordinatewise form a lattice then their join has the following expression~\cite{Hans24}: $$[x_1,y_1]\vee[x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right].$$
 
 %\begin{lem}
@@ -251,7 +230,7 @@ We prove that this operation defines a join on nuclear intervals of a join-semid
    Let $[x,y]$ be a nuclear interval of a finite join-semidistributive lattice with $x\neq y$, and $a\lessdot b$ with $x\le a$ and $y\le b$. Then there exists $z\lessdot y$ such that $x\le z\le a$.
 \end{lem}
 \begin{proof}
-   Write $x =\bigwedge S$ where $S$ is a nonempty set of lower covers of $y$, and assume for a contradiction that for all $s\in S$, $s\nleq a$. For all $s\in S$, we have $s\vee a = b$ since $s\le y\le b$, $s\nleq b$ and $a\lessdot b$. By join-semidistributivity, $\left( \bigwedge S\right)\vee a=b$, which is impossible since $\bigwedge S = x\le a < b$.
+   Write $x =\bigwedge S$ where $S$ is a nonempty set of lower covers of $y$, and assume for a contradiction that for all $s\in S$, $s\nleq a$. For all $s\in S$, we have $s\vee a = b$ since $s\le y\le b$, $s\nleq a$ and $a\lessdot b$. By join-semidistributivity, $\left( \bigwedge S\right)\vee a=b$, which is impossible since $\bigwedge S = x\le a < b$.
 \end{proof}
 
 \begin{prop}\label{FaceJoinProp}
@@ -260,6 +239,28 @@ We prove that this operation defines a join on nuclear intervals of a join-semid
 \begin{proof}
    Let $[a,b]$ be a nuclear interval of $\L$ such that $[x_1,y_1]\le [a,b]$ and $[x_2,y_2]\le [a,b]$. Since $y=y_1\vee y_2 \le b$, we just need to prove that $x=\popdown_{x_1\vee x_2} (y_1\vee y_2)\le a$. The inequality is obvious if $y\le a$, so we can assume without loss of generality that $y_1\nleq a$. This also implies $a\neq b$, and we can write $a$ as $\bigwedge S$ where $S$ is a nonempty set of lower covers of $b$. By Lemma~ \ref{lem:faces_lattice}, for all $s\in S$ there exists $z\lessdot y$ such that $x\le z \le s$. Hence, $x\le \bigwedge S = a$ and $[x, y]\le [a,b]$.
 \end{proof}
+Since the set of nuclear intervals of finite lattice has a minimal element $[\Lmin, \Lmin]$ and is a join-semilattice by Proposition~\ref{FaceJoinProp}, it is a lattice. Dually, conuclear intervals of meet-semidistributive lattice have a meet given by $[x_1,y_1]\wedge[x_2,y_2]=\left[ x_1\wedge x_2,\popdown_{y_1\wedge y_2} (x_1\wedge x_2),\right]$, hence these also form a lattice.
+
+\begin{prop}\label{PropositionNuclearCoNuclear}
+   Let $\L$ be a finite meet-semidistributive lattice. Let $[x,y]$ be a conuclear interval of $\L$. Then $[x,y]$ is a nuclear interval.
+\end{prop}
+\begin{proof}
+\label{pr:conuclear_implies_nuclear}
+   Without loss of generality, we take $\L=[x,y]$. Since $\L$ is conuclear, for all atoms $z\gtrdot x$, there exists $w\lessdot y$ such that $z\nleq w$ (if not, the join of the atoms would be less than $w$), and then $z\wedge w=x$ so $w=\kappa(z)$. By Lemma~\ref{lem:conuclear}, $[x,y]$ is nuclear.
+\end{proof}
+The converse is not true (see Figure~\ref{fig:inclusionoffaces}).
+\ludovic{Compare this result with Prop. 7.8 of \cite{BaHa24}}
+It follows from Proposition~\ref{pr:conuclear_implies_nuclear}, and from its dual counterpart for join-semidistributive lattices, that in a semidistributive lattice, nuclear and conuclear intervals are the same. We will call \defn{faces} the binuclear intervals of a semidistributive lattice, as they coincide with geometric faces of many polytopal realizations of lattices such as the weak order and the Tamari lattice. However, faces of a semidistributive lattice do not always have a geometric interpretation (see Figure~\ref{fig:inclusionoffaces}).
+
+We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we have an injection from the atoms to the coatoms of $[x,y]$. In semidistributive lattices this is a bijection. We call the \defn{dimension} of a face $[x,y]$ its number of atoms of this interval, or equivalently its number of coatoms.
+ 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{figures/nuclear_interval}\qquad
+\includegraphics[width=0.4\linewidth]{figures/inclusion_of_faces}
+\caption{Left: a meet-semidistributive lattice which is nuclear but not conuclear. Right: A semidistributive lattice with two faces of dimension $2$, one containing the other.}
+\label{fig:inclusionoffaces}
+\end{figure}
 
   \subsection{Transvals}
 
@@ -414,6 +415,8 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
     \end{align*}
   \end{prop}
   \begin{proof}
+  Observe first that the set $\left\{ y \geq b_1 \vee b_2 : (a_1 \vee a_2,y) \text{ is a transval} \right\}$ is nonempty, and its minimum is well-defined because of Lemma~\ref{TransvalsClosureLemma}.
+  
     It suffices to prove \((a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c)\) for \(c\) as defined above.
     By Lemma~\ref{TransvalsClosureLemma} and using that \(\L\) is finite, we have \((a_1 \vee a_2, c)\) is a transval.
 
