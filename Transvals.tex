@@ -254,7 +254,7 @@ We prove that this operation defines a join on nuclear intervals of a join-semid
    Write $x =\bigwedge S$ where $S$ is a nonempty set of lower covers of $y$, and assume for a contradiction that for all $s\in S$, $s\nleq a$. For all $s\in S$, we have $s\vee a = b$ since $s\le y\le b$, $s\nleq b$ and $a\lessdot b$. By join-semidistributivity, $\left( \bigwedge S\right)\vee a=b$, which is impossible since $\bigwedge S = x\le a < b$.
 \end{proof}
 
-\begin{prop}
+\begin{prop}\label{FaceJoinProp}
      Let $\L$ be a finite join-semidistributive lattice. The operation $$[x_1,y_1]\vee [x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right]$$ defines a join on the set of nuclear intervals of $\L$.
 \end{prop}
 \begin{proof}
@@ -291,7 +291,7 @@ We prove that this operation defines a join on nuclear intervals of a join-semid
 	\begin{proof}
 	   It is straightforward to show that $\popdown\left(\bigvee J\right)\le x\le y$ and $\popup\left(\bigwedge \kappa(J)\right)\ge y\ge x$. Conversely, if $(a,b)$ is a transval of $\L$ with $x:=a\wedge b$ and $y:=a\vee b$, for all $c$ such that $x\lessdot c \le a$, there exists $d\lessdot y$ such that $c\nleq d$ (if not, we would have $c \le \bigwedge_{b\le d\lessdot y}d=b$ and $c\le x$). Hence we have $b\le \kappa_{[x,y]}(c)\lessdot y$. Dually, each coatom of $[x,y]$ which is above $b$ corresponds to an atom above $a$, implying that $(a,b)=\left(\bigvee J ,\bigvee \kappa{[x,y]}(J)\right)$ where $J=\{c:x\lessdot c\le a\}$ and we have $\kappa{[x,y]}(J)=\{d:b\le d\lessdot y\}$, so $J\subseteq K_{[x,y]}$.
 	\end{proof}
-	\begin{cor}
+  \begin{cor}\label{ExactTransvalCorollary}
 	   All transvals of a finite semidistributive lattice are exact transvals.
 	   \label{cor:exact_transvals}
 	\end{cor}
@@ -306,6 +306,41 @@ We prove that this operation defines a join on nuclear intervals of a join-semid
 	\begin{prop}
 		Let $[x,y]$ be an interval of $\L$. $(y,x)$ is a transval of $\L$ if and only if $[x,y]$ is a nuclear interval.
 	\end{prop}
+
+  \begin{prop}\label{ClosureFaceProp}
+    Let \((x,y)\) be a transval and \(w \in [0,y]\) such that \((w \vee x) \wedge y = w\). Then, \([w, w \vee x]\) is a face.
+  \end{prop}
+  \begin{proof}
+    By Corollary~\ref{ExactTransvalCorollary}, \([x \wedge y, x]\) and \([y, x \vee y]\) are faces.
+    By Proposition~\ref{FaceJoinProp}, the join in the lattice of faces of \([x \wedge y, x]\) and \([w,w]\) is
+    \[[x \wedge y, x] \vee [w,w] = [\popdown_{(x \wedge y) \vee w} (w \vee x), w \vee x].\]
+    Since \(x \wedge y \leq (w \vee x) \wedge y = w\),
+    \[[x \wedge y, x] \vee [w,w] = [\popdown_{w} (w \vee x), w \vee x].\]
+    But since both \([x \wedge y, x]\) and \([w,w]\) are less than \([y, x \vee y]\) in the lattice of faces, we have \(\popdown_{w} (w \vee x) \leq y\).
+    By definition of \(\popdown\), we have
+    \[w \leq \popdown_{w} (w \vee x) \leq (w \vee x) \wedge y = w.\]
+    Hence, \([w,w \vee x]\) is a face.
+  \end{proof}
+
+  \jonathan{
+    If \((x,y)\) is a transval, we can define a closure operator \(\phi_{(x,y)}: [0,y] \rightarrow [x \wedge y, y]\) given by \(\phi_{(x,y)}(v) = (v \vee x) \wedge y\)
+    with the 3 properties:
+    \begin{align*}
+      v &\leq \phi(v) \\
+      \phi(v_1) &\leq \phi(v_2) \text{ if } v_1 \leq v_2 \\
+      \phi(\phi(v)) &= \phi(v)
+    \end{align*}
+    The Proposition~\ref{ClosureFaceProp} really says that for all \(w \in [0,y]\) such that \(\phi(w) = w\), we have that \([w, w \vee x]\) is a face.
+    This constructs a collection of faces for each transval.
+    \begin{align*}
+      [y,& x \vee y] \\
+      &\vdots \\
+      [w,& w \vee x] \\
+      &\vdots \\
+      [x \wedge y,& (x \wedge y) \vee x] = [x \wedge y, x]
+    \end{align*}
+    Question: Experimentally, this is not the entire interval in the lattice of faces. What is the size of this collection for each transval?
+  }
 	
 In a join-semidistributive lattice, there is a canonical labelling of edges by join-irreducible elements $\gamma:(x,y)\mapsto \min \{j: j\vee x = y\}$. $\Gamma(y):=\{\gamma(x,y):x\lessdot y\}$ is the canonical join-representation of $y$, and we write $U(x):=\{\gamma(x,y):y\gtrdot x\}$. Note that $\kappa(U(x))$ is the canonical meet-representation of $x$.
 	
@@ -317,7 +352,6 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
       \item If \((a_1,b_1)\) and \((a_2,b_1)\) are transvals, then \((a_1 \wedge a_2, b_1)\) is a transval.
     \end{itemize}
   \end{lem}
-	
 		\ludovic{This proposition could be proved more directly using Proposition~\ref{pr:transval_triplets} I think}
 \begin{prop}\label{pr:transvals_edgelabelling}
    $(x,y)$ is a transval of $\L$ if and only if $\Gamma(x)\subseteq \{j\in\JIrr(\L) :j\le y\}\cup U(y)$
@@ -331,31 +365,47 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
 \end{proof}
 
   \begin{lem}\label{TransvalsClosureLemma}
-    Let \(a_1,a_2,b_1,b_2 \in \L\).
+    Let \(x_1,x_2,y_1,y_2 \in \L\).
     \begin{itemize}
-      \item If \((a_1,b_1)\) and \((a_2,b_1)\) are transvals, then \((a_1 \vee a_2, b_1)\) is a transval.
-      \item If \((a_1,b_1)\) and \((a_1,b_2)\) are transvals, then \((a_1, b_1 \wedge b_2)\) is a transval.
+      \item If \((x_1,y_1)\) and \((x_2,y_1)\) are transvals, then \((x_1 \vee x_2, y_1)\) is a transval.
+      \item If \((x_1,y_1)\) and \((x_1,y_2)\) are transvals, then \((x_1, y_1 \wedge y_2)\) is a transval.
     \end{itemize}
   \end{lem}
   \begin{proof}
-    We use the following facts:
-    \begin{enumerate}
-      \item For all $j\in\Gamma(x)$, $j_*\le \popdown(x)$, but $j\nleq \popdown(x)$;
-      \item If $j$ is join-irreducible and $ j_*\le y, j\le \popup(y)$, and $j\nleq y$, then $j\in U(y)$.
-    \end{enumerate}
-    
-    Fact $(1)$ is proved as follows. If \(j\) labels \(p\lessdot x\), then \(j_*\le p\). Every other lower cover \(q\) of \(x\) satisfies \(p\vee q=x\), so \(j\le q\). Taking the meet of the lower covers proves the first assertion; \(j\nleq p\) proves the second.
-    
-    Fact $(2)$ is proved as follows. If no upper cover \(z\) of \(y\) contained \(j\), we would have \(j\wedge z=j_*\) for every such cover. Meet-semidistributivity would then give $ j\wedge \popup(y)=j_*$,
-    contradicting \(j\le \popup(y)\). Thus some upper cover contains \(j\), and \(j_*\le y\) ensures that \(j\) is its label.
- 
-    
-    Finally, the allowed set of join-irreducibles on the right of Proposition~\ref{pr:transvals_edgelabelling} is downward closed among join-irreducibles: if \(j\in U(y)\), every element strictly below \(j\) lies below \(j_*\le y\).
-    
-    If \((a,y)\) and \((c,y)\) are transvals, the refinement property says that every label in \(\Gamma(a\vee c)\) lies below some label in \(\Gamma(a)\cup\Gamma(c)\). It therefore remains in that allowed set. By Proposition~\ref{pr:transvals_edgelabelling}, \((a\vee c,y)\) is a transval.
-    
-    Applying the same argument to the dual lattice proves the statement for the meets, completing the proof.
+    It suffices to prove only the first statement since the second statement is dual to the first.
+    By Corollary~\ref{ExactTransvalCorollary}, it is equivalent to assume \([x_i \wedge y_1, x_i]\) and \([y_1, x_i \vee y_1]\) are faces for both \(i \in \{1,2\}\) and
+    show that \([(x_1 \vee x_2) \wedge y_1, x_1 \vee x_2]\) and \([y_1, (x_1 \vee x_2) \vee y_1]\) are faces.
+    Since \([y_1, x_i \vee y_1]\) is a face for both \(i \in \{1,2\}\) and by the \(\popup\) definition of a face, we have that \([y_1, (x_1 \vee x_2) \vee y_1]\) is a face.
+    (This implicitly uses Proposition~\ref{PropositionNuclearCoNuclear} to say the \(\popup\) and \(\popdown\) definitions of faces are equivalent.)
+
+    It remains to show \([(x_1 \vee x_2) \wedge y_1, x_1 \vee x_2]\) is a face.
+    Pick \(w = (x_1 \vee x_2) \wedge y_1 \in [0,y_1]\). Then,
+    \[w \leq (w \vee x_i) \wedge y_1 \leq (x_1 \vee x_2) \wedge y_1 = w\]
+    for both \(i \in \{1,2\}\). By Proposition~\ref{ClosureFaceProp}, \([w, w \vee x_i]\) is a face for both \(i \in \{1,2\}\).
+    Again, by the \(\popup\) definition of a face, we have that
+    \[[w, w \vee (x_1 \vee x_2)] = [(x_1 \vee x_2) \wedge y_1, x_1 \vee x_2]\]
+    is a face, proving the result.
   \end{proof}
+
+  % \begin{proof}
+  %   We use the following facts:
+  %   \begin{enumerate}
+  %     \item For all $j\in\Gamma(x)$, $j_*\le \popdown(x)$, but $j\nleq \popdown(x)$;
+  %     \item If $j$ is join-irreducible and $ j_*\le y, j\le \popup(y)$, and $j\nleq y$, then $j\in U(y)$.
+  %   \end{enumerate}
+  %
+  %   Fact $(1)$ is proved as follows. If \(j\) labels \(p\lessdot x\), then \(j_*\le p\). Every other lower cover \(q\) of \(x\) satisfies \(p\vee q=x\), so \(j\le q\). Taking the meet of the lower covers proves the first assertion; \(j\nleq p\) proves the second.
+  %
+  %   Fact $(2)$ is proved as follows. If no upper cover \(z\) of \(y\) contained \(j\), we would have \(j\wedge z=j_*\) for every such cover. Meet-semidistributivity would then give $ j\wedge \popup(y)=j_*$,
+  %   contradicting \(j\le \popup(y)\). Thus some upper cover contains \(j\), and \(j_*\le y\) ensures that \(j\) is its label.
+  %
+  %
+  %   Finally, the allowed set of join-irreducibles on the right of Proposition~\ref{pr:transvals_edgelabelling} is downward closed among join-irreducibles: if \(j\in U(y)\), every element strictly below \(j\) lies below \(j_*\le y\).
+  %
+  %   If \((a,y)\) and \((c,y)\) are transvals, the refinement property says that every label in \(\Gamma(a\vee c)\) lies below some label in \(\Gamma(a)\cup\Gamma(c)\). It therefore remains in that allowed set. By Proposition~\ref{pr:transvals_edgelabelling}, \((a\vee c,y)\) is a transval.
+  %
+  %   Applying the same argument to the dual lattice proves the statement for the meets, completing the proof.
+  % \end{proof}
 
   \begin{prop}
     Let \((a_1,b_1)\) and \((a_2,b_2)\) be transvals in \(\L\). Let
