@@ -20,6 +20,7 @@
 \usepackage{subfig}
 \usepackage{caption}
 \usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage[table]{xcolor}
@@ -94,6 +95,12 @@
  \definecolor{darkblue}{rgb}{0,0,0.7} % darkblue color
  \newcommand{\darkblue}{\color{darkblue}} % darkblue command
  \newcommand{\defn}[1]{\textsl{\darkblue #1}} % emphasis of a definition
+
+\DeclareMathOperator{\tc}{tc}
+\newcommand{\set}[2]{\left\{ #1 \;\middle|\; #2 \right\}} % set notation
+\newcommand{\bigset}[2]{\big\{ #1 \;|\; #2 \big\}} % big set notation
+\newcommand{\eqdef}{\mbox{\,\raisebox{0.2ex}{\scriptsize\ensuremath{\mathrm:}}\ensuremath{=}\,}} % :=
+\newcommand{\ssm}{\smallsetminus} % small set minus
 
 
 \numberwithin{equation}{section}
@@ -840,6 +847,109 @@ Let $I\in \IdL(\forcingorder_n)$. A preposet $\blacktriangleleft$ is a weak orde
 The definition of weak order preposets translated on topologies, give the following:
 
 If $a,c\in \MN(b)$ with $a<b<c$, then for all $a<k<b$, we have $k\in \MN(b)$ or $a\in \MN(k)$, and for all $b<k<c$ we have $k\in \MN(b)$ or $c\in \MN(k)$.
+
+\section{Transvals of quotients of the weak order, Vincent's version}
+
+\newcommand{\arc}{\alpha}
+\newcommand{\arcs}{\mathcal{A}}
+
+An \defn{arc} is a quadruple~$\arc \eqdef (a, b, A, B)$ with~$1 \le a < b \le n$ and~$A \sqcup B = {]a,b[}$.
+We denote by~$\arcs_n$ the set of all arcs on~$[n]$.
+We say that~$\arc \eqdef (a, b, A, B)$ is a \defn{subarc} of~$\arc' \eqdef (a', b', A', B')$ if~$a' \le a < b \le b'$ and~$A = A' \cap {]a,b[}$ and~$B = B' \cap {]a,b[}$.
+We denote by~$\arcs_{\arc}$ the set of subarcs of~$\arc$ (including~$\arc$ itself).
+
+\begin{defi}
+A \defn{preposet} on~$[n]$ is a reflexive and transitive relation on~$[n]$.
+A set~$X$ of preposets on~$[n]$ is \defn{closed} if ${\blacktriangleleft}, {\blacktriangleleft'} \in X \implies \tc({\blacktriangleleft} \cup {\blacktriangleleft'}) \in X$, where~$\tc$ denotes the transitive closure.
+\end{defi}
+
+\begin{defi}
+A preposet~$\blacktriangleleft$ on~$[n]$ is a \defn{weak order interval preposet} if  for all~$1 \le a<b<c \le n$,
+\[
+a \blacktriangleleft c \implies a \blacktriangleleft b \text{ or } b \blacktriangleleft c
+\qquad\text{and}\qquad
+a \blacktriangleright c \implies a \blacktriangleright b \text{ or } b \blacktriangleright c.
+\]
+\end{defi}
+
+\begin{prop}
+\label{prop:weakOrderIntervalPreposets}
+The set of weak order interval preposets is closed.
+\end{prop}
+
+\begin{proof}
+Let~${\blacktriangleleft}, {\blacktriangleleft'}$ be two weak order interval preposets on~$[n]$, let~${\blacktriangleleft''} \eqdef  \tc({\blacktriangleleft} \cup {\blacktriangleleft'})$, and let~$1 \le a<b<c \le n$.
+If~$a \blacktriangleleft'' c$, then there exists~$a = b_0, \dots, b_j = c$ such that~$b_{i-1} \blacktriangleleft b_i$ or~$b_{i-1} \blacktriangleleft' b_i$ for all~$i \in [j]$.
+As~$a < b < c$, there is~$i \in [j]$ such that~$b_{i-1} < b$ and~$b_i \ge b$.
+Assume by symmetry that~$b_{i-1} \blacktriangleleft b_i$.
+As~$\blacktriangleleft$ is a weak order interval preposet, we have~$b_{i-1} \blacktriangleleft b$ or~$b \blacktriangleleft b_i$.
+We conclude that~$a \blacktriangleleft'' b$ or~$b \blacktriangleleft'' c$.
+By symmetry, we conclude that~$\blacktriangleleft''$ is a weak order interval preposet.
+\end{proof}
+
+\begin{defi}
+Consider an arc~$\arc = (a, b, A, B)$.
+A preposet~$\blacktriangleleft$ on~$[n]$ is a \defn{$\arc$-admissible} if
+\begin{align*}
+& a \blacktriangleleft b \implies \text{there exists~$k \in A$ with~$k \blacktriangleleft b$ or~$k \in B$ with~$a \blacktriangleleft k$} \\
+\qquad\text{and}\qquad &
+a \blacktriangleright b \implies \text{there exists~$k \in A$ with~$k \blacktriangleright b$ or~$k \in B$ with~$a \blacktriangleright k$}.
+\end{align*}
+%\begin{itemize}
+%\item if $a\blacktriangleleft b$, there exists $k\in B$ such that $a\blacktriangleleft k$, or there exists $k \in A$ such that $k\blacktriangleleft b$
+%\item if $a \blacktriangleright b$, there exists $k\in B$ such that $k\blacktriangleright b$, or there exists $k \in A$ such that $a\blacktriangleright k$.
+%\end{itemize}
+\end{defi}
+
+\begin{defi}
+For a subset~$\arcs$ of arcs on~$[n]$, the \defn{$\arcs$-preposets} are the weak order interval preposets on~$[n]$ which are~$\arc$-admissible for all~$\arc \in \arcs_n \ssm \arcs$.
+\end{defi}
+
+\begin{prop}
+\label{prop:arcsPreposets}
+If~$\arcs$ is closed under subarcs, then the set of $\arcs$-preposets is closed.
+\end{prop}
+
+\begin{proof}
+Let~${\blacktriangleleft}, {\blacktriangleleft'}$ be two $\arcs$-admissible weak order interval preposets on~$[n]$ and~${\blacktriangleleft''} \eqdef  \tc({\blacktriangleleft} \cup {\blacktriangleleft'})$.
+By \cref{prop:weakOrderIntervalPreposets}, $\blacktriangleleft''$ is a weak order interval preposet.
+Consider now~$\arc \eqdef (a, b, A, B) \in \arcs_n \ssm \arcs$.
+If~$a \blacktriangleleft'' b$, then there exists~$a = k_0, \dots, k_j = b$ such that~$k_{i-1} \blacktriangleleft k_i$ or~$k_{i-1} \blacktriangleleft' k_i$ for all~$i \in [j]$.
+If there is~$i \in [j-1]$ with~$a < k_i < b$, then~$a \blacktriangleleft'' k_i \blacktriangleleft'' b$ and~$k \in {]a,b[} = A \sqcup B$ ensures that there exists~$k \in A$ with~$k \blacktriangleleft'' b$ or~$k \in B$ with~$a \blacktriangleleft'' k$.
+Otherwise, there is~$i \in [j]$ such that~$k_{i-1} \le a < b \le k_i$, and we can assume by symmetry that~$k_{i-1} \blacktriangleleft k_i$.
+Consider~$1 \le a' \le a < b \le b' \le n$ such that~$a \blacktriangleleft'' a' \blacktriangleleft b' \blacktriangleleft'' b$ and~$b' - a'$ is minimal for this property.
+(The preceding discussion ensures that~$a'$ and~$b'$ exist).
+%As~$\blacktriangleleft$ is a weak order interval poset and~$b' - a'$ is minimal, we have~$a' \blacktriangleleft a$ and~$b \blacktriangleleft b'$.
+By minimality of~$b'-a'$, there is no~$k \in {]a',a]} \cup {[b \cup b'[}$ with~$a' \blacktriangleleft k \blacktriangleleft b'$.
+Consider now the arc~$\arc' \eqdef (a', b', A', B')$ where~$A' \eqdef A \cup \set{k \in {]a',a]}}{a' \blacktriangleleft k} \cup \set{k \in {]b,b'[}}{k \not\blacktriangleleft b'}$ and~$B' \eqdef B  \cup \set{k \in {]a',a]}}{a' \not\blacktriangleleft k} \cup \set{k \in {]b,b'[}}{k \blacktriangleleft b'}$.
+As~$\arc$ is a subarc of~$\arc'$ and~$\arcs$ is closed under subarcs, $\arc \notin \arcs$ implies that~$\arc' \notin \arcs$.
+As~$\blacktriangleleft$ is $\arcs$-admissible, there exists~$k \in A'$ with~$k \blacktriangleleft b'$ or~$k \in B'$ with~$a' \blacktriangleleft k$.
+As there is no~$k \in {]a',a]} \cup {[b \cup b'[}$ with~$a' \blacktriangleleft k \blacktriangleleft b'$, the definition of~$A'$ and~$B'$ ensures that~$k \in {]a,b[}$.
+%Hence, there is~$k \in A$ with~$k \blacktriangleleft'' b'$ or~$k \in B$ with~$a' \blacktriangleleft'' k$.
+As~$a \blacktriangleleft'' a'$ and~$b' \blacktriangleleft'' b$, we conclude that there is~$k \in A$ with~$k \blacktriangleleft'' b$ or~$k \in B$ with~$a \blacktriangleleft'' k$.
+By symmetry, we conclude that~$\blacktriangleleft''$ is $\arcs$-admissible.
+\end{proof}
+
+\vincent{Define shard polytopes in terms of lattice path matroid of a snake...}
+
+\begin{prop}
+\label{prop:shardPolytope}
+For any arc~$\arc$, any vertex poset of the shard polytope~$sp(\arc)$ is a~$\arcs_{\arc}$-posets.
+\end{prop}
+
+\begin{proof}
+On paths in the snake...
+\vincent{todo}
+\end{proof}
+
+\begin{cor}
+For any subset~$\arcs$ of~$\arcs_n$ closed under subarcs, and any Minkowski sum~$M = \sum_{\arc \in \arcs} \lambda_\arc sp(\arc)$ with~$\lambda_\arc \ge 0$ for all~$\arc \in \arcs$, any face preposet of~$M$ is a $\arcs$-preposet.
+\end{cor}
+
+\begin{proof}
+The face preposets of a Minkowski sum are transitive closures of unions of vertex posets of the summands.
+Hence, the statement directly follows from \cref{prop:arcsPreposets,prop:shardPolytope}.
+\end{proof}
 
 	
 	\section{Acknowledgements}
