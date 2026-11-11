@@ -79,10 +79,40 @@ def Spine_transvals(L, lattice = False):
         return LatticePoset((l, lambda x, y: L.is_lequal(x[0], y[0]) and L.is_lequal(x[1], y[1])))
     return l
 
+######################## SPINE FACES ########################
+
+def surjective_closure(G):
+    S, I = SurEdges(G), InEdges(G)
+    SG, IG = DiGraph(S), DiGraph(I)
+    for x, y, _ in IG.edges():
+        if y in SG:
+            for z in SG.neighbors_out(y):
+                if x in SG:
+                    for w in SG.neighbors_out(x):
+                        if IG.has_edge(w, z):
+                            S.append((x, y))
+                if IG.has_edge(x, z) or SG.has_edge(x, z):
+                    S.append((x, y))
+    return Factorization_to_Graph(S, I)
+
+def injective_closure(G):
+    S, I = SurEdges(G), InEdges(G)
+    SG, IG = DiGraph(S), DiGraph(I)
+    for x, y, _ in IG.edges():
+        if y in SG:
+            for z in SG.neighbors_out(y):
+                if x in SG:
+                    for w in SG.neighbors_out(x):
+                        if IG.has_edge(w, z):
+                            I.append((y, z))
+                if IG.has_edge(x, z) or SG.has_edge(x, z):
+                    I.append((y, z))
+    return Factorization_to_Graph(S, I)
+
 
 # ne donne pas un TAFS, à corriger pour obtenir le treillis des nested topologies
 # il semblerait qu'il faille rajouter des arêtes dans les deux copies de G, mais lesquelles ?
-def Spine_faces_graph(G):
+def Spine_faces_graph_old(G):
     """
     G must be a acyclic & two-acylic factorization system
     (corresponds to an extremal and semidistributive lattice)
@@ -99,6 +129,31 @@ def Spine_faces_graph(G):
         G2.add_edge((x,0),(y,0))
         G2.add_edge((x,1),(y,1))
         G2.add_edge((x,1),(y,0))
+    for x in G:
+        for y in P.order_filter([x]):
+            G2.add_edge((x,0),(y,1))
+    return G2
+
+def Spine_faces_graph(G):
+    """
+    G must be a acyclic & two-acylic factorization system
+    (corresponds to an extremal and semidistributive lattice)
+    """
+    G.remove_loops()
+    P = Poset(G)
+    GI = injective_closure(G)
+    GS = surjective_closure(G)
+    G2 = DiGraph()
+    for x in G:
+        G2.add_vertex((x,0))
+        G2.add_vertex((x,1))
+    for x, y, _ in GI.edges():
+        G2.add_edge((x,0),(y,0))
+    for x, y, _ in GS.edges():
+        G2.add_edge((x,1),(y,1))
+    for x, y, _ in GS.edges():
+        if GI.has_edge(x, y):
+            G2.add_edge((x,1),(y,0))
     for x in G:
         for y in P.order_filter([x]):
             G2.add_edge((x,0),(y,1))
@@ -125,17 +180,55 @@ def test_spine_faces(L):
 
 def test_spine_faces_Tamari(n):
     L = NestedLattice(n)
-    vertex_colors = {'red': [], 'green': []}
-    G = SDLGraph(L)
-    for j in G:
+    G0, G1 = [], []
+    G2 = SDLGraph(L)
+    G2.remove_loops()
+    G = TamariGraph(n).canonical_label()
+    G.remove_loops()
+    for j in G2:
         jstar = L.lower_covers(j)[0]
         for i in range(n):
             if j[i] != jstar[i]:
                 if j[i][0] == 0:
-                    vertex_colors['green'].append(j)
+                    G0.append(j)
                 else:
-                    vertex_colors['red'].append(j)
-    return G, vertex_colors
+                    G1.append(j)
+    GI = injective_closure(G)
+    GS = surjective_closure(G)
+    G0, G1 = G2.subgraph(G0), G2.subgraph(G1)
+    D0 = G0.is_isomorphic(GS, certificate = True)[1]
+    D1 = G1.is_isomorphic(GI, certificate = True)[1]
+    G2.relabel(lambda x: (D0[x],0) if x in G0 else (D1[x],1))
+    return G, G2
+
+"""
+# There are too many edges from G0 to G1:
+G, G2 = test_spine_faces_Tamari(5)
+for x, y, _ in G2.edges():
+    if x[1] == 0 and y[1] == 1:
+        if not G.has_edge(x[0],y[0]):
+            print(x,y)
+(8, 0) (2, 1)
+
+Adding the corresponding edges in G gives an acyclic digraph which is not a 2-acyclic factorization system
+It gives a lattice of size 2, 5, 14, 42, 126... (14*3^(n-3) for n>=3)
+"""
+
+def test_spine_faces_Tamari2(n):
+    G, G2 = test_spine_faces_Tamari(n)
+    GSpine = DiGraph(loops = True)
+    GPseudoTamari = DiGraph(loops = True)
+    for x in G:
+        GSpine.add_vertex(x)
+        GPseudoTamari.add_vertex(x)
+    for x, y, _ in G2.edges():
+        if x[1] == 0 and y[1] == 1:
+            GPseudoTamari.add_edge(x[0],y[0])
+        elif x[1] == 1 and y[1] == 0:
+            GSpine.add_edge(x[0],y[0])
+    if not is_TAFS(GSpine) or len(MOPLattice(GSpine,False)) != 2^(n-1):
+        print('ERROR: not the spine')
+    return GPseudoTamari
 
 def spine_face_relabel1(x):
     """
@@ -274,18 +367,33 @@ L3 = NestedLattice(5)
 L2.is_isomorphic(L3)
 """
 
+def Strong_spine_faces(L, lattice = True):
+    S = Spine(L)
+    L2 = semidistributive_faces(L)
+    l = []
+    for x, y in L2:
+        if any(z in S for z in L.interval(x, y)):
+            l.append((x,y))
+    l2 = []
+    for a in l:
+        if all(L2.join([a, (x, x)]) in l for x in S) and all(L2.meet([a, (x, x)]) in l for x in S):
+            l2.append(a)
+    if lattice:
+        return LatticePoset((l2, lambda x, y: L.is_lequal(x[0], y[0]) and L.is_lequal(x[1], y[1])))
+    return l
 
 
-def Spine_transvals_restriction(L):
+def Spine_transvals_restriction(L, lattice = True):
     G = SDLGraph(L)
-    L = MOPLattice(G)
+    D = {Set([j for j in G if L.is_lequal(j, x)]): x for x in L}
     G2 = Spine_transvals_graph(G)
     rest = []
     for X in MOPLattice(G2, False):
         s1, s2 = [x[0] for x in X if x[1]==0], [x[0] for x in right_orthogonal(G2, X) if x[1]==1]
-        rest.append((Set(s1), Set(left_orthogonal(G, s2))))
-    L2 = LatticePoset((rest, lambda p,q: p[0].issubset(q[0]) and p[1].issubset(q[1])))
-    return L2
+        rest.append((D[Set(s1)], D[Set(left_orthogonal(G, s2))]))
+    if lattice:
+        return LatticePoset((rest, lambda p,q: L.is_lequal(p[0], q[0]) and L.is_lequal(p[1], q[1])))
+    return rest
 
 # pas nécessaire ! La restriction suffit
 def Spine_transvals_cloture_restriction(L):

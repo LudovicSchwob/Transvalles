@@ -1,0 +1,194 @@
+def Random_lattice(n, p):
+    return posets.RandomPoset(n, p).completion_by_cuts().canonical_label()
+
+def Random_meetsemidistributive_lattice(n, p):
+    while True:
+        L = Random_lattice(n, p)
+        if L.is_meet_semidistributive() and not L.is_join_semidistributive():
+            return L
+
+def Random_joinsemidistributive_lattice(n, p):
+    while True:
+        L = Random_lattice(n, p)
+        if L.is_join_semidistributive() and not L.is_meet_semidistributive():
+            return L
+
+def Random_semidistributive_lattice(n, p):
+    while True:
+        L = Random_lattice(n, p)
+        if L.is_semidistributive():
+            return L
+
+
+#doesn't work with faces
+def Test_lemma(L):
+    T = set(semidistributive_transvals(L, False))
+    for t1 in T:
+        for t2 in T:
+            if t1[1] == t2[1]:
+                t3 = (L.join([t1[0], t2[0]]), t1[1])
+                if t3 not in T:
+                    print(t1, t2, t3)
+                    return False
+    return True
+
+#seems to also work with faces, but not face transvals
+def Test_lemma2(L):
+    T = set(semidistributive_transvals(L, False))
+    for t1 in T:
+        for t2 in T:
+            if t1[0] == t2[0]:
+                t3 = (t1[0], L.join([t1[1], t2[1]]))
+                if t3 not in T:
+                    print(t1, t2, t3)
+                    return False
+    return True
+
+def transvals_from_CJL(L):
+    G = {x: L.canonical_joinands(x) for x in L}
+    E = {}
+    for x, y in L.cover_relations():
+        for j in G[y]:
+            if not L.is_lequal(j, x):
+                E[(x, y)] = j
+                break
+    U = {x: [E[(x, y)] for y in L.upper_covers(x)] for x in L}
+    return [(x, y) for x in L for y in L if all(L.is_lequal(j, y) or j in U[y] for j in G[x])]
+            
+
+
+def test_conuclear_up(L, display = False):
+    D = defaultdict(list)
+    for x, y in L.relations():
+        if is_conuclear(L, x, y):
+            D[x].append(y)
+    Errors = set()
+    for x in D:
+        l = D[x]
+        for i, y in enumerate(l):
+            for z in l[i+1:]:
+                m = L.meet([y, z])
+                if m not in l:
+                    if display:
+                        print(f"Meet of upper bounds fails: [{x}, {y}] and [{x}, {z}] are conuclear intervals, but [{x}, {m}] is not")
+                    Errors.add("upmeet_not_conuclear")
+                if not is_nuclear(L, x, m):
+                    if display:
+                        print(f"Meet of upper bounds fails: [{x}, {y}] and [{x}, {z}] are conuclear intervals, but [{x}, {m}] is not nuclear")
+                    Errors.add("upmeet_not_nuclear")
+                j = L.join([y, z])
+                if j not in l:
+                    if display:
+                        print(f"Join of upper bounds fails: [{x}, {y}] and [{x}, {z}] are conuclear intervals, but [{x}, {j}] is not")
+                    Errors.add("upjoin_not_conuclear")
+                if not is_nuclear(L, x, j):
+                    if display:
+                        print(f"Join of upper bounds fails: [{x}, {y}] and [{x}, {z}] are conuclear intervals, but [{x}, {j}] is not nuclear")
+                    Errors.add("upjoin_not_nuclear")
+    return Errors
+
+
+def test_conuclear_down(L, display = False):
+    D = defaultdict(list)
+    for x, y in L.relations():
+        if is_conuclear(L, x, y):
+            D[y].append(x)
+    Errors = set()
+    for y in D:
+        l = D[y]
+        for i, x in enumerate(l):
+            for z in l[i+1:]:
+                m = L.meet([x, z])
+                if m not in l:
+                    if display:
+                        print(f"Meet of lower bounds fails: [{x}, {y}] and [{z}, {y}] are conuclear intervals, but [{m}, {y}] is not")
+                    Errors.add("downmeet_not_conuclear")
+                if not is_nuclear(L, m, y):
+                    if display:
+                        print(f"Meet of lower bounds fails: [{x}, {y}] and [{z}, {y}] are conuclear intervals, but [{m}, {y}] is not nuclear")
+                    Errors.add("downmeet_not_nuclear")
+                j = L.join([x, z])
+                if j not in l:
+                    if display:
+                        print(f"Join of lower bounds fails: [{x}, {y}] and [{z}, {y}] are conuclear intervals, but [{j}, {y}] is not")
+                    Errors.add("downjoin_not_conuclear")
+                if not is_nuclear(L, j, y):
+                    if display:
+                        print(f"Join of lower bounds fails: [{x}, {y}] and [{z}, {y}] are conuclear intervals, but [{j}, {y}] is not nuclear")
+                    Errors.add("downjoin_not_nuclear")
+    return Errors
+
+"""
+Dans un treillis quelconque, si [x, y] et [x, z] sont conucléaires, [x, y v z] est conucléaire
+Contre-exemple minimal join-semidistributif pour les autres propriétés : {7: [3, 2, 1], 3: [6], 6: [5, 4], 2: [5], 5: [0], 1: [4], 4: [0], 0: []}
+Il semblerait que dans le cas meet-semidistributif, si [x, y] et [x, z] sont conucléaires, [x, y v z] est nucléaire
+Contre-exemple minimal meet-semidistributif pour les autres propriétés : {11: [8, 7, 3], 8: [10, 4], 7: [10, 9], 10: [5, 2], 3: [6], 6: [4, 9], 4: [5], 9: [5, 1], 5: [0], 2: [0], 1: [0], 0: []}
+
+Dans un treillis join-semidistributif, si [y, z] et [x, z] sont conucléaires, [x ^ y, z] est conucléaire
+Contre-exemple pour les autres propriétés : {1: [7], 2: [10], 6: [2], 7: [8], 8: [], 9: [10], 10: [8], 15: [10, 7], 16: [9, 6], 17: [9, 15], 18: [1, 6, 15], 19: [16, 17, 18]}
+
+Dans un treillis meet-semidistributif, si [y, z] et [x, z] sont conucléaires, [x ^ y, z] est nucléaire
+Contre-exemple minimal pour les autres propriétés : {5: [6, 7], 6: [4, 1], 7: [4, 2], 4: [3], 3: [0], 2: [0], 1: [0], 0: []}
+
+
+"""
+
+def TestConuclear(n = 15, p = 0.3, up = True, prop = 'joinsemi'):
+    while True:
+        if prop == 'joinsemi':
+            L = Random_joinsemidistributive_lattice(n, p)
+        elif prop == 'meetsemi':
+            L = Random_meetsemidistributive_lattice(n, p)
+        elif prop == 'semi':
+            L = Random_semidistributive_lattice(n, p)
+        else:
+            raise Exception('parameter prop not recognized')
+        print(f"{len(L)} éléments")
+        if up:
+            Errors = test_conuclear_up(L)
+        else:
+            Errors = test_conuclear_down(L)
+        if len(Errors) > 0:
+            print(L.hasse_diagram().to_dictionary())
+            print(Errors)
+        print("continuer ? Y/N")
+        a = input()
+        if a == "N":
+            break
+
+
+def Test_face_join_transvals(L):
+    L2 = semidistributive_transvals(L)
+    for a, b in L2:
+        for c, d in L2:
+            if b == d:
+                y = L.join([a, c])
+                x = L.meet([b, y])
+                t = L.join([L.meet([a,b]), L.meet([c,b])])
+                x2 = popdown(L, y, t)
+                if x != x2:
+                    print(a,b,c,d,x,y,x2)
+
+def Test_face_join_transvals2(L):
+    for a, b, c in Tuples(L, 3):
+        a2, b2 = L.meet([a,c]), L.meet([b,c])
+        if not L.is_lequal(c, a) and not L.is_lequal(c, b) and is_nuclear(L, a2, a) and is_nuclear(L, b2, b):
+            z = L.join([a,b])
+            x, y = L.join([a2, b2]), L.meet([z,c])
+            if popdown(L, z, x) != y:
+                print(a,b,c,a2,b2,x,y,z)
+                return False
+    return True
+
+def Test_face_join_transvals3(L):
+    for a, b, c in Tuples(L, 3):
+        a2, b2 = L.meet([a,c]), L.meet([b,c])
+        if is_nuclear(L, a2, a) and is_nuclear(L, b2, b):
+            z = L.join([a,b])
+            x, y = L.join([a2, b2]), L.meet([z,c])
+            if not is_nuclear(L, y, z):
+                print(a,b,c,a2,b2,x,y,z)
+                return False
+    return True
+
+                

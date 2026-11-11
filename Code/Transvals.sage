@@ -100,6 +100,7 @@ def intervals_canonical_joinands(L):
             else:                   # (0, j)
                 y[j[1]].append(1)
         t = tuple(sorted(y, key = lambda t: t.__hash__()))
+        print(x, t, [y[j] for j in t])
         D[t].append(tuple(y[j] for j in t))
     return D
 
@@ -130,6 +131,7 @@ def transvals_canonical_joinands(L):
             else:                    # (j, j_*)
                 y[j[0]].append(1)
         t = tuple(sorted(y, key = lambda t: t.__hash__()))
+        print(x, t, [y[j] for j in t])
         D[t].append(tuple(y[j] for j in t))
     return D
 

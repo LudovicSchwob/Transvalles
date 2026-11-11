@@ -52,6 +52,8 @@
 \newcommand{\Lmax}{\mathbf 1}
 \newcommand{\JIrrGraph}{\operatorname{JG}}
 \newcommand{\joinlabel}{\operatorname{j}}
+\newcommand{\cjr}{\operatorname{cjr}}
+\newcommand{\cmr}{\operatorname{cmr}}
 
 \newcommand{\Fac}{\mathbf{FInt}}
 \newcommand{\Trf}{\mathbf{FTrv}}
@@ -120,9 +122,10 @@
 \newcommand{\jonathan}[1]{\todo[inline, color=orange!30]{#1 \\ \hfill --- J.}}
 \newcommand{\ludovic}[1]{\todo[inline, color=green!30]{#1 \\ \hfill --- L.}}
 \newcommand{\vincent}[1]{\todo[inline, color=blue!30]{#1 \\ \hfill --- V.}}
+\newcommand{\baptiste}[1]{\todo[inline, color=red!30]{#1 \\ \hfill --- B.}}
 
 \title{Transvals in semidistributive lattices}
-\author{Ludovic Schwob}
+\author{Vincent Pilaud, Baptiste Rognerud, Ludovic Schwob, Jonathan Yang}
 
 \begin{document}
 	
@@ -203,13 +206,7 @@ Any finite lattice $\L$ can be represented as the lattice of lower sets of a set
 
 \subsection{Faces}
 
-\begin{lem}
-   \label{lem:conuclear}
-   A finite meet-semidistributive lattice is a nuclear interval if and only if for all atoms $w$ of $\L$, $\kappa(w)$ is a coatom of $\L$.
-\end{lem}
-\begin{proof}
-It is straightforward to check that for all $x\gtrdot\Lmin$, $x=\bigwedge_{y\gtrdot \Lmin , y\neq x}\kappa(y)$ and $\Lmin=\bigwedge_{y\gtrdot \Lmin}\kappa(y)$ (these are the canonical meet-representations of $x$ and $\Lmin$, respectively). Hence, if for all atoms $x$ , $\kappa(x)$ is a coatom, then $\L$ is a nuclear interval. Conversely, if there exists $x\gtrdot \Lmin$ such that $\kappa(x)$ is not a coatom, it implies that for all coatoms $y\lessdot \Lmax$, we have $x\le y$, so their meet is above $x$ and $\L$ is not nuclear.
-\end{proof}
+We start by studying faces, a family of intervals in semidistributive lattices, which was already considered in the literature under various names: binuclear intervals, pure intervals...
 
 Hanson proved that for any lattice, if its nuclear intervals compared coordinatewise form a lattice then their join has the following expression~\cite{Hans24}: $$[x_1,y_1]\vee[x_2,y_2]=\left[\popdown_{x_1\vee x_2} (y_1\vee y_2), y_1\vee y_2\right].$$
 
@@ -248,12 +245,23 @@ We prove that this operation defines a join on nuclear intervals of a join-semid
 \end{proof}
 Since the set of nuclear intervals of finite lattice has a minimal element $[\Lmin, \Lmin]$ and is a join-semilattice by Proposition~\ref{FaceJoinProp}, it is a lattice. Dually, conuclear intervals of meet-semidistributive lattice have a meet given by $[x_1,y_1]\wedge[x_2,y_2]=\left[ x_1\wedge x_2,\popdown_{y_1\wedge y_2} (x_1\wedge x_2),\right]$, hence these also form a lattice.
 
+\begin{lem}
+   \label{lem:conuclear}
+   A finite meet-semidistributive lattice is a nuclear interval if and only if for all atoms $w$ of $\L$, $\kappa(w)$ is a coatom of $\L$.
+\end{lem}
+\begin{proof}
+Without loss of generality, we take $\L=[x,y]$. If $x=y$, the result is trivial, so we assume $x<y$.
+ Assume that $[x,y]$ is nuclear, so that $x$ is the meet of lower covers of $y$. For all $a\gtrdot\Lmin$, we have $a\nleq x$, so there exists $c$ a coatom with $a\nleq x$. This gives $a\wedge c=x$, so $c\le \kappa(a)$. We have $\kappa(a)\neq y$, since $y\wedge a=a\neq x$. As $c$ is a coatom, $\kappa(a)=c$.
+ 
+Conversely, assume that $\kappa(a)$ is a coatom for all atoms $a$ of $[x,y]$. Let $m=\bigwedge_{a\gtrdot x}\kappa(a)$, and suppose $m>x$. Then there is some atom $a$ with $a\le m$, thus $a\le \kappa(a)$ and $a=a\vee \kappa(a)=x$, which is a contradiction. Hence, $m=x$, and $[x,y]$ is conuclear.
+\end{proof}
+
 \begin{prop}\label{PropositionNuclearCoNuclear}
    Let $\L$ be a finite meet-semidistributive lattice. Let $[x,y]$ be a conuclear interval of $\L$. Then $[x,y]$ is a nuclear interval.
 \end{prop}
 \begin{proof}
 \label{pr:conuclear_implies_nuclear}
-   Without loss of generality, we take $\L=[x,y]$. Since $\L$ is conuclear, for all atoms $z\gtrdot x$, there exists $w\lessdot y$ such that $z\nleq w$ (if not, the join of the atoms would be less than $w$), and then $z\wedge w=x$ so $w=\kappa(z)$. By Lemma~\ref{lem:conuclear}, $[x,y]$ is nuclear.
+   Without loss of generality, we take $\L=[x,y]$. Let $a$ be an atom of $\L$. For every other atom $b$, we have $a\wedge b=x$, so $b\le \kappa(a)$. Now let $z\in \L$ with $\kappa(a)<z$. By maximality of $\kappa(a)$, $z\wedge a\neq x$, hence $z\wedge a=a$ and so $a\le z$. Hence, $z$ lies above every atom of $\L$,and $z\ge \bigvee \{a:a\gtrdot x\}=y$, thus $\kappa(a)$ is a coatom. By Lemma~\ref{lem:conuclear}, $[x,y]$ is nuclear.
 \end{proof}
 The converse is not true (see Figure~\ref{fig:inclusionoffaces}).
 \ludovic{Compare this result with Prop. 7.8 of \cite{BaHa24}}
@@ -350,21 +358,7 @@ We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we
     \end{align*}
     Question: Experimentally, this is not the entire interval in the lattice of faces. What is the size of this collection for each transval?
   }
-	
-In a join-semidistributive lattice, there is a canonical labelling of edges by join-irreducible elements $\gamma:(x,y)\mapsto \min \{j: j\vee x = y\}$. $\Gamma(y):=\{\gamma(x,y):x\lessdot y\}$ is the canonical join-representation of $y$, and we write $U(x):=\{\gamma(x,y):y\gtrdot x\}$. Note that $\kappa(U(x))$ is the canonical meet-representation of $x$.
-	
 
-		\ludovic{This proposition could be proved more directly using Proposition~\ref{pr:transval_triplets} I think. Maybe we can just remove it, as we don't use it in the proof ?}
-\begin{prop}\label{pr:transvals_edgelabelling}
-   $(x,y)$ is a transval of $\L$ if and only if $\Gamma(x)\subseteq \{j\in\JIrr(\L) :j\le y\}\cup U(y)$
-\end{prop}
-\begin{proof}
-  If $(x,y)$ is a transval, each $j\in \Gamma(x)$ satisfies $j_*\le \popdown(x)\le y$ and $j\le x\le \popup(y)$. This tells us that either $j\le y$ or $j\in U(y)$. 
-  Conversely, suppose that $\Gamma(x)\subseteq \{j\in\JIrr(\L) :j\le y\}\cup U(y)$. Since for all $j\in \Gamma(x)$, $j\le y$ or $j\le z$ for some $z\gtrdot y$, we have $x\le \popup y$.
-  Suppose, for a contradiction, that $\popdown(x)\nleq y$. Let $k\le \popdown(x)$ that is not below $y$, minimal with this property. Then $k$ is join-irreducible and $k_*\le y$. This gives us $k\in U(y)$, but $k\notin\Gamma(x)$, because $k\le \popdown(x)$. Let $z=y\vee k$, an upper cover of $y$. For every $j\in\Gamma(x)$, either $j\le y$, or $j$ labels a different upper cover of \(y\). In either case, $z\wedge(y\vee j)=y.$
-     Applying meet-semidistributivity over the finite set $\Gamma(x)$ gives $ z\wedge(y\vee x)=y$.
-     However, $k\le \popdown(x)\le x$, so $z=y\vee k\le y\vee x$. The left side is therefore $z>y$, a contradiction. Thus $\popdown(x)\le y$, proving the result.
-\end{proof}
 
   \begin{lem}\label{TransvalsClosureLemma}
     Let \(x_1,x_2,y_1,y_2 \in \L\).
@@ -409,7 +403,7 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
   %   Applying the same argument to the dual lattice proves the statement for the meets, completing the proof.
   % \end{proof}
 
-  \begin{prop}
+  \begin{prop}\label{prop:transvals_join_meet}
     Let \((a_1,b_1)\) and \((a_2,b_2)\) be transvals in \(\L\). Let
     \begin{align*}
       c &= \min \left\{ y \geq b_1 \vee b_2 : (a_1 \vee a_2,y) \text{ is a transval} \right\}, \\     
@@ -422,25 +416,17 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
     \end{align*}
   \end{prop}
   \begin{proof}
-  Observe first that the set $\left\{ y \geq b_1 \vee b_2 : (a_1 \vee a_2,y) \text{ is a transval} \right\}$ is nonempty, and its minimum is well-defined because of Lemma~\ref{TransvalsClosureLemma}.
-  
-    It suffices to prove \((a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c)\) for \(c\) as defined above.
-    By Lemma~\ref{TransvalsClosureLemma} and using that \(\L\) is finite, we have \((a_1 \vee a_2, c)\) is a transval.
-
-    First, we show \((a_1 \vee a_2, c)\) is an upper bound. That is, we want to show \((a_1 \vee a_2, c) \geq (a_i, b_i)\) for all \(i \in \{1,2\}\).
-    By definition of \(c\), we have that \(c \geq b_1 \vee b_2\). So, \(c \geq b_i\).
-    Also, \(a_1 \vee a_2 \geq a_i\).
-    Hence, \((a_1 \vee a_2, c) \geq (a_i, b_i)\).
-
-    It remains to show \((a_1 \vee a_2, c)\) is a minimal upper bound.
+      It is sufficient to prove that \((a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c)\) for \(c\) as defined above, since the second statement is dual to the first. Observe first that the set $\left\{ y \geq b_1 \vee b_2 : (a_1 \vee a_2,y) \text{ is a transval} \right\}$ is nonempty, since $(a_1\vee a_2,\Lmax)$ is a transval, and its minimum is well-defined by Lemma~\ref{TransvalsClosureLemma}.
+   It is clear from the definition of $c$ that $(a_1 \vee a_2, c)$ is an upper bound of $(a_1,b_1)$ and $(a_2,b_2)$; it remains to show that this upper bound is minimal.
     Take any transval \((e,f)\) such that \((e,f) \geq (a_i,b_i)\) for all \(i \in \{1,2\}\).
     We want to show \((a_1 \vee a_2, c) \leq (e,f)\). By definition of transvals,
     \[\popdown(a_i) \leq b_i \leq f \text{ and } a_i \leq e \leq \popup(f)\]
     Hence, \((a_i,f)\) is a transval for all \(i \in \{1,2\}\).
     By Lemma~\ref{TransvalsClosureLemma}, \((a_1 \vee a_2, f)\) is a transval.
-    By assumption, \(f \geq b_1 \vee b_2\). So by definition of \(c\), we have \(c \leq f\).
+    By assumption, \(f \geq b_1 \vee b_2\), so by definition of \(c\), we have \(c \leq f\).
     Also by assumption, \(a_1 \vee a_2 \leq e\). Hence, \((a_1 \vee a_2, c) \leq (e,f)\).
   \end{proof}
+ 
 
 \subsection{Face transvals}
 \begin{defi}
@@ -448,12 +434,15 @@ In a join-semidistributive lattice, there is a canonical labelling of edges by j
 \end{defi}
 
 
-\section{Lattice structures of transvals}
+\section{Lattice structure of transvals}
 \ludovic{Should face transvals be named transfaces ? If so, should faces become interfaces ?? Meh.}
 
 \begin{prop}
      $\Fac_\L$ is a sublattice of $\Trf_\L$, and $\Int_\L$ is a sublattice of $\Trv_\L$.
 \end{prop}
+\begin{proof}
+    We only prove that intervals of $\L$ have the same join in $\Int_\L$ and in $\Trv_\L$, since the statement for the meet is equivalent by duality. By Proposition~\ref{prop:transvals_join_meet}, the join of two transvals $(a_1,b_1)$ and $(a_2,b_2)$ is given by $(a_1\vee a_2, c)$ where $c=\min \left\{ y \geq b_1 \vee b_2 : (a_1 \vee a_2,y) \text{ is a transval} \right\}$. If $(a_1,b_1)$ and $(a_2,b_2)$  are intervals, we have $(a_1\vee a_2, c)=(a_1\vee a_2,b_1\vee b_2)$ which is the same as their join in $\Int_\L$.
+ \end{proof}
 However, $\Fac_\L$ is not a sublattice of $\Int_\L$, and $\Trf_\L$ is not a sublattice of $\Trv_\L$.  $\Trf_\L$ contains another sublattice isomorphic to $\Fac_\L$, consisting of pairs $(y,x)$ such that $[x,y]\in \Fac_\L$.
 
 \begin{prop}
@@ -475,6 +464,9 @@ Meet-irreducible elements of $\Int_\L$, $\Trv_\L$, $\Fac_\L$, and $\Trf_\L$ are 
 \end{itemize}
 where $1$ is the maximal element of $\L$, and $m\in \MIrr(\L)$.
 \end{prop}
+\begin{proof}
+  By duality, it is sufficient to prove the description of join-irreducible elements.
+\end{proof}
 
 \begin{prop}
    The $\kappa$ maps of $\Int_\L$, $\Trv_\L$, $\Fac_\L$, and $\Trf_\L$ are respectively given by:
@@ -533,7 +525,8 @@ If $\L$ is trim, which is the case if and only if $\L$ is extremal~\cite[Thm. 1.
    Elements of $\Spine(\L)$ correspond to pairs $(X,Y)\in \Pairs(\rightarrow_\L)$ such that $X\cup Y= \JIrr(\L)$, since chains of maximal length in $\L$ have length $|\JIrr(\L)|$ and $(X,Y)$ belongs to chains of length at most $|X|+|Y|$. For all $(X,Y)\in \Pairs(\rightarrow_\L)$, we have $X\cup Y=\JIrr(\L)$ if and only if $x\rightarrow _\L y$ and $x\in X$ imply $y\in X$, which is the case if and only $X$ is a lower set of $\SpinePos$.
 \end{proof}
 
-\begin{prop}Let $\L$ be a finite semidistributive extremal lattice. We have
+\begin{prop}\label{prop:transvals_spine}
+Let $\L$ be a finite semidistributive extremal lattice. We have
    \begin{itemize}
    \item $\Spine(\Int_\L)=\Int_{\Spine(\L)}$;
    \item $\Spine(\Trv_\L)=\Trv_{\Spine(\L)}$;
@@ -546,10 +539,43 @@ Direct proof or corollary of the description of TAFS.
 \end{proof}
 
 \section{Spine intervals and spine transvals}
+\ludovic{Generalize these constructions for any sublattice, and for non necessarily extremal lattices ? Maybe it is better to leave these generalizations in perspectives}
 
 \begin{defi}
 A \defn{spine interval} of a trim lattice $\L$ is an interval $[x,y]$ intersecting its spine, \emph{i.e.}, there exists $x\le z\le y$ such that $z\in \Spine(\L)$.
 \end{defi}
+
+\begin{defi}
+   A \defn{spine transval} of a semidistributive and extremal lattice $\L$ is a transval $(a,b)$ such that there exists a face $[c,d]$ of $\L$ such that $[a\wedge b,a]\le [c,d]\le [b,a\vee b]$ and $[c,d]\subset \Spine(\L)$.
+\end{defi}
+It is clear from this definition that a spine transval is an interval if and only if it is a spine interval. Notice that by Proposition~\ref{prop:transvals_spine}, the lattice of faces of $\Spine(\L)$ is equal to the spine of $\Fac_\L$.
+
+\begin{defi}
+   A \defn{spine face} is a spine interval which is a also a face. A \defn{spine face transval} is a spine transval which is a face transval.
+\end{defi}
+Spine faces and spine face transvals do not form a lattice in general, which leads us to the following stricter definition.
+
+\begin{defi}
+   A strong spine face (resp. strong spine face transval) is a spine face (resp. spine face transval) $(x,y)$ such that for all $z\in \Spine(\L)$, the join and meet in the lattice of faces (resp. face transvals) $(x,y)\vee (z,z)$ and $(x,y)\wedge (z,z)$ are also spine faces (resp. spine face transvals).
+\end{defi}
+
+\ludovic{Spine intervals in the Tamari lattices are the infinitely modern intervals of Baptiste. I found another family of intervals counted by the same sequence, by taking MOP of the Galois graph of $\Int_{\Tam_n}$ and adding edges $(x,1)\rightarrow (y,0)$ whenever $(x,y)$ is not surjective in $\JIrrGraph(\Tam_n)$}
+
+In the Tamari lattice, all spine faces are strong.
+
+\begin{prop}
+   Spine intervals and spine transvals of a finite semidistributive and extremal lattice $\L$ form a lattice with the same properties; more precisely:
+   \begin{itemize}
+   \item Spine intervals form a sublattice of $\Int_\L$;
+   \item Spine transvals form a sublattice of $\Trv_\L$.
+   \end{itemize}
+\end{prop}
+\begin{proof}
+  Let $[x_1,y_1]$ and $[x_2,y_2]$ be spine intervals of $\L$, and let $z_1,z_2\in \Spine(\L)$ such that $x_1\le z_1\le y_1$ and $x_2\le z_2\le y_2$. Since $\Spine(\L) $ is a sublattice of $\L$, $z_1\vee z_2$ and $z_1\wedge z_2$ are in $\Spine(\L)$. We have $x_1\vee x_2\le z_1 \vee z_2 \le y_1\vee y_2$ and $x_1\wedge x_2\le z_1 \wedge z_2 \le y_1\wedge y_2$, thus $[x_1\vee x_2,y_1\vee y_2]$ and $[x_1\wedge x_2,y_1\wedge y_2]$ are spine intervals of $\L$.
+  %TODO complete the proof
+\end{proof}
+
+
 Spine intervals of a semidistributive and extremal lattice $\Pairs(\rightarrow)$ form (conjecturally) a lattice  $\Pairs(\rightarrow_{\SpIntGraph})$, where $\SpIntGraph(\Sha)$ is the set of pairs $(x,k)$ with $x\in \Sha$ and $k\in \{0,1\}$, endowed with the binary relation where $(x, 0)\rightarrow_\SpIntGraph(y,0)$ and $(x, 1)\rightarrow_{\SpIntGraph}(y,1)$ if $x\rightarrow y$, and $(x, 0)\rightarrow_{\SpIntGraph}(y,1)$ if $x\le y$ in $\SpinePos$, the transitive closure of $\rightarrow$.
 Spine intervals of Tamari seem to coincide with infinitely modern intervals, which are counted by the same sequence as ternary trees~\cite{Rogn18}.
 
@@ -567,21 +593,76 @@ We define $\SpTrvGraph(\Sha)$ as the set of pairs $(x,k)$ with $x\in \Sha$ and $
 			$A001353$ & $1$ & $4$ & $15$ & $56$ & $209$ & $780$ & $2911$ & $10864$ & $40545$ & $151316$ & $564719$ \\ \midrule 
 		    $A121545$ & $1$ & $4$ & $17$ & $81$ & $412$ & $2192$ & $12049$ & $67891$ & $390041$ & $2276176$ & $13455356$ \\  \bottomrule
 		\end{tabular}
-		\caption{\centering The number of spine faces, spine intervals, spine, spine face transvals and spine transvals of $\Tam_n$.}
+		\caption{\centering The number of spine faces, spine intervals, spine face transvals and spine transvals of $\Tam_n$.}
+	\end{table}
+	
+
+\section{Essential transvals}
+
+ \ludovic{There is a better construction of these lattices, which also work for extremal lattices. Clément Chenevière is writing a paper on the lattice of faces, using a construction he calls "splitting". Essential faces are then an intermediate step in this construction. Maybe we could just remove this section.}
+
+\begin{defi}
+    Let $\L$ be a finite semidistributive lattice, and let $S\subset \JIrr(\L)$. We define $\Pos_S(\L)$ as the coarsening of $\L$ obtained by keeping its cover relations labelled by elements of $S$. 
+\end{defi}
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{cccccccccccc}
+		\toprule
+		   $n$ & $1$& $2$ &$3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $11$  \\ \midrule 
+		  $A002212$ & $1$ & $3$ & $10$ & $36$ & $137$ & $543$ & $2219$ & $9285$ &$39587$ & $171369$ & $751236$ \\ \midrule 
+		    $A005572$ & $1$ & $4$ & $17$ & $76$ & $354$ & $1704$ & $8421$ & $42508$ & $218318$ & $1137400$ & $5996938$ \\  \bottomrule
+		\end{tabular}
+		\caption{\centering The number of essential faces, and essentia face transvals of $\Tam_n$.}
 	\end{table}
 
 \section{Canonical join-representations}
 \label{sec:trv_cjr}
 
+\subsection{Characterization of transvals using canonical representations}
+
+\begin{lem}\label{lem:popdown_cjr}
+Let $x\in\L$ and $j\in \cjr(x)$. Then
+\begin{enumerate}
+\item $j_*\le\popdown(x)\le\kappa(j)$;
+\item $j'\le\kappa(j)$ for all $j'\in\cjr(x)\setminus\{j\}$.
+\end{enumerate}
+Dually, if $m\in\cmr(y)$, then $\kappa^d(m)\le\popup(y)\le m^*$ and $\kappa^d(m)\le m'$ for all $m'\in\cmr(y)\setminus\{m\}$.
+\end{lem}
+
+\begin{thm}
+  Let $x,y\in\L$, $J:=\operatorname{cjr}(x)$ and $M:=\operatorname{cmr}(y)$. Then $(x,y)$ is a transval if and only if for all $j\in J $ and $m\in M$, $j\le m$ or $m=\kappa(j)$.
+\end{thm}
+\begin{proof}
+  Assume that for all $j\in J $ and $m\in M$, $j\le m$ or $m=\kappa(j)$. If $m=\kappa(j)$ for some $j\in J$, then $\popdown(x)\le\kappa(j)=m$ by  Lemma~\ref{lem:popdown_cjr}. Otherwise $j\le m$ for all $j\in J$, so  $\popdown(x)\le x=\bigvee J\le m$. Hence $\popdown(x)\le\bigwedge M=y$. Dually, we prove that $\popdown(y)\ge \bigvee J=x$ Thus $(x,y)$ is a transval.
+  
+  Conversely, assume that $(x,y)$ is a transval, and let $j\in J$ and $m\in M$ with $j\nleq m$. By Lemma~\ref{lem:popdown_cjr} and its dual, $ j_*\le\popdown(x)\le y\le m$ and $j\le x\le\popup(y)\le m^*$. 
+  Since $j\nleq m$, we have $j_*\le j\wedge m < j$, so $j\wedge m = j_*$ and $m\le \kappa(j)$. If $m< \kappa(j)$, then $j\le m^* \le \kappa(j)$, which contradicts $\kappa(j)\wedge j=j_*$, hence $m=\kappa(j)$.
+  \end{proof}
+  
+ \ludovic{Is this already known for intervals ?}
+In particular $(x,y)$ is an interval if and only if for all $j\in J $ and $m\in M$, $j\le m$.
+  
+ \subsection{Min-max sets}
+ 
+ \begin{defi}
+    Let $G$ be a directed graph, and $X\subset G$. We say that $x\in X$ is maximal (resp. minimal) if there is no $y\in X$ distinct from $x$ such that $y\rightarrow x$ (resp. $x\mapsto y$). We write $\max_G(X)$ (resp. $\min_G(X)$) the set of maximal (resp. minimal) elements of $X$ relatively to $G$.
+ \end{defi}
+ 
+
+
 \begin{defi}
-  Let $G$ be a directed graph. A min-max set of $G$ is a subset $X\subseteq G$ such that for all $x\in X$, there is no $y,z\in X$ such that $y\to x\to z$.
+  Let $G$ be a directed graph. A min-max set of $G$ is a subset $X\subseteq G$ such that for all $x\in X$, $x$ is either maximal or minimal, \emph{i.e.}, there is no $y,z\in X$ distinct from $x$ such that $y\to x\to z$.
 \end{defi}
 
 %interval-closed subsets of a poset $\Pos$ are in bijection with pairs of disjoint antichains $(A,B)$ of $\Pos$ such that $B\subset \Delta(A)$~\cite[Proposition 2.5]{ELMSW24}. 
 
 \begin{defi}
-  An independant set of $G$ is a subset $X\subseteq G$ such that $x\in X$, there is no $y\in X$ such that $x\to y$ or $y\to x$.
+  An independent set of $G$ is a subset $X\subseteq G$ such that for all $x\in X$, $x$ is maximal and minimal, \emph{i.e.}, there is no $y\in X$ distinct from $x$ such that $x\to y$ or $y\to x$.
 \end{defi}
+
+In a finite semidistributive lattice $\L$, canonical join-representations of elements of $\L$ are the independent sets of its Galois graph $\JIrrGraph(\L)$.
+%FALSE More precisely, for all $x\in \L$ we have $\cjr(x)=\min_{\surj}(\max_{\inj}(\{j\in \JIrr(\L):j\le x\}))$.
 
 %Let $\L$ be a finite semidistributive lattice, and let $\JIrrGraph(\L)$  be its irreducibles graph. There is a canonical labelling of edges $\gamma : E(\L)\to \JIrr(L)$ such that for all $(x,y)\in E(\L)$, $y = x\vee \gamma((x,y))$.
 
@@ -596,24 +677,26 @@ We define $\SpTrvGraph(\Sha)$ as the set of pairs $(x,k)$ with $x\in \Sha$ and $
 %    %TODO find reverse bijection between set of labels and min-max sets
 %\end{proof}}
 
+\ludovic{These results follow easily from the description of $\JIrrGraph(\Int_\L)$, $\JIrrGraph(\Trv_\L)$... as cjr are independant set of the Galois graph. It is unclear how we can compute the cjr of a transval (x,y) from the cjr or cmr of x and y.}
 
-Let $\L$ be a finite semidistributive lattice, with irreducibles graph $\JIrrGraph(\L)$.
 \begin{prop}
-   There is a bijection between intervals $(x,y)\in \Int_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $m\subseteq\min(X) $, $M\subseteq \max(X)$, and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
+   There is a bijection between intervals of $\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $\JIrrGraph(\L)$, $m\subseteq\min(X) $, $M\subseteq \max(X)$, and $m\sqcup M=X$, the corresponding interval having canonical join-representations $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j).$$
 \end{prop}
 
 \begin{prop}
-    There is a bijection between transvals $(x,y)\in \Trv_\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $G$, $m\subseteq\min(X) $, $M\subseteq \max(X)$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
- Intervals of $\L$ correspond to triples $(X,m,M)$ such that $m=\min(X)$.
+    There is a bijection between transvals of $\L$ and triples $(X,m,M)$ where $X$ is a min-max set of $\JIrrGraph(\L)$, $m\subseteq\min(X) $, $M\subseteq \max(X)$, and $m\cup M=X$, the corresponding transval having canonical join-representation $$\bigvee_{j\in m} (0,j)\vee \bigvee_{j\in M} (j,j_*).$$
+ Intervals of $\L$ (seen as transvals) correspond to triples $(X,m,M)$ such that $m=\min(X)$.
+\end{prop}
+
+It seems that the corresponding transval is $(x,y)$ where $x=\bigvee m$ and $y=\min\{z\ge \bigvee M:(x,z)\in \Trv(\L)\}$.
+
+\begin{prop}
+   There is a bijection between faces of $\L$ and triples $(X,m,M)$ where $X$ is an independent set of $\JIrrGraph(\L)$ and $m\sqcup M=X$, the corresponding face having  canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j).$$
 \end{prop}
 
 \begin{prop}
-   There is a bijection between faces $(x,y)\in \Fac_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$ and $m\sqcup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j).$$
-\end{prop}
-
-\begin{prop}
-  There is a bijection between face transvals $(x,y)\in \Trf_\L$ and triples $(X,m,M)$ where $X$ is an independent set of $G$, and $m\cup M=X$, which is given by : $(x,y)$ has canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j_*).$$
-    Faces of $\L$ correspond to triples $(X,m,M)$ such that $m=X$.
+  There is a bijection between face transvals of $\L$ and triples $(X,m,M)$ where $X$ is an independent set of $\JIrrGraph(\L)$, and $m\cup M=X$, the corresponding face transval having  canonical join-representation $$\bigvee_{j\in m} (j_*,j)\vee \bigvee_{j\in M} (j,j_*).$$
+    Faces of $\L$ (seen as face transvals) correspond to triples $(X,m,M)$ such that $m=X$.
 \end{prop}
 
 \subsection{Enumeration of interval-closed subsets}
@@ -800,7 +883,7 @@ $\Trv(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its 
 				 $A122704$ & $4$ & $22$ & $160$ & $1456$ & $15905$ & $202672$ & $2951680$ & $48361216$   \\  \midrule
 			    $A213438$ & $4$ & $26$ & $252$ & $3368$ & $58810$ & $1290930$ & $34604844$ & $1107490596$  \\  \bottomrule
 			\end{tabular}
-			\caption{\centering The number of elements, face intervals, intervals, face transvals, and transvals of $(A_n,\le_R)$.}
+			\caption{\centering The number of elements, faces, intervals, face transvals, and transvals of $(A_n,\le_R)$.}
 		\end{table}
 		
      \begin{table}[H]
@@ -814,7 +897,7 @@ $\Trv(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its 
 			   & $28$ & $304$ & $4432$ &$80704$ & $1763008$ & $44932864$  \\  \midrule
 			   $A395854$ & $38$ & $664$ & $17848$ & $672004$ & $33369560$ & $2094849020$  \\  \bottomrule
 			\end{tabular}
-			\caption{\centering The number of elements, face intervals, intervals, face transvals, and transvals of $(B_n,\le_R)$.}
+			\caption{\centering The number of elements, faces, intervals, face transvals, and transvals of $(B_n,\le_R)$.}
 		\end{table}
 		
      \begin{table}[H]
@@ -828,10 +911,12 @@ $\Trv(\Tam_n)$  contains the lattice of faces of $\Tam_n $ as a subposet of its 
 			  & $2320$ & $42304$ & $924352$ & $23557888$ \\  \midrule
 			   $A395855$ & $6512$ & $238720$ & $11633624$  &  $720453984$  \\  \bottomrule
 			\end{tabular}
-			\caption{\centering The number of elements, face intervals, intervals, face transvals, and transvals of $(D_n,\le_R)$.}
+			\caption{\centering The number of elements, faces, intervals, face transvals, and transvals of $(D_n,\le_R)$.}
 		\end{table}
 		
 \section{Transvals of quotients of the weak order}
+
+\ludovic{I use the right weak order so my definitions does not match the ones in  the paper "The weak order on integer preposets", we should clarify this}
 
 Bijection between transvals and preposets for any quotient, generalizing \cite{CPP19}
 
