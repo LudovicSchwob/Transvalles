@@ -416,8 +416,9 @@ We have seen in Lemma~\ref{lem:conuclear} that in a nuclear interval $[x,y]$, we
     \end{align*}
   \end{prop}
   \begin{proof}
-      It is sufficient to prove that \((a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c)\) for \(c\) as defined above, since the second statement is dual to the first. Observe first that the set $\left\{ y \geq b_1 \vee b_2 : (a_1 \vee a_2,y) \text{ is a transval} \right\}$ is nonempty, since $(a_1\vee a_2,\Lmax)$ is a transval, and its minimum is well-defined by Lemma~\ref{TransvalsClosureLemma}.
-   It is clear from the definition of $c$ that $(a_1 \vee a_2, c)$ is an upper bound of $(a_1,b_1)$ and $(a_2,b_2)$; it remains to show that this upper bound is minimal.
+    First, observe that the set $\left\{ y \geq b_1 \vee b_2 : (a_1 \vee a_2,y) \text{ is a transval} \right\}$ is nonempty since it contains \(\Lmax\). So by Lemma~\ref{TransvalsClosureLemma}, \(c\) is well defined. By the same reasoning, \(d\) is also well defined.
+    Now, it is sufficient to prove that \((a_1,b_1) \vee (a_2,b_2) = ( a_1 \vee a_2, c)\) since the second statement is dual to the first.
+    It is clear from the definition of $c$ that $(a_1 \vee a_2, c)$ is an upper bound of $(a_1,b_1)$ and $(a_2,b_2)$. It remains to show that this upper bound is minimal.
     Take any transval \((e,f)\) such that \((e,f) \geq (a_i,b_i)\) for all \(i \in \{1,2\}\).
     We want to show \((a_1 \vee a_2, c) \leq (e,f)\). By definition of transvals,
     \[\popdown(a_i) \leq b_i \leq f \text{ and } a_i \leq e \leq \popup(f)\]
